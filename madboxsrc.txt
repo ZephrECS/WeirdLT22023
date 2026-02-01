@@ -40,6 +40,33 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             transition: background 0.3s ease, color 0.3s ease;
+            cursor: none;
+        }
+
+        /* Custom Green Circular Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5),
+                        0 0 20px rgba(0, 255, 136, 0.3),
+                        inset 0 0 10px rgba(0, 255, 136, 0.2);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .custom-cursor.clicking {
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        .custom-cursor.hovering {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: rgba(0, 255, 136, 0.2);
         }
 
         .sidebar {
@@ -525,6 +552,9 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor Element -->
+    <div class="custom-cursor" id="customCursor"></div>
+
     <div class="sidebar">
         <div class="logo">
             <div class="logo-icon">֎</div>
@@ -624,6 +654,35 @@
     </div>
 
     <script>
+        // ============================================
+        // CUSTOM CURSOR FUNCTIONALITY
+        // ============================================
+        const cursor = document.getElementById('customCursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('clicking');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('clicking');
+        });
+
+        // Add hover effect for interactive elements
+        const hoverElements = document.querySelectorAll('button, .nav-item, .game-card, input, .favorite-btn, .explore-link');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovering');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovering');
+            });
+        });
+
         // ============================================
         // DISCORD BUTTON - CUSTOMIZE YOUR DISCORD URL HERE!
         // ============================================
@@ -943,6 +1002,17 @@
                 };
                 
                 gamesGrid.appendChild(card);
+            });
+            
+            // Re-attach hover listeners to new game cards
+            const newGameCards = document.querySelectorAll('.game-card');
+            newGameCards.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hovering');
+                });
+                element.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hovering');
+                });
             });
         }
 
