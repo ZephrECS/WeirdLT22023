@@ -624,9 +624,24 @@
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
             },
             {
-                title: 'TattleTail',
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/tattletail-646521.7.webp',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                title: 'Half-Life',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/halflife_coverart.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+            },
+            {
+                title: 'Getting Over It - WBF',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/9AZHswQrJ6UuZld22c5UGLuk5mqDWAocm0gUhDd6MyA.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+            },
+            {
+                title: 'Hotline Miami',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyMWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html' // PASTE YOUR GITHUB RAW GAME URL HERE
+            },
+            {
+                title: 'COD: Zombies 2009',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/TIARP5371__87728.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
             }
         ];
 
