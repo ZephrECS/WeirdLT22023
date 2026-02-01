@@ -111,6 +111,64 @@
             justify-content: center;
         }
 
+        .changelog-section {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .changelog-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .changelog-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .changelog-item {
+            font-size: 11px;
+        }
+
+        .changelog-date {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .changelog-text {
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .changelog-section::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .changelog-section::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .changelog-section::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .changelog-section::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
         .main-content {
             margin-left: 190px;
             padding: 0;
@@ -406,32 +464,46 @@
 <body>
     <div class="sidebar">
         <div class="logo">
-            <div class="logo-icon">🎮</div>
+            <div class="logo-icon">֎</div>
             <div class="logo-text">Madbox</div>
         </div>
         
         <div class="nav-item active" data-page="home">
-            <div class="nav-icon">🏠</div>
+            <div class="nav-icon"></div>
             <span>Home</span>
         </div>
         <div class="nav-item" data-page="games">
-            <div class="nav-icon">🎮</div>
+            <div class="nav-icon"></div>
             <span>My Games</span>
         </div>
         <div class="nav-item" data-page="discover">
-            <div class="nav-icon">🔍</div>
+            <div class="nav-icon"></div>
             <span>Discover Games</span>
         </div>
         <div class="nav-item" id="settingsBtn">
-            <div class="nav-icon">⚙️</div>
+            <div class="nav-icon"></div>
             <span>Settings</span>
+        </div>
+        
+        <div class="changelog-section">
+            <div class="changelog-title">Updates</div>
+            <div class="changelog-content">
+                <div class="changelog-item">
+                    <div class="changelog-date">Feb 1, 2026</div>
+                    <div class="changelog-text">+Added Sandboxels</div>
+                    <div class="changelog-text">+Added Balatro</div>
+                    <div class="changelog-text">+Added Hotline Miami</div>
+                    <div class="changelog-text">+Added Side Effects</div>
+                    <div class="changelog-text">+Added GTA Vice City</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="main-content">
         <div class="top-bar">
             <div class="search-bar">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon">⌕</span>
                 <input type="text" id="searchInput" placeholder="Find games, add-ons, and more">
             </div>
             <div class="user-section">
@@ -581,67 +653,77 @@
             {
                 title: 'Balatro',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro'
             },
             {
                 title: 'ULTRAKILL',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt'
             },
             {
                 title: 'Buckshot Roulette',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/logo_Buckshot_Roulette.png',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/Buckshot%20Roulette.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/Buckshot%20Roulette.txt'
             },
             {
                 title: 'People Playground',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/4bb51ff19e082e45d9187564ea12f3c01d520c683db7da74b10a89efd254ee7c.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/People%20Playground.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/People%20Playground.txt'
             },
             {
                 title: 'R.E.P.O.',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./repo-teases-big-update-game-rant.avif',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./R.E.P.O.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./R.E.P.O.txt'
             },
             {
                 title: 'Hollow Knight',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/MV5BMGIyYmJmZDgtOWQ1Ny00NDFiLTk2OTgtM2Q2ZWQ4OWIxZjg3XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/HollowGME.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/HollowGME.txt'
             },
             {
                 title: 'Slime Rancher',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/w5OuzDEu6HNzT2K4e5HRI7vJ.avif',
-                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/Slime%20Rancher.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/Slime%20Rancher.txt'
             },
             {
                 title: 'Side Effects',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/side-effects-button-1759512691005.webp',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt'
             },
             {
                 title: 'TattleTail',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/tattletail-646521.7.webp',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt'
             },
             {
                 title: 'Half-Life',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/halflife_coverart.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt'
             },
             {
                 title: 'Getting Over It - WBF',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/9AZHswQrJ6UuZld22c5UGLuk5mqDWAocm0gUhDd6MyA.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt'
             },
             {
                 title: 'Hotline Miami',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyMWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html'
             },
             {
                 title: 'COD: Zombies 2009',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/TIARP5371__87728.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt' // PASTE YOUR GITHUB RAW GAME URL HERE
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt'
+            },
+            {
+                title: 'Sandboxels',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/Site-logo.webp',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/clsandboxels.html'
+            },
+            {
+                title: 'Vice City',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/Vice-city-cover.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/ViceCity.html'
             }
         ];
 
