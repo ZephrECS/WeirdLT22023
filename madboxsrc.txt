@@ -495,6 +495,8 @@
                     <div class="changelog-text">+Added Hotline Miami</div>
                     <div class="changelog-text">+Added Side Effects</div>
                     <div class="changelog-text">+Added GTA Vice City</div>
+                    <div class="changelog-text">+Added Undertale</div>
+                    <div class="changelog-text">+Added FTF: Home Alone</div>
                 </div>
             </div>
         </div>
@@ -724,6 +726,16 @@
                 title: 'Vice City',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/Vice-city-cover.jpg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/ViceCity.html'
+            },
+            {
+                title: 'Undertale',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/MV5BMWI3ZTkxZjktYWU3NC00OGQ1LWFlNzgtYzIwMWI4NDg2YTU0XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
+                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/undertale.html'
+            },
+            {
+                title: 'FTF: Home Alone',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/MV5BNGZjOTBlYTctODcxNy00YTM1LTg2YTYtZTI3NzBmMDA4ZmJmXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/genizy/web-port/refs/heads/main/fears-to-fathom/home-alone/index.html'
             }
         ];
 
