@@ -111,6 +111,49 @@
             justify-content: center;
         }
 
+        .discord-button {
+            position: absolute;
+            bottom: 258px;
+            left: 20px;
+            right: 20px;
+            padding: 10px 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .discord-button:hover {
+            background: #5865F2;
+            border-color: #5865F2;
+            transform: translateY(-1px);
+        }
+        
+        .discord-button:hover .discord-icon svg {
+            fill: #ffffff;
+        }
+
+        .discord-icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .discord-icon svg {
+            fill: var(--text-secondary);
+            transition: fill 0.2s;
+        }
+
         .changelog-section {
             position: absolute;
             bottom: 0;
@@ -277,6 +320,26 @@
 
         .game-card:hover {
             transform: translateY(-4px);
+        }
+
+        /* Featured game styling */
+        .game-card.featured {
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .game-card.featured::before {
+            content: '⭐ FEATURED';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--accent-color);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            z-index: 1;
         }
 
         .favorite-btn {
@@ -485,6 +548,16 @@
             <span>Settings</span>
         </div>
         
+        <button class="discord-button" id="discordBtn">
+            <span class="discord-icon">
+                <!-- Discord SVG Icon -->
+                <svg viewBox="0 0 127.14 96.36" fill="currentColor">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+                </svg>
+            </span>
+            Join The Discord
+        </button>
+        
         <div class="changelog-section">
             <div class="changelog-title">Updates</div>
             <div class="changelog-content">
@@ -551,6 +624,15 @@
     </div>
 
     <script>
+        // ============================================
+        // DISCORD BUTTON - CUSTOMIZE YOUR DISCORD URL HERE!
+        // ============================================
+        const DISCORD_INVITE_URL = 'https://discord.gg/ymWa5nkk7g';
+        
+        document.getElementById('discordBtn').addEventListener('click', () => {
+            window.open(DISCORD_INVITE_URL, '_blank');
+        });
+        
         // ============================================
         // SETTINGS SYSTEM - Saves to localStorage
         // ============================================
@@ -650,92 +732,114 @@
         // ============================================
         // EASY SETUP: ADD YOUR GAMES HERE!
         // Just copy one of the game objects below and add your own info
+        // 
+        // EMBED PRIORITY SYSTEM:
+        // - embed: 2 = Featured (shows at the very top with special styling)
+        // - embed: 1 = Normal (shows with all other games)
+        // - No embed property = Normal (same as 1)
         // ============================================
         const games = [
             {
                 title: 'Balatro',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro',
+                embed: 2  // Featured game - shows at top!
             },
             {
                 title: 'ULTRAKILL',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt',
+                embed: 1  // Normal game
             },
             {
                 title: 'Buckshot Roulette',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/logo_Buckshot_Roulette.png',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/Buckshot%20Roulette.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/Buckshot%20Roulette.txt',
+                embed: 1
             },
             {
                 title: 'People Playground',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/4bb51ff19e082e45d9187564ea12f3c01d520c683db7da74b10a89efd254ee7c.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/People%20Playground.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/People%20Playground.txt',
+                embed: 1
             },
             {
                 title: 'R.E.P.O.',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./repo-teases-big-update-game-rant.avif',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./R.E.P.O.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./R.E.P.O.txt',
+                embed: 1
             },
             {
                 title: 'Hollow Knight',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/MV5BMGIyYmJmZDgtOWQ1Ny00NDFiLTk2OTgtM2Q2ZWQ4OWIxZjg3XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/HollowGME.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/HollowGME.txt',
+                embed: 2
             },
             {
                 title: 'Slime Rancher',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/w5OuzDEu6HNzT2K4e5HRI7vJ.avif',
-                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/Slime%20Rancher.txt'
+                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/Slime%20Rancher.txt',
+                embed: 1
             },
             {
                 title: 'Side Effects',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/side-effects-button-1759512691005.webp',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt',
+                embed: 1  // Another featured game!
             },
             {
                 title: 'TattleTail',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/tattletail-646521.7.webp',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt',
+                embed: 1
             },
             {
                 title: 'Half-Life',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/halflife_coverart.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt',
+                embed: 1
             },
             {
                 title: 'Getting Over It - WBF',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/9AZHswQrJ6UuZld22c5UGLuk5mqDWAocm0gUhDd6MyA.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt',
+                embed: 1
             },
             {
                 title: 'Hotline Miami',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyMWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html',
+                embed: 1
             },
             {
                 title: 'COD: Zombies 2009',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/TIARP5371__87728.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt',
+                embed: 1
             },
             {
                 title: 'Sandboxels',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/Site-logo.webp',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/clsandboxels.html'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/clsandboxels.html',
+                embed: 1
             },
             {
                 title: 'Vice City',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/Vice-city-cover.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/ViceCity.html'
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/ViceCity.html',
+                embed: 1
             },
             {
                 title: 'Undertale',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/MV5BMWI3ZTkxZjktYWU3NC00OGQ1LWFlNzgtYzIwMWI4NDg2YTU0XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/undertale.html'
+                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/undertale.html',
+                embed: 1
             },
             {
                 title: 'FTF: Home Alone',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/MV5BNGZjOTBlYTctODcxNy00YTM1LTg2YTYtZTI3NzBmMDA4ZmJmXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/genizy/web-port/refs/heads/main/fears-to-fathom/home-alone/index.html'
+                gameUrl: 'https://raw.githubusercontent.com/genizy/web-port/refs/heads/main/fears-to-fathom/home-alone/index.html',
+                embed: 1
             }
         ];
 
@@ -771,29 +875,48 @@
         }
 
         // ============================================
-        // RENDER GAMES - Automatically sorted by favorites
+        // RENDER GAMES - Now with embed priority!
         // ============================================
         
         function renderGames() {
             const gamesGrid = document.getElementById('gamesGrid');
             gamesGrid.innerHTML = '';
             
-            // Sort games: favorites first, then alphabetically
+            // Sort games with new priority system:
+            // 1. Featured games (embed: 2) come first
+            // 2. Then favorited normal games
+            // 3. Then non-favorited normal games
+            // Within each group, sort alphabetically
             const sortedGames = [...games].sort((a, b) => {
+                const aEmbed = a.embed || 1;
+                const bEmbed = b.embed || 1;
                 const aFav = isFavorited(a.title);
                 const bFav = isFavorited(b.title);
                 
-                if (aFav && !bFav) return -1;
-                if (!aFav && bFav) return 1;
+                // Featured games (embed: 2) always come first
+                if (aEmbed === 2 && bEmbed !== 2) return -1;
+                if (aEmbed !== 2 && bEmbed === 2) return 1;
+                
+                // Within normal games (embed: 1), favorites come first
+                if (aEmbed === 1 && bEmbed === 1) {
+                    if (aFav && !bFav) return -1;
+                    if (!aFav && bFav) return 1;
+                }
+                
+                // Within same priority and favorite status, sort alphabetically
                 return a.title.localeCompare(b.title);
             });
             
             sortedGames.forEach(game => {
                 const card = document.createElement('div');
-                card.className = 'game-card';
-                card.setAttribute('data-title', game.title.toLowerCase());
-                
+                const embedLevel = game.embed || 1;
                 const favorited = isFavorited(game.title);
+                
+                // Add featured class for embed: 2
+                const cardClasses = embedLevel === 2 ? 'game-card featured' : 'game-card';
+                
+                card.className = cardClasses;
+                card.setAttribute('data-title', game.title.toLowerCase());
                 
                 card.innerHTML = `
                     <div class="game-card-image">
