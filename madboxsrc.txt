@@ -911,6 +911,12 @@
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/RLDGy%2B.png',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/midnight_shift.html',
                 embed: 1
+            },
+            {
+                title: 'FNAW',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Five%20Nights%20At%20Winstons/five-nights-at-winstons.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Five%20Nights%20At%20Winstons/five_nights_at_winstons.html',
+                embed: 1
             }
         ];
 
