@@ -595,6 +595,7 @@
                     <div class="changelog-date">Feb 3, 2026</div>
                     <div class="changelog-text">+Added Granny</div>
                     <div class="changelog-text">+Added Deltarune</div>
+                    <div class="changelog-text">+Added Get Yoked</div>
                     <div class="changelog-text">-Fixed Undertale</div>
                     <div class="changelog-date">Feb 2, 2026</div>
                     <div class="changelog-text">+Added GladdiHoppers</div>
@@ -939,6 +940,12 @@
                 title: 'Deltarune',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/deltrarune/deltarune.webp',
                 gameUrl: 'https://raw.githubusercontent.com/aukak/fyinx/refs/heads/main/g/deltarune/index.html',
+                embed: 1
+            },
+            {
+                title: 'Get Yoked',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/GetYoked/New%20Project%20(3).jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/GetYoked/Get%20Yoked.html',
                 embed: 1
             }
         ];
