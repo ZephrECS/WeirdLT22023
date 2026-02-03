@@ -592,14 +592,13 @@
             <div class="changelog-title">Updates</div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <div class="changelog-date">Feb 1, 2026</div>
-                    <div class="changelog-text">+Added Sandboxels</div>
-                    <div class="changelog-text">+Added Balatro</div>
-                    <div class="changelog-text">+Added Hotline Miami</div>
-                    <div class="changelog-text">+Added Side Effects</div>
-                    <div class="changelog-text">+Added GTA Vice City</div>
-                    <div class="changelog-text">+Added Undertale</div>
-                    <div class="changelog-text">+Added FTF: Home Alone</div>
+                    <div class="changelog-date">Feb 3, 2026</div>
+                    <div class="changelog-text">+Added Granny</div>
+                    <div class="changelog-text">+Added Deltarune</div>
+                    <div class="changelog-text">-Fixed Undertale</div>
+                    <div class="changelog-date">Feb 2, 2026</div>
+                    <div class="changelog-text">+Added GladdiHoppers</div>
+                    <div class="changelog-text">+Added Subway Surfers</div>
                 </div>
             </div>
         </div>
@@ -891,7 +890,7 @@
             {
                 title: 'Undertale',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/MV5BMWI3ZTkxZjktYWU3NC00OGQ1LWFlNzgtYzIwMWI4NDg2YTU0XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
-                gameUrl: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/undertale.html',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/undertale.html',
                 embed: 1
             },
             {
@@ -916,6 +915,30 @@
                 title: 'FNAW',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Five%20Nights%20At%20Winstons/five-nights-at-winstons.jpg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Five%20Nights%20At%20Winstons/five_nights_at_winstons.html',
+                embed: 1
+            },
+            {
+                title: 'Gladdi-Hoppers',
+                image: 'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/Gladdihoppers/images.jpeg',
+                gameUrl: 'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/Gladdihoppers/gladdihoppers.html',
+                embed: 1
+            },
+            {
+                title: 'Subway Surfers',
+                image: 'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/video-game-Subway-Surfers-Poster-diamond-by-numbers.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/s0lace-games/s0lace/refs/heads/main/public/games/subway-surfers/index.html',
+                embed: 1
+            },
+            {
+                title: 'Granny',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/images.jpeg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/undertale2.txt',
+                embed: 1
+            },
+            {
+                title: 'Deltarune',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/deltrarune/deltarune.webp',
+                gameUrl: 'https://raw.githubusercontent.com/aukak/fyinx/refs/heads/main/g/deltarune/index.html',
                 embed: 1
             }
         ];
