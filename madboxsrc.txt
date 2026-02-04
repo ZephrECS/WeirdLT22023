@@ -369,6 +369,26 @@
             z-index: 1;
         }
 
+        /* Multi-version game styling */
+        .game-card.multi-version {
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+        }
+
+        .game-card.multi-version::before {
+            content: '🎮 VERSIONS';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: #ff00ff;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
         .favorite-btn {
             width: 24px;
             height: 24px;
@@ -549,6 +569,115 @@
         .btn-secondary:hover {
             opacity: 0.8;
         }
+
+        /* Version Picker Modal */
+        .version-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+
+        .version-content {
+            background: var(--bg-secondary);
+            padding: 32px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        .version-header {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .version-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .version-grid {
+            display: grid;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .version-option {
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .version-option:hover {
+            border-color: #ff00ff;
+            background: var(--bg-card);
+            transform: translateX(4px);
+        }
+
+        .version-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .version-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .version-close {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .version-close:hover {
+            background: var(--bg-card);
+        }
+
+        .version-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .version-grid::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .version-grid::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .version-grid::-webkit-scrollbar-thumb:hover {
+            background: #ff00ff;
+        }
     </style>
 </head>
 <body>
@@ -580,7 +709,6 @@
         
         <button class="discord-button" id="discordBtn">
             <span class="discord-icon">
-                <!-- Discord SVG Icon -->
                 <svg viewBox="0 0 127.14 96.36" fill="currentColor">
                     <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
                 </svg>
@@ -592,6 +720,9 @@
             <div class="changelog-title">Updates</div>
             <div class="changelog-content">
                 <div class="changelog-item">
+                    <div class="changelog-date">Feb 4, 2026</div>
+                    <div class="changelog-text">+Added Version Picker</div>
+                    <div class="changelog-text">+Added Minecraft</div>
                     <div class="changelog-date">Feb 3, 2026</div>
                     <div class="changelog-text">+Added Granny</div>
                     <div class="changelog-text">+Added Deltarune</div>
@@ -599,9 +730,6 @@
                     <div class="changelog-text">+Added Webfishing</div>
                     <div class="changelog-text">+Added Not:MN</div>
                     <div class="changelog-text">-Fixed Undertale</div>
-                    <div class="changelog-date">Feb 2, 2026</div>
-                    <div class="changelog-text">+Added GladdiHoppers</div>
-                    <div class="changelog-text">+Added Subway Surfers</div>
                 </div>
             </div>
         </div>
@@ -652,6 +780,22 @@
                 <button class="btn btn-primary" id="saveSettingsBtn">Save Changes</button>
                 <button class="btn btn-secondary" id="cancelSettingsBtn">Cancel</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Version Picker Modal -->
+    <div class="version-modal hidden" id="versionModal">
+        <div class="version-content">
+            <h2 class="version-header">
+                🎮 Select Version
+            </h2>
+            <p class="version-subtitle" id="versionGameTitle">Choose which version you'd like to play</p>
+            
+            <div class="version-grid" id="versionGrid">
+                <!-- Versions will be populated by JavaScript -->
+            </div>
+
+            <button class="version-close" id="closeVersionModal">Cancel</button>
         </div>
     </div>
 
@@ -798,19 +942,46 @@
         // - embed: 2 = Featured (shows at the very top with special styling)
         // - embed: 1 = Normal (shows with all other games)
         // - No embed property = Normal (same as 1)
+        //
+        // MULTI-VERSION GAMES:
+        // - Add "versions" array with name, description, and gameUrl
+        // - Don't add gameUrl at the top level for multi-version games
         // ============================================
         const games = [
+            // Example: Multi-version game
+            {
+                title: 'Minecraft',
+                image: 'https://github.com/ZephrECS/EagerIGG1.12.html/blob/main/MC.jpg?raw=true',
+                embed: 1,
+                versions: [
+                    {
+                        name: 'Minecraft 1.5.2',
+                        description: 'Runs better than other versions.',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/EaglercraftMODDED/cleaglercraft152.html'
+                    },
+                    {
+                        name: 'Minecraft 1.12.2',
+                        description: 'broken for now, too lazy to fix',
+                        gameUrl: 'https://example.com/fnaf2.html'
+                    },
+                    {
+                        name: 'Minecraft 1.9',
+                        description: 'Newer than 1.5.2, older than 1.12.2',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/EaglercraftMODDED/1.9eag.txt'
+                    }
+                ]
+            },
             {
                 title: 'Balatro',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro',
-                embed: 2  // Featured game - shows at top!
+                embed: 2
             },
             {
                 title: 'ULTRAKILL',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt',
-                embed: 1  // Normal game
+                embed: 1
             },
             {
                 title: 'Buckshot Roulette',
@@ -846,7 +1017,7 @@
                 title: 'Side Effects',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/side-effects-button-1759512691005.webp',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt',
-                embed: 1  // Another featured game!
+                embed: 1
             },
             {
                 title: 'TattleTail',
@@ -912,12 +1083,6 @@
                 title: 'Midnight Shift',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/RLDGy%2B.png',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/midnight_shift.html',
-                embed: 1
-            },
-            {
-                title: 'FNAW',
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Five%20Nights%20At%20Winstons/five-nights-at-winstons.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Five%20Nights%20At%20Winstons/five_nights_at_winstons.html',
                 embed: 1
             },
             {
@@ -1002,35 +1167,66 @@
         }
 
         // ============================================
-        // RENDER GAMES - Now with embed priority!
+        // VERSION PICKER SYSTEM
+        // ============================================
+        
+        function showVersionPicker(game) {
+            const modal = document.getElementById('versionModal');
+            const titleElement = document.getElementById('versionGameTitle');
+            const gridElement = document.getElementById('versionGrid');
+            
+            titleElement.textContent = `Choose a version of ${game.title}`;
+            gridElement.innerHTML = '';
+            
+            game.versions.forEach(version => {
+                const option = document.createElement('div');
+                option.className = 'version-option';
+                option.innerHTML = `
+                    <div class="version-name">${version.name}</div>
+                    <div class="version-description">${version.description}</div>
+                `;
+                option.onclick = () => {
+                    loadGame(version.gameUrl);
+                    modal.classList.add('hidden');
+                };
+                gridElement.appendChild(option);
+            });
+            
+            modal.classList.remove('hidden');
+        }
+
+        document.getElementById('closeVersionModal').addEventListener('click', () => {
+            document.getElementById('versionModal').classList.add('hidden');
+        });
+
+        document.getElementById('versionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'versionModal') {
+                document.getElementById('versionModal').classList.add('hidden');
+            }
+        });
+
+        // ============================================
+        // RENDER GAMES - Now with multi-version support!
         // ============================================
         
         function renderGames() {
             const gamesGrid = document.getElementById('gamesGrid');
             gamesGrid.innerHTML = '';
             
-            // Sort games with new priority system:
-            // 1. Featured games (embed: 2) come first
-            // 2. Then favorited normal games
-            // 3. Then non-favorited normal games
-            // Within each group, sort alphabetically
             const sortedGames = [...games].sort((a, b) => {
                 const aEmbed = a.embed || 1;
                 const bEmbed = b.embed || 1;
                 const aFav = isFavorited(a.title);
                 const bFav = isFavorited(b.title);
                 
-                // Featured games (embed: 2) always come first
                 if (aEmbed === 2 && bEmbed !== 2) return -1;
                 if (aEmbed !== 2 && bEmbed === 2) return 1;
                 
-                // Within normal games (embed: 1), favorites come first
                 if (aEmbed === 1 && bEmbed === 1) {
                     if (aFav && !bFav) return -1;
                     if (!aFav && bFav) return 1;
                 }
                 
-                // Within same priority and favorite status, sort alphabetically
                 return a.title.localeCompare(b.title);
             });
             
@@ -1038,9 +1234,11 @@
                 const card = document.createElement('div');
                 const embedLevel = game.embed || 1;
                 const favorited = isFavorited(game.title);
+                const hasVersions = game.versions && game.versions.length > 0;
                 
-                // Add featured class for embed: 2
-                const cardClasses = embedLevel === 2 ? 'game-card featured' : 'game-card';
+                let cardClasses = 'game-card';
+                if (embedLevel === 2) cardClasses += ' featured';
+                if (hasVersions) cardClasses += ' multi-version';
                 
                 card.className = cardClasses;
                 card.setAttribute('data-title', game.title.toLowerCase());
@@ -1057,12 +1255,14 @@
                     </div>
                 `;
                 
-                // Add click handler for the game card (but not the favorite button)
                 const cardImage = card.querySelector('.game-card-image');
                 
-                cardImage.onclick = () => loadGame(game.gameUrl);
+                if (hasVersions) {
+                    cardImage.onclick = () => showVersionPicker(game);
+                } else {
+                    cardImage.onclick = () => loadGame(game.gameUrl);
+                }
                 
-                // Add click handler for favorite button
                 const favBtn = card.querySelector('.favorite-btn');
                 favBtn.onclick = (e) => {
                     e.stopPropagation();
@@ -1072,7 +1272,6 @@
                 gamesGrid.appendChild(card);
             });
             
-            // Re-attach hover listeners to new game cards
             const newGameCards = document.querySelectorAll('.game-card');
             newGameCards.forEach(element => {
                 element.addEventListener('mouseenter', () => {
@@ -1084,14 +1283,12 @@
             });
         }
 
-        // Initial render
         renderGames();
 
         // ============================================
         // CODE BELOW - You don't need to edit this!
         // ============================================
 
-        // Function to load game from GitHub
         async function loadGame(gameUrl) {
             if (!gameUrl) {
                 alert('Please add a GitHub RAW game URL to this game card in the code!');
@@ -1111,7 +1308,6 @@
             }
         }
 
-        // Search functionality
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
@@ -1129,4 +1325,3 @@
     </script>
 </body>
 </html>
-CDN
