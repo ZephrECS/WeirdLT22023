@@ -720,16 +720,12 @@
             <div class="changelog-title">Updates</div>
             <div class="changelog-content">
                 <div class="changelog-item">
+                    <div class="changelog-date">Feb 5, 2026</div>
+                    <div class="changelog-text">+Added Deadseat</div>
+                    <div class="changelog-text">+Added ABAF</div>
                     <div class="changelog-date">Feb 4, 2026</div>
                     <div class="changelog-text">+Added Version Picker</div>
                     <div class="changelog-text">+Added Minecraft</div>
-                    <div class="changelog-date">Feb 3, 2026</div>
-                    <div class="changelog-text">+Added Granny</div>
-                    <div class="changelog-text">+Added Deltarune</div>
-                    <div class="changelog-text">+Added Get Yoked</div>
-                    <div class="changelog-text">+Added Webfishing</div>
-                    <div class="changelog-text">+Added Not:MN</div>
-                    <div class="changelog-text">-Fixed Undertale</div>
                 </div>
             </div>
         </div>
@@ -1116,7 +1112,7 @@
                 embed: 1
             },
             {
-                title: 'Bendt: ATIM',
+                title: 'Bendy: ATIM',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Bendy/images%20(1).jpeg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Bendy/Bendy%20and%20the%20Ink%20Machine%20(1).html',
                 embed: 1
@@ -1131,6 +1127,18 @@
                 title: 'Webfishing',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Webfishing/images%20(3).jpeg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Webfishing/WebFishing%20(1).html',
+                embed: 1
+            },
+            {
+                title: 'Deadseat',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Deadseat/images_upscaled.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Deadseat/The%20Deadseat.html',
+                embed: 1
+            },
+            {
+                title: 'A Bite At Freddys',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/New%20Project%20(1).png',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/ABAF.html',
                 embed: 1
             }
         ];
