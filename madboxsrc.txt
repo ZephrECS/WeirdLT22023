@@ -722,6 +722,7 @@
                 <div class="changelog-item">
                     <div class="changelog-date">Feb 5, 2026</div>
                     <div class="changelog-text">+Added Deadseat</div>
+                    <div class="changelog-text">+Added Iron Lung</div>
                     <div class="changelog-text">+Added ABAF</div>
                     <div class="changelog-date">Feb 4, 2026</div>
                     <div class="changelog-text">+Added Version Picker</div>
@@ -1140,6 +1141,12 @@
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/New%20Project%20(1).png',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/ABAF.html',
                 embed: 1
+            },
+            {
+                title: 'Iron Lung',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/MV5BM2JhZDRmNDAtZWE4OC00NmRjLTlmZGUtZmQxNmNkOTk5ZWRhXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/Iron%20Lung.html',
+                embed: 2
             }
         ];
 
