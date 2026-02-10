@@ -140,45 +140,51 @@
             justify-content: center;
         }
 
-        /* Secret Games Button */
-        .secret-button {
+        /* Secret Games Menu Icon */
+        .secret-menu-icon {
             position: absolute;
             bottom: 330px;
             left: 20px;
             right: 20px;
-            padding: 10px 14px;
-            background: linear-gradient(135deg, var(--secret-color) 0%, #aa0066 100%);
-            border: 1px solid var(--secret-color);
+            padding: 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
+            flex-direction: column;
+            gap: 5px;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 0 15px rgba(255, 0, 136, 0.3);
-            animation: secretPulse 2s ease-in-out infinite;
         }
 
-        @keyframes secretPulse {
-            0%, 100% {
-                box-shadow: 0 0 15px rgba(255, 0, 136, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 25px rgba(255, 0, 136, 0.6);
-            }
+        .secret-menu-icon:hover {
+            background: var(--bg-card);
+            border-color: var(--secret-color);
+            box-shadow: 0 0 15px rgba(255, 0, 136, 0.2);
         }
 
-        .secret-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(255, 0, 136, 0.6);
+        .secret-menu-line {
+            width: 24px;
+            height: 3px;
+            background: var(--secret-color);
+            border-radius: 2px;
+            transition: all 0.2s;
         }
 
-        .secret-icon {
-            font-size: 16px;
+        .secret-menu-icon:hover .secret-menu-line {
+            background: var(--secret-color);
+            box-shadow: 0 0 8px rgba(255, 0, 136, 0.5);
+        }
+
+        .secret-menu-icon.unlocked {
+            border-color: var(--secret-color);
+            box-shadow: 0 0 10px rgba(255, 0, 136, 0.3);
+        }
+
+        .secret-menu-icon.unlocked .secret-menu-line {
+            background: var(--secret-color);
         }
 
         .discord-button {
@@ -875,6 +881,162 @@
         .secret-btn-secondary:hover {
             background: var(--bg-card);
         }
+
+        /* Secret Games Popup Window */
+        .secret-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-secondary);
+            border: 2px solid var(--secret-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 600px;
+            box-shadow: 0 0 40px rgba(255, 0, 136, 0.4);
+            z-index: 1003;
+            animation: popupEntry 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes popupEntry {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .secret-popup-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .secret-popup-title {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--secret-color) 0%, #ff44aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .secret-popup-close {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .secret-popup-close:hover {
+            background: var(--bg-card);
+            border-color: var(--secret-color);
+            color: var(--text-primary);
+        }
+
+        .secret-popup-content {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .secret-popup-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .secret-popup-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .secret-popup-content::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .secret-popup-content::-webkit-scrollbar-thumb:hover {
+            background: var(--secret-color);
+        }
+
+        .secret-popup-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .secret-game-item {
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .secret-game-item:hover {
+            border-color: var(--secret-color);
+            background: var(--bg-card);
+            transform: translateX(4px);
+        }
+
+        .secret-game-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: var(--bg-card);
+        }
+
+        .secret-game-info {
+            flex: 1;
+        }
+
+        .secret-game-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .secret-game-badge {
+            display: inline-block;
+            background: var(--secret-color);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .secret-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1002;
+        }
     </style>
 </head>
 <body>
@@ -904,10 +1066,11 @@
             <span>Settings</span>
         </div>
         
-        <button class="secret-button" id="secretBtn">
-            <span class="secret-icon">🔒</span>
-            Secret Games
-        </button>
+        <div class="secret-menu-icon" id="secretMenuIcon">
+            <div class="secret-menu-line"></div>
+            <div class="secret-menu-line"></div>
+            <div class="secret-menu-line"></div>
+        </div>
         
         <button class="discord-button" id="discordBtn">
             <span class="discord-icon">
@@ -943,7 +1106,7 @@
                 <input type="text" id="searchInput" placeholder="Find games, add-ons, and more">
             </div>
             <div class="user-section">
-                <div class="username-display" id="usernameDisplay">Guest</div>
+                <div class="username-display" id="usernameDisplay">sup, loser</div>
             </div>
         </div>
 
@@ -955,18 +1118,6 @@
             
             <div class="game-grid" id="gamesGrid">
                 <!-- Games will be populated by JavaScript -->
-            </div>
-
-            <!-- Secret Games Section -->
-            <div class="hidden" id="secretGamesSection">
-                <div class="section-header">
-                    <h2 class="section-title secret-title">🔒 Secret Games</h2>
-                    <div class="explore-link" style="color: var(--secret-color);">Hidden Collection</div>
-                </div>
-                
-                <div class="game-grid" id="secretGamesGrid">
-                    <!-- Secret games will be populated by JavaScript -->
-                </div>
             </div>
         </div>
     </div>
@@ -1037,6 +1188,22 @@
         </div>
     </div>
 
+    <!-- Secret Games Popup Window -->
+    <div class="secret-popup-overlay hidden" id="secretPopupOverlay"></div>
+    <div class="secret-popup hidden" id="secretPopup">
+        <div class="secret-popup-header">
+            <div class="secret-popup-title">
+                🔒 Secret Games
+            </div>
+            <div class="secret-popup-close" id="closeSecretPopup">✕</div>
+        </div>
+        <div class="secret-popup-content">
+            <div class="secret-popup-grid" id="secretPopupGrid">
+                <!-- Secret games will be populated here -->
+            </div>
+        </div>
+    </div>
+
     <script>
         // ============================================
         // CUSTOM CURSOR FUNCTIONALITY
@@ -1057,7 +1224,7 @@
         });
 
         // Add hover effect for interactive elements
-        const hoverElements = document.querySelectorAll('button, .nav-item, .game-card, input, .favorite-btn, .explore-link');
+        const hoverElements = document.querySelectorAll('button, .nav-item, .game-card, input, .favorite-btn, .explore-link, .secret-menu-icon');
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
                 cursor.classList.add('hovering');
@@ -1085,27 +1252,62 @@
         
         let secretUnlocked = false;
         
+        // ============================================
+        // SECRET GAMES - ADD YOUR SECRET GAMES HERE!
+        // ============================================
+        const secretGames = [
+            {
+                title: 'Five Nights At Epsteins',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/images.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/gncrack.html'
+            },
+            {
+                title: 'Five Nights At Epsteins',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/images.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/gncrack.html'
+            }
+
+        ];
+        
         // Check if user has already unlocked secrets
         function checkSecretAccess() {
             const unlocked = localStorage.getItem('gamerz-secret-unlocked');
             if (unlocked === 'true') {
                 secretUnlocked = true;
-                document.getElementById('secretGamesSection').classList.remove('hidden');
-                document.getElementById('secretBtn').innerHTML = '<span class="secret-icon">🔓</span>Secret Games';
+                document.getElementById('secretMenuIcon').classList.add('unlocked');
+                renderSecretPopupGames();
             }
         }
         
-        // Secret button click
-        document.getElementById('secretBtn').addEventListener('click', () => {
+        // Secret menu icon click
+        document.getElementById('secretMenuIcon').addEventListener('click', () => {
             if (secretUnlocked) {
-                // Already unlocked, scroll to secret section
-                document.getElementById('secretGamesSection').scrollIntoView({ behavior: 'smooth' });
+                // Show popup window
+                showSecretPopup();
             } else {
                 // Show password prompt
                 document.getElementById('secretModal').classList.remove('hidden');
                 document.getElementById('secretPasswordInput').focus();
             }
         });
+        
+        // Show secret popup window
+        function showSecretPopup() {
+            document.getElementById('secretPopupOverlay').classList.remove('hidden');
+            document.getElementById('secretPopup').classList.remove('hidden');
+        }
+        
+        // Hide secret popup window
+        function hideSecretPopup() {
+            document.getElementById('secretPopupOverlay').classList.add('hidden');
+            document.getElementById('secretPopup').classList.add('hidden');
+        }
+        
+        // Close popup button
+        document.getElementById('closeSecretPopup').addEventListener('click', hideSecretPopup);
+        
+        // Close popup when clicking overlay
+        document.getElementById('secretPopupOverlay').addEventListener('click', hideSecretPopup);
         
         // Cancel secret modal
         document.getElementById('cancelSecretBtn').addEventListener('click', () => {
@@ -1138,8 +1340,7 @@
                 localStorage.setItem('gamerz-secret-unlocked', 'true');
                 
                 // Update UI
-                document.getElementById('secretGamesSection').classList.remove('hidden');
-                document.getElementById('secretBtn').innerHTML = '<span class="secret-icon">🔓</span>Secret Games';
+                document.getElementById('secretMenuIcon').classList.add('unlocked');
                 document.getElementById('secretModal').classList.add('hidden');
                 
                 // Clear input
@@ -1147,9 +1348,10 @@
                 errorMsg.textContent = '';
                 input.classList.remove('wrong');
                 
-                // Scroll to secret games
+                // Render secret games and show popup
+                renderSecretPopupGames();
                 setTimeout(() => {
-                    document.getElementById('secretGamesSection').scrollIntoView({ behavior: 'smooth' });
+                    showSecretPopup();
                 }, 300);
             } else {
                 // Wrong password
@@ -1459,17 +1661,28 @@
             }
         ];
 
-        // ============================================
-        // SECRET GAMES - ADD YOUR SECRET GAMES HERE!
-        // ============================================
-        const secretGames = [
-
-            {
-                title: 'Hidden Gem 2',
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/images.jpg',
-                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/gncrack.html'
-            }
-        ];
+        // Render secret games in popup
+        function renderSecretPopupGames() {
+            const grid = document.getElementById('secretPopupGrid');
+            grid.innerHTML = '';
+            
+            secretGames.forEach(game => {
+                const item = document.createElement('div');
+                item.className = 'secret-game-item';
+                item.innerHTML = `
+                    <img src="${game.image}" alt="${game.title}" class="secret-game-image">
+                    <div class="secret-game-info">
+                        <div class="secret-game-title">${game.title}</div>
+                        <span class="secret-game-badge">SECRET</span>
+                    </div>
+                `;
+                item.onclick = () => {
+                    loadGame(game.gameUrl);
+                    hideSecretPopup();
+                };
+                grid.appendChild(item);
+            });
+        }
 
         // ============================================
         // FAVORITES SYSTEM
@@ -1567,34 +1780,22 @@
             });
             
             sortedGames.forEach(game => {
-                const card = createGameCard(game, false);
+                const card = createGameCard(game);
                 gamesGrid.appendChild(card);
             });
-            
-            // Render secret games if unlocked
-            if (secretUnlocked) {
-                const secretGrid = document.getElementById('secretGamesGrid');
-                secretGrid.innerHTML = '';
-                
-                secretGames.forEach(game => {
-                    const card = createGameCard(game, true);
-                    secretGrid.appendChild(card);
-                });
-            }
             
             updateHoverElements();
         }
 
-        function createGameCard(game, isSecret) {
+        function createGameCard(game) {
             const card = document.createElement('div');
             const embedLevel = game.embed || 1;
             const favorited = isFavorited(game.title);
             const hasVersions = game.versions && game.versions.length > 0;
             
             let cardClasses = 'game-card';
-            if (embedLevel === 2 && !isSecret) cardClasses += ' featured';
+            if (embedLevel === 2) cardClasses += ' featured';
             if (hasVersions) cardClasses += ' multi-version';
-            if (isSecret) cardClasses += ' secret';
             
             card.className = cardClasses;
             card.setAttribute('data-title', game.title.toLowerCase());
