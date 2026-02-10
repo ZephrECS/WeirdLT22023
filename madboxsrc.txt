@@ -15,6 +15,7 @@
             --text-secondary: #888;
             --border-color: #1a1a1a;
             --accent-color: #00ff88;
+            --secret-color: #ff0088;
         }
 
         [data-theme="light"] {
@@ -26,6 +27,7 @@
             --text-secondary: #666;
             --border-color: #e0e0e0;
             --accent-color: #00cc6a;
+            --secret-color: #cc0066;
         }
 
         * {
@@ -136,6 +138,47 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Secret Games Button */
+        .secret-button {
+            position: absolute;
+            bottom: 330px;
+            left: 20px;
+            right: 20px;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, var(--secret-color) 0%, #aa0066 100%);
+            border: 1px solid var(--secret-color);
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(255, 0, 136, 0.3);
+            animation: secretPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes secretPulse {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(255, 0, 136, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(255, 0, 136, 0.6);
+            }
+        }
+
+        .secret-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 0, 136, 0.6);
+        }
+
+        .secret-icon {
+            font-size: 16px;
         }
 
         .discord-button {
@@ -317,6 +360,13 @@
             color: var(--text-primary);
         }
 
+        .section-title.secret-title {
+            background: linear-gradient(135deg, var(--secret-color) 0%, #ff44aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .explore-link {
             color: var(--accent-color);
             font-size: 14px;
@@ -381,6 +431,26 @@
             top: 8px;
             left: 8px;
             background: #ff00ff;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        /* Secret game styling */
+        .game-card.secret {
+            border: 2px solid var(--secret-color);
+            box-shadow: 0 0 20px rgba(255, 0, 136, 0.3);
+        }
+
+        .game-card.secret::before {
+            content: '🔒 SECRET';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--secret-color);
             color: #fff;
             padding: 4px 8px;
             border-radius: 4px;
@@ -678,6 +748,133 @@
         .version-grid::-webkit-scrollbar-thumb:hover {
             background: #ff00ff;
         }
+
+        /* Secret Password Modal */
+        .secret-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+        }
+
+        .secret-modal-content {
+            background: var(--bg-secondary);
+            padding: 32px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            border: 2px solid var(--secret-color);
+            box-shadow: 0 0 40px rgba(255, 0, 136, 0.5);
+            animation: secretModalEntry 0.3s ease;
+        }
+
+        @keyframes secretModalEntry {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .secret-modal-header {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .secret-modal-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .secret-password-input {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 16px;
+            outline: none;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .secret-password-input:focus {
+            border-color: var(--secret-color);
+            box-shadow: 0 0 15px rgba(255, 0, 136, 0.3);
+        }
+
+        .secret-password-input.wrong {
+            border-color: #ff3333;
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .secret-error-message {
+            color: #ff3333;
+            font-size: 13px;
+            margin-bottom: 16px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .secret-modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .secret-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .secret-btn-primary {
+            background: linear-gradient(135deg, var(--secret-color) 0%, #aa0066 100%);
+            color: #ffffff;
+        }
+
+        .secret-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 0, 136, 0.4);
+        }
+
+        .secret-btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .secret-btn-secondary:hover {
+            background: var(--bg-card);
+        }
     </style>
 </head>
 <body>
@@ -707,6 +904,11 @@
             <span>Settings</span>
         </div>
         
+        <button class="secret-button" id="secretBtn">
+            <span class="secret-icon">🔒</span>
+            Secret Games
+        </button>
+        
         <button class="discord-button" id="discordBtn">
             <span class="discord-icon">
                 <svg viewBox="0 0 127.14 96.36" fill="currentColor">
@@ -720,6 +922,8 @@
             <div class="changelog-title">Updates</div>
             <div class="changelog-content">
                 <div class="changelog-item">
+                    <div class="changelog-date">Feb 10, 2026</div>
+                    <div class="changelog-text">+Added Secret Games</div>
                     <div class="changelog-date">Feb 5, 2026</div>
                     <div class="changelog-text">+Added Deadseat</div>
                     <div class="changelog-text">+Added Iron Lung</div>
@@ -751,6 +955,18 @@
             
             <div class="game-grid" id="gamesGrid">
                 <!-- Games will be populated by JavaScript -->
+            </div>
+
+            <!-- Secret Games Section -->
+            <div class="hidden" id="secretGamesSection">
+                <div class="section-header">
+                    <h2 class="section-title secret-title">🔒 Secret Games</h2>
+                    <div class="explore-link" style="color: var(--secret-color);">Hidden Collection</div>
+                </div>
+                
+                <div class="game-grid" id="secretGamesGrid">
+                    <!-- Secret games will be populated by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
@@ -796,6 +1012,31 @@
         </div>
     </div>
 
+    <!-- Secret Password Modal -->
+    <div class="secret-modal hidden" id="secretModal">
+        <div class="secret-modal-content">
+            <h2 class="secret-modal-header">
+                🔒 Secret Access
+            </h2>
+            <p class="secret-modal-subtitle">Enter the password to unlock the secret games collection</p>
+            
+            <input 
+                type="password" 
+                class="secret-password-input" 
+                id="secretPasswordInput" 
+                placeholder="Enter password"
+                maxlength="30"
+            >
+            
+            <div class="secret-error-message" id="secretErrorMessage"></div>
+
+            <div class="secret-modal-actions">
+                <button class="secret-btn secret-btn-primary" id="unlockSecretBtn">Unlock</button>
+                <button class="secret-btn secret-btn-secondary" id="cancelSecretBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ============================================
         // CUSTOM CURSOR FUNCTIONALITY
@@ -827,7 +1068,7 @@
         });
 
         // ============================================
-        // DISCORD BUTTON - CUSTOMIZE YOUR DISCORD URL HERE!
+        // DISCORD BUTTON
         // ============================================
         const DISCORD_INVITE_URL = 'https://discord.gg/ymWa5nkk7g';
         
@@ -836,21 +1077,111 @@
         });
         
         // ============================================
-        // SETTINGS SYSTEM - Saves to localStorage
+        // SECRET GAMES SYSTEM
         // ============================================
         
-        // Load saved settings on page load
+        // CHANGE THIS PASSWORD TO WHATEVER YOU WANT!
+        const SECRET_PASSWORD = 'madbox2026';
+        
+        let secretUnlocked = false;
+        
+        // Check if user has already unlocked secrets
+        function checkSecretAccess() {
+            const unlocked = localStorage.getItem('gamerz-secret-unlocked');
+            if (unlocked === 'true') {
+                secretUnlocked = true;
+                document.getElementById('secretGamesSection').classList.remove('hidden');
+                document.getElementById('secretBtn').innerHTML = '<span class="secret-icon">🔓</span>Secret Games';
+            }
+        }
+        
+        // Secret button click
+        document.getElementById('secretBtn').addEventListener('click', () => {
+            if (secretUnlocked) {
+                // Already unlocked, scroll to secret section
+                document.getElementById('secretGamesSection').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Show password prompt
+                document.getElementById('secretModal').classList.remove('hidden');
+                document.getElementById('secretPasswordInput').focus();
+            }
+        });
+        
+        // Cancel secret modal
+        document.getElementById('cancelSecretBtn').addEventListener('click', () => {
+            document.getElementById('secretModal').classList.add('hidden');
+            document.getElementById('secretPasswordInput').value = '';
+            document.getElementById('secretErrorMessage').textContent = '';
+            document.getElementById('secretPasswordInput').classList.remove('wrong');
+        });
+        
+        // Unlock button
+        document.getElementById('unlockSecretBtn').addEventListener('click', () => {
+            attemptUnlock();
+        });
+        
+        // Allow Enter key to unlock
+        document.getElementById('secretPasswordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                attemptUnlock();
+            }
+        });
+        
+        function attemptUnlock() {
+            const input = document.getElementById('secretPasswordInput');
+            const errorMsg = document.getElementById('secretErrorMessage');
+            const password = input.value;
+            
+            if (password === SECRET_PASSWORD) {
+                // Correct password!
+                secretUnlocked = true;
+                localStorage.setItem('gamerz-secret-unlocked', 'true');
+                
+                // Update UI
+                document.getElementById('secretGamesSection').classList.remove('hidden');
+                document.getElementById('secretBtn').innerHTML = '<span class="secret-icon">🔓</span>Secret Games';
+                document.getElementById('secretModal').classList.add('hidden');
+                
+                // Clear input
+                input.value = '';
+                errorMsg.textContent = '';
+                input.classList.remove('wrong');
+                
+                // Scroll to secret games
+                setTimeout(() => {
+                    document.getElementById('secretGamesSection').scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            } else {
+                // Wrong password
+                input.classList.add('wrong');
+                errorMsg.textContent = '❌ Incorrect password. Try again.';
+                
+                setTimeout(() => {
+                    input.classList.remove('wrong');
+                }, 300);
+            }
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('secretModal').addEventListener('click', (e) => {
+            if (e.target.id === 'secretModal') {
+                document.getElementById('secretModal').classList.add('hidden');
+                document.getElementById('secretPasswordInput').value = '';
+                document.getElementById('secretErrorMessage').textContent = '';
+                document.getElementById('secretPasswordInput').classList.remove('wrong');
+            }
+        });
+        
+        // ============================================
+        // SETTINGS SYSTEM
+        // ============================================
+        
         function loadSettings() {
             const savedTheme = localStorage.getItem('gamerz-theme') || 'dark';
             const savedUsername = localStorage.getItem('gamerz-username') || 'Guest';
             
-            // Apply theme
             document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            // Update username display
             document.getElementById('usernameDisplay').textContent = savedUsername;
-            
-            // Update theme buttons in modal
             updateThemeButtons(savedTheme);
         }
 
@@ -867,10 +1198,8 @@
             }
         }
 
-        // Settings Modal Controls
         let currentTheme = localStorage.getItem('gamerz-theme') || 'dark';
 
-        // Open settings modal
         document.getElementById('settingsBtn').addEventListener('click', () => {
             const settingsModal = document.getElementById('settingsModal');
             const usernameInput = document.getElementById('usernameInput');
@@ -881,22 +1210,17 @@
             updateThemeButtons(currentTheme);
         });
 
-        // Close modal on cancel
         document.getElementById('cancelSettingsBtn').addEventListener('click', (e) => {
-            console.log('Cancel clicked');
             e.stopPropagation();
             document.getElementById('settingsModal').classList.add('hidden');
         });
 
-        // Close modal when clicking outside
         document.getElementById('settingsModal').addEventListener('click', (e) => {
-            console.log('Modal clicked', e.target.id);
             if (e.target.id === 'settingsModal') {
                 document.getElementById('settingsModal').classList.add('hidden');
             }
         });
 
-        // Theme button clicks
         document.getElementById('darkThemeBtn').addEventListener('click', (e) => {
             e.stopPropagation();
             currentTheme = 'dark';
@@ -909,43 +1233,28 @@
             updateThemeButtons('light');
         });
 
-        // Save settings
         document.getElementById('saveSettingsBtn').addEventListener('click', (e) => {
-            console.log('Save clicked');
             e.stopPropagation();
             const usernameInput = document.getElementById('usernameInput');
             const username = usernameInput.value.trim() || 'Guest';
             
-            // Save to localStorage
             localStorage.setItem('gamerz-username', username);
             localStorage.setItem('gamerz-theme', currentTheme);
             
-            // Apply changes
             document.getElementById('usernameDisplay').textContent = username;
             document.documentElement.setAttribute('data-theme', currentTheme);
             
-            // Close modal
             document.getElementById('settingsModal').classList.add('hidden');
         });
 
-        // Load settings on page load
         loadSettings();
+        checkSecretAccess();
 
         // ============================================
-        // EASY SETUP: ADD YOUR GAMES HERE!
-        // Just copy one of the game objects below and add your own info
-        // 
-        // EMBED PRIORITY SYSTEM:
-        // - embed: 2 = Featured (shows at the very top with special styling)
-        // - embed: 1 = Normal (shows with all other games)
-        // - No embed property = Normal (same as 1)
-        //
-        // MULTI-VERSION GAMES:
-        // - Add "versions" array with name, description, and gameUrl
-        // - Don't add gameUrl at the top level for multi-version games
+        // GAME LIBRARY
         // ============================================
+        
         const games = [
-            // Example: Multi-version game
             {
                 title: 'Minecraft',
                 image: 'https://github.com/ZephrECS/EagerIGG1.12.html/blob/main/MC.jpg?raw=true',
@@ -1036,7 +1345,7 @@
             },
             {
                 title: 'Hotline Miami',
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyMWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyYWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg',
                 gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html',
                 embed: 1
             },
@@ -1151,7 +1460,19 @@
         ];
 
         // ============================================
-        // FAVORITES SYSTEM - Saves to localStorage
+        // SECRET GAMES - ADD YOUR SECRET GAMES HERE!
+        // ============================================
+        const secretGames = [
+
+            {
+                title: 'Hidden Gem 2',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/images.jpg',
+                gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/gncrack.html'
+            }
+        ];
+
+        // ============================================
+        // FAVORITES SYSTEM
         // ============================================
         
         function getFavorites() {
@@ -1221,7 +1542,7 @@
         });
 
         // ============================================
-        // RENDER GAMES - Now with multi-version support!
+        // RENDER GAMES
         // ============================================
         
         function renderGames() {
@@ -1246,47 +1567,68 @@
             });
             
             sortedGames.forEach(game => {
-                const card = document.createElement('div');
-                const embedLevel = game.embed || 1;
-                const favorited = isFavorited(game.title);
-                const hasVersions = game.versions && game.versions.length > 0;
-                
-                let cardClasses = 'game-card';
-                if (embedLevel === 2) cardClasses += ' featured';
-                if (hasVersions) cardClasses += ' multi-version';
-                
-                card.className = cardClasses;
-                card.setAttribute('data-title', game.title.toLowerCase());
-                
-                card.innerHTML = `
-                    <div class="game-card-image">
-                        <img src="${game.image}" alt="${game.title}">
-                    </div>
-                    <div class="game-card-info">
-                        <div class="game-card-title">${game.title}</div>
-                        <div class="favorite-btn ${favorited ? 'favorited' : ''}" data-game="${game.title}">
-                            ${favorited ? '⭐' : '☆'}
-                        </div>
-                    </div>
-                `;
-                
-                const cardImage = card.querySelector('.game-card-image');
-                
-                if (hasVersions) {
-                    cardImage.onclick = () => showVersionPicker(game);
-                } else {
-                    cardImage.onclick = () => loadGame(game.gameUrl);
-                }
-                
-                const favBtn = card.querySelector('.favorite-btn');
-                favBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    toggleFavorite(game.title);
-                };
-                
+                const card = createGameCard(game, false);
                 gamesGrid.appendChild(card);
             });
             
+            // Render secret games if unlocked
+            if (secretUnlocked) {
+                const secretGrid = document.getElementById('secretGamesGrid');
+                secretGrid.innerHTML = '';
+                
+                secretGames.forEach(game => {
+                    const card = createGameCard(game, true);
+                    secretGrid.appendChild(card);
+                });
+            }
+            
+            updateHoverElements();
+        }
+
+        function createGameCard(game, isSecret) {
+            const card = document.createElement('div');
+            const embedLevel = game.embed || 1;
+            const favorited = isFavorited(game.title);
+            const hasVersions = game.versions && game.versions.length > 0;
+            
+            let cardClasses = 'game-card';
+            if (embedLevel === 2 && !isSecret) cardClasses += ' featured';
+            if (hasVersions) cardClasses += ' multi-version';
+            if (isSecret) cardClasses += ' secret';
+            
+            card.className = cardClasses;
+            card.setAttribute('data-title', game.title.toLowerCase());
+            
+            card.innerHTML = `
+                <div class="game-card-image">
+                    <img src="${game.image}" alt="${game.title}">
+                </div>
+                <div class="game-card-info">
+                    <div class="game-card-title">${game.title}</div>
+                    <div class="favorite-btn ${favorited ? 'favorited' : ''}" data-game="${game.title}">
+                        ${favorited ? '⭐' : '☆'}
+                    </div>
+                </div>
+            `;
+            
+            const cardImage = card.querySelector('.game-card-image');
+            
+            if (hasVersions) {
+                cardImage.onclick = () => showVersionPicker(game);
+            } else {
+                cardImage.onclick = () => loadGame(game.gameUrl);
+            }
+            
+            const favBtn = card.querySelector('.favorite-btn');
+            favBtn.onclick = (e) => {
+                e.stopPropagation();
+                toggleFavorite(game.title);
+            };
+            
+            return card;
+        }
+
+        function updateHoverElements() {
             const newGameCards = document.querySelectorAll('.game-card');
             newGameCards.forEach(element => {
                 element.addEventListener('mouseenter', () => {
@@ -1301,7 +1643,7 @@
         renderGames();
 
         // ============================================
-        // CODE BELOW - You don't need to edit this!
+        // LOAD GAME FUNCTION
         // ============================================
 
         async function loadGame(gameUrl) {
@@ -1322,6 +1664,10 @@
                 alert('Error loading game: ' + error.message);
             }
         }
+
+        // ============================================
+        // SEARCH FUNCTIONALITY
+        // ============================================
 
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
