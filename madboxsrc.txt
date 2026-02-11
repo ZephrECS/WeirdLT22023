@@ -526,6 +526,67 @@
             display: none !important;
         }
 
+        /* Padlet Embed Section */
+        .padlet-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .padlet-embed {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            background: var(--bg-card);
+            margin-bottom: 40px;
+        }
+
+        .padlet-embed iframe {
+            width: 100%;
+            height: 608px;
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+
+        .padlet-attribution {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin: 0;
+            padding: 8px 8px 8px 0;
+        }
+
+        .padlet-attribution a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-grow: 0;
+            margin: 0;
+            border: none;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .padlet-attribution span {
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1;
+        }
+
+        .padlet-attribution img {
+            padding: 0;
+            margin: 0;
+            background: 0 0;
+            border: none;
+            box-shadow: none;
+            display: block;
+        }
+
         /* Settings Modal */
         .settings-modal {
             position: fixed;
@@ -1119,6 +1180,29 @@
             <div class="game-grid" id="gamesGrid">
                 <!-- Games will be populated by JavaScript -->
             </div>
+
+            <!-- Padlet Embed Section -->
+            <div class="padlet-section">
+                <div class="padlet-embed">
+                    <p style="padding:0;margin:0">
+                        <iframe 
+                            src="https://padlet.com/embed/92orf2emee3yax8n" 
+                            frameborder="0" 
+                            allow="camera;microphone;geolocation;display-capture;clipboard-write" 
+                            style="width:100%;height:608px;display:block;padding:0;margin:0">
+                        </iframe>
+                    </p>
+                    <div class="padlet-attribution">
+                        <a href="https://padlet.com?ref=embed" target="_blank">
+                            <span aria-hidden>Made with</span>
+                            <img 
+                                src="https://padlet.net/emails/padlet_email_logo_2026_text-dark-200.png" 
+                                height="12" 
+                                alt="Made with Padlet">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1248,7 +1332,7 @@
         // ============================================
         
         // CHANGE THIS PASSWORD TO WHATEVER YOU WANT!
-        const SECRET_PASSWORD = 'madbox2026';
+        const SECRET_PASSWORD = 'fluxusnew';
         
         let secretUnlocked = false;
         
