@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: #fff;
+            animation: pulse 1.5s ease-in-out infinite;
+            text-shadow: 0 0 40px rgba(255,255,255,0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Profile Selection Screen */
+        .profile-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .profile-screen.hidden {
+            display: none;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .profile-logo {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .profile-title {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .profiles-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px;
+        }
+
+        .profile-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            margin-bottom: 20px;
+            border: 4px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+            position: relative;
+            overflow: visible;
+        }
+
+        .letter-f {
+            font-size: 120px;
+            font-weight: 900;
+            color: #000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .profile-card:hover .profile-avatar {
+            border-color: #fff;
+            box-shadow: 0 0 60px rgba(255,255,255,0.5);
+            transform: translateY(-10px);
+        }
+
+        .profile-card:hover .letter-f {
+            transform: scale(1.1);
+        }
+
+        /* Animation classes */
+        .profile-screen.animating {
+            pointer-events: none;
+        }
+
+        .profile-screen.animating::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            z-index: -1;
+            animation: fadeBackground 1.2s ease forwards;
+        }
+
+        .profile-header.fade-header {
+            animation: fadeOut 0.6s ease forwards;
+        }
+
+        .profile-name.fade-name {
+            animation: fadeOut 0.6s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeBackground {
+            0% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .profile-avatar.zoom-animation {
+            animation: zoomProfile 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            z-index: 9999;
+        }
+
+        .letter-f.grow-animation {
+            animation: growF 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes zoomProfile {
+            0% {
+                transform: translateY(-10px) scale(1);
+                border-radius: 12px;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.2);
+                border-radius: 12px;
+            }
+            70% {
+                transform: translateY(-10px) scale(5);
+                border-radius: 50%;
+            }
+            100% {
+                transform: translateY(-10px) scale(50);
+                border-radius: 50%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes growF {
+            0% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            30% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            60% {
+                transform: scale(8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(40);
+                opacity: 0;
+            }
+        }
+
+        .profile-screen.fade-out {
+            animation: fadeOutScreen 0.3s ease forwards;
+            animation-delay: 1.1s;
+        }
+
+        @keyframes fadeOutScreen {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 18px;
+            color: #808080;
+            transition: color 0.3s ease;
+        }
+
+        .profile-card:hover .profile-name {
+            color: #fff;
+        }
+
+        /* Main App */
+        .main-app {
+            display: none;
+            min-height: 100vh;
+            opacity: 0;
+        }
+
+        .main-app.active {
+            display: block;
+            animation: fadeInApp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInApp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 60px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: background 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .navbar.scrolled {
+            background: #000;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .nav-logo {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            cursor: pointer;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Changelog Button */
+        .changelog-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .changelog-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+            50%, 100% {
+                left: 150%;
+            }
+        }
+
+        .changelog-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+        }
+
+        .changelog-btn .badge {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            margin-left: 8px;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Changelog Modal */
+        .changelog-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            animation: fadeInModal 0.3s ease forwards;
+        }
+
+        .changelog-modal.closing {
+            animation: fadeOutModal 0.3s ease forwards;
+        }
+
+        .changelog-content {
+            background: #000;
+            padding: 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: scale(0.9) translateY(20px);
+            animation: slideUpScale 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .changelog-modal.closing .changelog-content {
+            animation: slideDownScale 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .changelog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .changelog-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .changelog-close {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .changelog-close:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            color: #fff;
+        }
+
+        .changelog-list {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .changelog-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .changelog-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .changelog-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .changelog-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .changelog-entry {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .changelog-entry:hover {
+            background: rgba(255,255,255,0.05);
+            border-left-color: #fff;
+            transform: translateX(4px);
+        }
+
+        .changelog-entry.new {
+            border-left-color: #00ff88;
+            background: rgba(0,255,136,0.05);
+        }
+
+        .changelog-date {
+            font-size: 12px;
+            color: #00ff88;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .changelog-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .changelog-item {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .changelog-item::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .changelog-item.added::before {
+            content: '+';
+            color: #00ff88;
+        }
+
+        .changelog-item.fixed::before {
+            content: '✓';
+            color: #00aaff;
+        }
+
+        .changelog-item.removed::before {
+            content: '-';
+            color: #ff4444;
+        }
+
+        .search-box {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+            width: 250px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: #fff;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 900;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }
+
+        /* Flash animation for profile icon */
+        body.flashing::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            z-index: 10000;
+            animation: flashEffect 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes flashEffect {
+            0% {
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Content */
+        .content {
+            padding-top: 100px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-background.active {
+            opacity: 0.4;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(8px) brightness(0.6);
+            transform: scale(1.2) translateX(0);
+            animation: slideRightToLeft 25s ease-in-out infinite;
+        }
+
+        @keyframes slideRightToLeft {
+            0% {
+                transform: scale(1.2) translateX(10%);
+            }
+            50% {
+                transform: scale(1.3) translateX(-10%);
+            }
+            100% {
+                transform: scale(1.2) translateX(10%);
+            }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e5e5e5;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .hero-description.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255,255,255,0.8);
+        }
+
+        .btn-secondary {
+            background: rgba(109,109,110,0.7);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(109,109,110,0.4);
+        }
+
+        /* Version Picker Modal - Sleek Popup */
+        .version-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            animation: fadeInModal 0.3s ease forwards;
+        }
+
+        .version-modal.closing {
+            animation: fadeOutModal 0.3s ease forwards;
+        }
+
+        @keyframes fadeInModal {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutModal {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .version-content {
+            background: #000;
+            padding: 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: scale(0.9) translateY(20px);
+            animation: slideUpScale 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .version-modal.closing .version-content {
+            animation: slideDownScale 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slideUpScale {
+            to {
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideDownScale {
+            to {
+                transform: scale(0.9) translateY(20px);
+                opacity: 0;
+            }
+        }
+
+        .version-header {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .version-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
+
+        .version-grid {
+            display: grid;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 24px;
+        }
+
+        .version-option {
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .version-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .version-option:hover::before {
+            left: 100%;
+        }
+
+        .version-option:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .version-option:active {
+            transform: translateY(-2px) scale(0.98);
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .version-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .version-description {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .version-close {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .version-close:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .version-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .version-grid::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .version-grid::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .version-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Game Grid Layout - Unique Design */
+        .game-section {
+            padding: 0 60px;
+            margin-bottom: 80px;
+        }
+
+        /* Bento Box Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .bento-item {
+            background: #111;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            aspect-ratio: 16/9;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+        }
+
+        .bento-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .bento-item:hover .bento-image {
+            transform: scale(1.1);
+        }
+
+        .bento-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bento-item:hover .bento-overlay {
+            transform: translateY(0);
+        }
+
+        .bento-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .bento-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 4px 10px;
+            background: #fff;
+            color: #000;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 60px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 20px 20px;
+            }
+
+            .hero {
+                height: 60vh;
+                padding: 0 20px;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .game-section {
+                padding: 0 20px;
+            }
+
+            .bento-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .profiles-container {
+                gap: 20px;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">FLUXUS</div>
+    </div>
+
+    <!-- Profile Selection Screen -->
+    <div class="profile-screen" id="profileScreen">
+        <div class="profile-header">
+            <div class="profile-logo">FLUXUS</div>
+            <h1 class="profile-title">Ready to play?</h1>
+        </div>
+        <div class="profiles-container">
+            <div class="profile-card" id="fluxusProfile">
+                <div class="profile-avatar">
+                    <div class="letter-f">F</div>
+                </div>
+                <div class="profile-name">Fluxus Games</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="main-app" id="mainApp">
+        <!-- Navigation Bar -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-logo">FLUXUS</div>
+            <div class="nav-right">
+                <input type="text" class="search-box" id="searchBox" placeholder="Search games...">
+                <button class="changelog-btn" id="changelogBtn">
+                    What's New
+                    <span class="badge"></span>
+                </button>
+                <div class="profile-icon" id="profileIcon" style="font-size: 20px; font-weight: 900;">F</div>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-background active" id="heroBackground">
+                    <img id="heroImage" src="" alt="Featured Game">
+                </div>
+                <div class="hero-content">
+                    <h1 class="hero-title visible" id="heroTitle">Unblocked Gaming</h1>
+                    <p class="hero-description visible" id="heroDescription">
+                        Play the best collection of unblocked games. From classics to new releases, 
+                        all accessible anywhere, anytime.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="playFeatured">
+                            ▶ Play Now
+                        </button>
+                        <button class="btn btn-secondary">
+                            ℹ More Info
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Games - Single Grid -->
+            <div class="game-section">
+                <div class="bento-grid" id="allGamesGrid"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-logo">FLUXUS</div>
+                <p>Your gateway to unblocked gaming</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game Library - Easy to add/modify games
+        // ============================================
+        // CHANGELOG SYSTEM - EASY TO ADD NEW ENTRIES!
+        // ============================================
+        // Add your changelog entries here - newest first!
+        const changelogs = [
+            {
+                date: 'Feb 13, 2026',
+                isNew: true, // Set to true to highlight as new
+                items: [
+                    { text: 'Added sleek changelog feature', type: 'added' },
+                    { text: 'Improved version picker animations', type: 'fixed' },
+                    { text: 'Added secret games system', type: 'added' }
+                ]
+            },
+            {
+                date: 'Feb 12, 2026',
+                items: [
+                    { text: 'Dynamic hero background with smooth transitions', type: 'added' },
+                    { text: 'Profile selection animation improvements', type: 'fixed' },
+                    { text: 'Fixed Minecraft versions', type: 'fixed' }
+                ]
+            },
+            {
+                date: 'Feb 10, 2026',
+                items: [
+                    { text: 'Black and white theme redesign', type: 'added' },
+                    { text: 'Removed category sections for cleaner layout', type: 'removed' },
+                    { text: 'Bento grid layout implementation', type: 'added' }
+                ]
+            }
+        ];
+
+        // ============================================
+        // SECRET GAMES - HIDDEN SEARCH TERMS
+        // ============================================
+        // These games only appear when you search for the EXACT search term
+        // Add your secret games here with their search triggers
+        const secretGames = [
+            {
+                title: 'Five Nights At Epsteins',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/images.jpg',
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/gncrack.html',
+                searchTrigger: 'roblox',
+                description: 'A forbidden horror game that only the brave can find.',
+                hidden: true
+            },
+            {
+                title: 'Secret Test Game',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg',
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro',
+                searchTrigger: 'konami', // Type exactly 'konami' to reveal
+                description: 'A secret game that only appears when you know the code.',
+                hidden: true
+            },
+            {
+                title: 'Hidden Gem',
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg',
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt',
+                searchTrigger: 'secret', // Type exactly 'secret' to reveal
+                description: 'Another hidden treasure waiting to be discovered.',
+                hidden: true
+            }
+        ];
+
+        // ============================================
+        // GAME LIBRARY
+        // ============================================
+        
+        const games = [
+            // Featured
+            { 
+                title: 'Minecraft', 
+                image: 'https://github.com/ZephrECS/EagerIGG1.12.html/blob/main/MC.jpg?raw=true', 
+                category: 'featured', 
+                tag: 'POPULAR',
+                description: 'Build, explore, and survive in an infinite blocky world. Mine resources, craft tools, and create anything you can imagine.',
+                versions: [
+                    {
+                        name: 'Minecraft 1.5.2',
+                        description: 'Runs better than other versions.',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/EaglercraftMODDED/cleaglercraft152.html'
+                    },
+                    {
+                        name: 'Minecraft 1.8.8',
+                        description: 'Classic PvP version with great performance',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/EaglercraftMODDED/1.9eag.txt'
+                    }
+                ]
+            },
+            { 
+                title: 'ULTRAKILL', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt', 
+                category: 'featured', 
+                tag: 'NEW',
+                description: 'A fast-paced ultraviolent retro FPS. Descend through the layers of Hell in this stylish tribute to classic shooters.'
+            },
+            { 
+                title: 'Balatro', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro', 
+                category: 'featured', 
+                tag: 'TRENDING',
+                description: 'A poker-inspired roguelike deck builder. Build ridiculous synergies and beat the blinds in this addictive card game.'
+            },
+            { 
+                title: 'Hollow Knight', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/MV5BMGIyYmJmZDgtOWQ1Ny00NDFiLTk2OTgtM2Q2ZWQ4OWIxZjg3XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/HollowGME.txt', 
+                category: 'featured', 
+                tag: 'TOP 10',
+                description: 'Explore a vast ruined kingdom of insects and heroes. Discover ancient secrets and battle tainted creatures in this challenging metroidvania.'
+            },
+
+            // Action
+            { 
+                title: 'Buckshot Roulette', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/logo_Buckshot_Roulette.png', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/Buckshot%20Roulette.txt', 
+                category: 'action',
+                description: 'A twisted game of chance with a shotgun. Make life-or-death decisions in this intense Russian roulette thriller.'
+            },
+            { 
+                title: 'People Playground', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/4bb51ff19e082e45d9187564ea12f3c01d520c683db7da74b10a89efd254ee7c.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/People%20Playground.txt', 
+                category: 'action',
+                description: 'A ragdoll physics sandbox. Experiment with various weapons, tools, and environments in creative and destructive ways.'
+            },
+            { 
+                title: 'Hotline Miami', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyYWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html', 
+                category: 'action',
+                description: 'A brutal top-down action game set in 1989 Miami. Clear rooms of enemies in this neon-soaked ultraviolent rampage.'
+            },
+            { 
+                title: 'Half-Life', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/halflife_coverart.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt', 
+                category: 'action',
+                description: 'A revolutionary FPS that changed gaming forever. Fight through Black Mesa as Gordon Freeman in this legendary adventure.'
+            },
+            { 
+                title: 'Vice City', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/Vice-city-cover.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/ViceCity.html', 
+                category: 'action',
+                description: 'Return to the 1980s in this crime-filled open world. Build your empire in the neon paradise of Vice City.'
+            },
+            { 
+                title: 'COD: Zombies', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/TIARP5371__87728.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt', 
+                category: 'action',
+                description: 'Survive endless waves of the undead. Team up and fight off zombies in this classic arcade shooter experience.'
+            },
+            { 
+                title: 'Bow Masters', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/BowMasters/81H-w-fHMWL.png', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/BowMasters/28.html', 
+                category: 'action',
+                description: 'Master the art of archery in ragdoll combat. Aim, shoot, and watch the hilarious physics-based carnage unfold.'
+            },
+            { 
+                title: 'Subway Surfers', 
+                image: 'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/video-game-Subway-Surfers-Poster-diamond-by-numbers.jpg', 
+                url: 'https://raw.githubusercontent.com/s0lace-games/s0lace/refs/heads/main/public/games/subway-surfers/index.html', 
+                category: 'action',
+                description: 'Endless runner through city subways. Dodge trains, grind rails, and outrun the inspector in this colorful chase.'
+            },
+
+            // Horror
+            { 
+                title: 'Iron Lung', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/MV5BM2JhZDRmNDAtZWE4OC00NmRjLTlmZGUtZmQxNmNkOTk5ZWRhXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/Iron%20Lung.html', 
+                category: 'horror',
+                description: 'Navigate a submarine through an ocean of blood. A claustrophobic horror experience in complete darkness.'
+            },
+            { 
+                title: 'TattleTail', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/tattletail-646521.7.webp', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt', 
+                category: 'horror',
+                description: 'Keep your new toy quiet before Mom finds out. A short survival horror about a very annoying talking toy.'
+            },
+            { 
+                title: 'FTF: Home Alone', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/MV5BNGZjOTBlYTctODcxNy00YTM1LTg2YTYtZTI3NzBmMDA4ZmJmXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
+                url: 'https://raw.githubusercontent.com/genizy/web-port/refs/heads/main/fears-to-fathom/home-alone/index.html', 
+                category: 'horror',
+                description: 'Home alone on a stormy night. Investigate strange occurrences in this psychological horror experience.'
+            },
+            { 
+                title: 'Granny', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/images.jpeg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/undertale2.txt', 
+                category: 'horror',
+                description: 'Escape from Granny\'s house before it\'s too late. Stay quiet, hide, and solve puzzles to survive five terrifying nights.'
+            },
+            { 
+                title: 'Bendy: ATIM', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Bendy/images%20(1).jpeg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Bendy/Bendy%20and%20the%20Ink%20Machine%20(1).html', 
+                category: 'horror',
+                description: 'Return to an abandoned animation studio. Uncover dark secrets and survive encounters with ink creatures.'
+            },
+            { 
+                title: 'Thats Not My Neighbor', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Your%20Not%20My%20Neighbor/images%20(2).jpeg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/tnmn.html', 
+                category: 'horror',
+                description: 'Work as a doorman in 1955. Identify doppelgangers trying to enter the building in this tense horror job simulator.'
+            },
+            { 
+                title: 'Deadseat', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Deadseat/images_upscaled.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Deadseat/The%20Deadseat.html', 
+                category: 'horror',
+                description: 'Answer calls in a mysterious taxi dispatch. Face supernatural events in this chilling late-night horror game.'
+            },
+            { 
+                title: 'A Bite At Freddys', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/New%20Project%20(1).png', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/ABAF.html', 
+                category: 'horror',
+                description: 'Survive the night at a haunted pizzeria. Monitor cameras and manage power as animatronics hunt you down.'
+            },
+            { 
+                title: 'Midnight Shift', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/RLDGy%2B.png', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/midnight_shift.html', 
+                category: 'horror',
+                description: 'Work the graveyard shift at a gas station. Something\'s not right in this unsettling atmospheric horror.'
+            },
+
+            // Sandbox
+            { 
+                title: 'R.E.P.O.', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./repo-teases-big-update-game-rant.avif', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./R.E.P.O.txt', 
+                category: 'sandbox',
+                description: 'Genetic disaster survival simulator. Build, craft, and adapt in a world filled with horrifying mutations.'
+            },
+            { 
+                title: 'Slime Rancher', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/w5OuzDEu6HNzT2K4e5HRI7vJ.avif', 
+                url: 'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/Slime%20Rancher.txt', 
+                category: 'sandbox',
+                description: 'Become a slime rancher on an alien planet. Collect, raise, and farm adorable bouncing slimes for profit.'
+            },
+            { 
+                title: 'Sandboxels', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/Site-logo.webp', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/clsandboxels.html', 
+                category: 'sandbox',
+                description: 'A pixel physics sandbox simulation. Experiment with hundreds of elements and watch them interact in creative ways.'
+            },
+            { 
+                title: 'Webfishing', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Webfishing/images%20(3).jpeg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Webfishing/WebFishing%20(1).html', 
+                category: 'sandbox',
+                description: 'Chill fishing with friends online. Cast your line, catch fish, and hang out in this relaxing multiplayer experience.'
+            },
+
+            // Classic
+            { 
+                title: 'Getting Over It', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/9AZHswQrJ6UuZld22c5UGLuk5mqDWAocm0gUhDd6MyA.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt', 
+                category: 'classic',
+                description: 'Climb a mountain with only a hammer. A punishing climbing game that will test your patience and skill.'
+            },
+            { 
+                title: 'Undertale', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/MV5BMWI3ZTkxZjktYWU3NC00OGQ1LWFlNzgtYzIwMWI4NDg2YTU0XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/undertale.html', 
+                category: 'classic',
+                description: 'A unique RPG where nobody has to die. Make friends with monsters in this heartfelt indie masterpiece.'
+            },
+            { 
+                title: 'Deltarune', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/deltrarune/deltarune.webp', 
+                url: 'https://raw.githubusercontent.com/aukak/fyinx/refs/heads/main/g/deltarune/index.html', 
+                category: 'classic',
+                description: 'The spiritual successor to Undertale. Experience a new world of choices, friendship, and mysterious dark powers.'
+            },
+            { 
+                title: 'Get Yoked', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/GetYoked/New%20Project%20(3).jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/GetYoked/Get%20Yoked.html', 
+                category: 'classic',
+                description: 'Build your muscles to absurd proportions. A ridiculous fitness clicker game where bigger is always better.'
+            },
+            { 
+                title: 'Gladdi-Hoppers', 
+                image: 'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/Gladdihoppers/images.jpeg', 
+                url: 'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/Gladdihoppers/gladdihoppers.html', 
+                category: 'classic',
+                description: 'Ragdoll gladiator physics battles. Fight in the arena with hilariously floppy warriors in chaotic combat.'
+            },
+            { 
+                title: 'Side Effects', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/side-effects-button-1759512691005.webp', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt', 
+                category: 'classic',
+                description: 'Manage bizarre pharmaceutical side effects. A darkly comedic game about the absurdity of modern medicine.'
+            }
+        ];
+
+        // Initialize
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 2000);
+        });
+
+        // Profile Selection with Animation
+        const fluxusProfile = document.getElementById('fluxusProfile');
+        const profileScreen = document.getElementById('profileScreen');
+        const mainApp = document.getElementById('mainApp');
+        const profileIcon = document.getElementById('profileIcon');
+
+        fluxusProfile.addEventListener('click', function() {
+            // Start animation
+            profileScreen.classList.add('animating');
+            
+            const avatar = this.querySelector('.profile-avatar');
+            const letterF = this.querySelector('.letter-f');
+            const profileName = this.querySelector('.profile-name');
+            const profileHeader = document.querySelector('.profile-header');
+            
+            // Fade out text elements immediately
+            profileName.classList.add('fade-name');
+            profileHeader.classList.add('fade-header');
+            
+            // Trigger animations
+            avatar.classList.add('zoom-animation');
+            letterF.classList.add('grow-animation');
+            
+            // Fade out entire screen
+            setTimeout(() => {
+                profileScreen.classList.add('fade-out');
+            }, 1000);
+            
+            // Show main app with fade in
+            setTimeout(() => {
+                profileScreen.style.display = 'none';
+                mainApp.classList.add('active');
+                profileIcon.textContent = 'F';
+                profileIcon.style.fontSize = '20px';
+                profileIcon.style.fontWeight = '900';
+                
+                renderGames();
+                startHeroRotation();
+            }, 1200);
+        });
+
+        // Flash effect when clicking profile icon
+        profileIcon.addEventListener('click', () => {
+            document.body.classList.add('flashing');
+            setTimeout(() => {
+                document.body.classList.remove('flashing');
+            }, 600);
+        });
+
+        // ============================================
+        // CHANGELOG MODAL
+        // ============================================
+        
+        function showChangelog() {
+            const modal = document.createElement('div');
+            modal.className = 'changelog-modal';
+            
+            const changelogHTML = changelogs.map(entry => `
+                <div class="changelog-entry ${entry.isNew ? 'new' : ''}">
+                    <div class="changelog-date">${entry.date}${entry.isNew ? ' • NEW' : ''}</div>
+                    <div class="changelog-items">
+                        ${entry.items.map(item => `
+                            <div class="changelog-item ${item.type}">${item.text}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            modal.innerHTML = `
+                <div class="changelog-content">
+                    <div class="changelog-header">
+                        <h2 class="changelog-title">🎮 What's New</h2>
+                        <button class="changelog-close">✕</button>
+                    </div>
+                    <div class="changelog-list">
+                        ${changelogHTML}
+                    </div>
+                </div>
+            `;
+            
+            // Smooth close function
+            function closeModal() {
+                modal.classList.add('closing');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+            
+            // Close button
+            modal.querySelector('.changelog-close').addEventListener('click', closeModal);
+            
+            // Close when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            document.body.appendChild(modal);
+        }
+        
+        // Changelog button click
+        document.getElementById('changelogBtn').addEventListener('click', showChangelog);
+
+        // Hero rotation system
+        let currentHeroIndex = 0;
+        let heroInterval;
+
+        function startHeroRotation() {
+            updateHero();
+            heroInterval = setInterval(() => {
+                currentHeroIndex = (currentHeroIndex + 1) % games.length;
+                updateHero();
+            }, 8000); // Change every 8 seconds
+        }
+
+        function updateHero() {
+            const game = games[currentHeroIndex];
+            const heroBackground = document.getElementById('heroBackground');
+            const heroImage = document.getElementById('heroImage');
+            const heroTitle = document.getElementById('heroTitle');
+            const heroDescription = document.getElementById('heroDescription');
+            
+            // Fade out text
+            heroTitle.classList.remove('visible');
+            heroDescription.classList.remove('visible');
+            
+            // Fade out background
+            heroBackground.classList.remove('active');
+            
+            setTimeout(() => {
+                // Update content
+                heroImage.src = game.image;
+                heroTitle.textContent = game.title;
+                heroDescription.textContent = game.description || 'Experience this amazing game now.';
+                
+                // Fade in background
+                heroBackground.classList.add('active');
+                
+                // Fade in text with stagger
+                setTimeout(() => {
+                    heroTitle.classList.add('visible');
+                }, 100);
+                
+                setTimeout(() => {
+                    heroDescription.classList.add('visible');
+                }, 200);
+            }, 600);
+        }
+
+        // Render Games
+        function renderGames() {
+            const container = document.getElementById('allGamesGrid');
+            
+            // Regular games
+            const regularGamesHTML = games.map(game => `
+                <div class="bento-item" onclick="${game.versions ? `showVersionPicker(${games.indexOf(game)}, false)` : `playGame('${game.url}')`}">
+                    <img src="${game.image}" class="bento-image" alt="${game.title}">
+                    <div class="bento-overlay">
+                        <div class="bento-title">${game.title}</div>
+                        ${game.tag ? `<span class="bento-tag">${game.tag}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Secret games (hidden by default)
+            const secretGamesHTML = secretGames.map(game => `
+                <div class="bento-item secret-game" style="display: none;" onclick="${game.versions ? `showVersionPicker(${secretGames.indexOf(game)}, true)` : `playGame('${game.url}')`}">
+                    <img src="${game.image}" class="bento-image" alt="${game.title}">
+                    <div class="bento-overlay">
+                        <div class="bento-title">${game.title}</div>
+                        <span class="bento-tag">SECRET</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = regularGamesHTML + secretGamesHTML;
+            
+            // Debug: Log secret games
+            console.log('Secret games rendered:', secretGames.length);
+            console.log('Secret game triggers:', secretGames.map(g => g.searchTrigger));
+        }
+
+        // Version picker for games with multiple versions
+        function showVersionPicker(gameIndex, isSecret = false) {
+            const game = isSecret ? secretGames[gameIndex] : games[gameIndex];
+            if (!game.versions) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'version-modal';
+            modal.innerHTML = `
+                <div class="version-content">
+                    <h2 class="version-header">🎮 Select Version</h2>
+                    <p class="version-subtitle">Choose which version of ${game.title} you'd like to play</p>
+                    <div class="version-grid">
+                        ${game.versions.map(v => `
+                            <div class="version-option" data-url="${v.gameUrl}">
+                                <div class="version-name">${v.name}</div>
+                                <div class="version-description">${v.description}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="version-close">Cancel</button>
+                </div>
+            `;
+            
+            // Smooth close function
+            function closeModal() {
+                modal.classList.add('closing');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+            
+            // Add click handlers to version options
+            modal.querySelectorAll('.version-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const url = this.dataset.url;
+                    closeModal();
+                    setTimeout(() => {
+                        playGame(url);
+                    }, 150);
+                });
+            });
+            
+            // Close button
+            modal.querySelector('.version-close').addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            document.body.appendChild(modal);
+        }
+
+        // Play Game
+        async function playGame(url) {
+            try {
+                const response = await fetch(url);
+                const code = await response.text();
+                const newTab = window.open('', '_blank');
+                newTab.document.open();
+                newTab.document.write(code);
+                newTab.document.close();
+            } catch (error) {
+                alert('Error loading game');
+            }
+        }
+
+        // Play Featured Game
+        document.getElementById('playFeatured').addEventListener('click', () => {
+            // Only play from regular games, not secrets
+            const game = games[currentHeroIndex % games.length];
+            if (game.versions) {
+                showVersionPicker(currentHeroIndex % games.length, false);
+            } else {
+                playGame(game.url);
+            }
+        });
+
+        // Search with secret game support
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const search = e.target.value.toLowerCase().trim();
+            
+            // Get all game items
+            const allItems = document.querySelectorAll('.bento-item');
+            
+            allItems.forEach(item => {
+                const title = item.querySelector('.bento-title')?.textContent.toLowerCase() || '';
+                const isSecret = item.classList.contains('secret-game');
+                
+                if (search === '') {
+                    // No search - hide secret games, show all regular games
+                    item.style.display = isSecret ? 'none' : 'block';
+                } else {
+                    if (isSecret) {
+                        // Secret game - check if search matches trigger
+                        const gameTitle = item.querySelector('.bento-title').textContent;
+                        const secretGame = secretGames.find(g => g.title === gameTitle);
+                        
+                        if (secretGame && secretGame.searchTrigger.toLowerCase() === search) {
+                            item.style.display = 'block';
+                            console.log('Secret game revealed:', gameTitle);
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    } else {
+                        // Regular game - show if title matches
+                        item.style.display = title.includes(search) ? 'block' : 'none';
+                    }
+                }
+            });
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
