@@ -1177,7 +1177,7 @@
         const games = [
             // Featured
             { 
-                title: 'Minecraft', 
+                title: 'gaycraft', 
                 image: 'https://github.com/ZephrECS/EagerIGG1.12.html/blob/main/MC.jpg?raw=true', 
                 category: 'featured', 
                 tag: 'POPULAR',
