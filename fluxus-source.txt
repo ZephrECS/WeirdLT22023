@@ -1967,6 +1967,13 @@
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/Untitled%20Goose%20Game.txt', 
                 category: 'classic',
                 description: 'Theres a Goose, Theres a game.'
+            },
+            { 
+                title: 'Clover Pit', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/CloverPit_cover.jpeg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/Clover%20Pit.html', 
+                category: 'classic',
+                description: 'Gamble. Gamble. Gamble. Gamble. '
             }
         ];
 
