@@ -1038,10 +1038,12 @@
             color: rgba(255,255,255,0.6);
         }
 
-        /* Tighter masonry grid */
+        /* Tighter grid layout with explicit positioning */
         .bento-grid {
-            column-count: 5;
-            column-gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            grid-auto-rows: 10px;
         }
 
         .bento-item {
@@ -1051,18 +1053,29 @@
             cursor: pointer;
             position: relative;
             border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            break-inside: avoid;
-            margin-bottom: 10px;
-            display: inline-block;
-            width: 100%;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 1;
+            transform: scale(1);
+            grid-column: span 1;
         }
 
         .bento-item:hover {
-            transform: translateY(-8px);
+            transform: translateY(-8px) scale(1);
             border-color: rgba(255,255,255,0.3);
             box-shadow: 0 20px 40px rgba(255,255,255,0.15);
             z-index: 10;
+        }
+
+        /* Fade out and shrink non-matching items */
+        .bento-item.fade-out {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        /* Keep items visible during transition */
+        .bento-item.transitioning {
+            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .bento-image {
@@ -1290,13 +1303,13 @@
         /* Responsive */
         @media (max-width: 1600px) {
             .bento-grid {
-                column-count: 4;
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
         @media (max-width: 1200px) {
             .bento-grid {
-                column-count: 3;
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -1323,7 +1336,7 @@
             }
 
             .bento-grid {
-                column-count: 3;
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -1358,7 +1371,7 @@
             }
 
             .bento-grid {
-                column-count: 2;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .profiles-container {
@@ -1374,7 +1387,7 @@
 
         @media (max-width: 480px) {
             .bento-grid {
-                column-count: 1;
+                grid-template-columns: repeat(1, 1fr);
             }
 
             .hero-buttons {
@@ -2101,7 +2114,7 @@
             
             const regularGamesHTML = games.map(game => `
                 <div class="bento-item" data-category="${game.category}" onclick="${game.versions ? `showVersionPicker(${games.indexOf(game)}, false)` : `playGame('${game.url}')`}">
-                    <img src="${game.image}" class="bento-image" alt="${game.title}">
+                    <img src="${game.image}" class="bento-image" alt="${game.title}" onload="setGridRowSpan(this)">
                     <div class="bento-overlay">
                         <div class="bento-title">${game.title}</div>
                         ${game.tag ? `<span class="bento-tag">${game.tag}</span>` : ''}
@@ -2111,7 +2124,7 @@
             
             const secretGamesHTML = secretGames.map(game => `
                 <div class="bento-item secret-game" style="display: none;" onclick="${game.versions ? `showVersionPicker(${secretGames.indexOf(game)}, true)` : `playGame('${game.url}')`}">
-                    <img src="${game.image}" class="bento-image" alt="${game.title}">
+                    <img src="${game.image}" class="bento-image" alt="${game.title}" onload="setGridRowSpan(this)">
                     <div class="bento-overlay">
                         <div class="bento-title">${game.title}</div>
                         <span class="bento-tag">SECRET</span>
@@ -2126,6 +2139,16 @@
             
             // Add category filter listeners
             setupCategoryFilters();
+        }
+
+        // Calculate grid row span based on image height for masonry effect
+        function setGridRowSpan(img) {
+            const item = img.closest('.bento-item');
+            const rowHeight = 10; // matches grid-auto-rows
+            const rowGap = 10; // matches gap
+            const height = img.getBoundingClientRect().height;
+            const rowSpan = Math.ceil((height + rowGap) / (rowHeight + rowGap));
+            item.style.gridRowEnd = `span ${rowSpan}`;
         }
 
         // Update category counts
@@ -2161,21 +2184,45 @@
             });
         }
 
-        // Filter games by category
+        // Filter games by category - fade out non-matching, let grid reflow smoothly
         function filterByCategory(category) {
             const allItems = document.querySelectorAll('.bento-item:not(.secret-game)');
             
+            // Add transitioning class for smooth animation
             allItems.forEach(item => {
-                if (category === 'all') {
-                    item.style.display = 'inline-block';
+                item.classList.add('transitioning');
+            });
+            
+            allItems.forEach((item, index) => {
+                const shouldShow = category === 'all' || item.dataset.category === category;
+                
+                if (shouldShow) {
+                    // Remove fade-out and ensure visibility
+                    item.classList.remove('fade-out');
+                    // Use grid properties instead of display
+                    item.style.gridColumn = 'span 1';
+                    item.style.visibility = 'visible';
+                    item.style.position = 'relative';
                 } else {
-                    if (item.dataset.category === category) {
-                        item.style.display = 'inline-block';
-                    } else {
-                        item.style.display = 'none';
-                    }
+                    // Fade out the item
+                    item.classList.add('fade-out');
+                    // After fade completes, collapse it from grid
+                    setTimeout(() => {
+                        if (item.classList.contains('fade-out')) {
+                            item.style.gridColumn = 'span 0';
+                            item.style.visibility = 'hidden';
+                            item.style.position = 'absolute';
+                        }
+                    }, 400);
                 }
             });
+            
+            // Remove transitioning class after animations complete
+            setTimeout(() => {
+                allItems.forEach(item => {
+                    item.classList.remove('transitioning');
+                });
+            }, 700);
         }
 
         // Version picker
