@@ -1067,12 +1067,110 @@
         }
 
         .comments-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            position: relative;
+            display: flex;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .reviews-column {
+            flex: 0 0 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .review-avatar.alt1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .review-avatar.alt2 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .review-avatar.alt3 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .review-avatar.alt4 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .review-avatar.alt5 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .review-info {
+            flex: 1;
+        }
+
+        .review-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .review-stars {
+            color: #ffd700;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .review-text.featured {
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+        }
+
+        .review-date {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 8px;
         }
 
         .padlet-wrapper {
+            flex: 1;
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
@@ -1200,6 +1298,15 @@
             .comments-title {
                 font-size: 32px;
             }
+
+            .comments-container {
+                flex-direction: column;
+            }
+
+            .reviews-column {
+                flex: 1;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -1281,8 +1388,111 @@
                     <p class="comments-subtitle">Share your thoughts, suggest games, or just hang out with fellow gamers</p>
                 </div>
                 <div class="comments-container">
+                    <!-- Left Reviews Column -->
+                    <div class="reviews-column">
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">M</div>
+                                <div class="review-info">
+                                    <div class="review-name">Marcus Chen</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text featured">Finally found a site that actually cares about quality. The owner/developer really makes sure he only adds higher quality games compared to the slop on other sites which add whatever they can. This guy takes pride in keeping the site clean and sleek.</p>
+                            <div class="review-date">2 days ago</div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar alt1">S</div>
+                                <div class="review-info">
+                                    <div class="review-name">Sarah J.</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text">Best unblocked gaming site I've used. Clean interface, no ads everywhere, just pure gaming. The Minecraft version runs so smooth!</p>
+                            <div class="review-date">5 days ago</div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar alt2">J</div>
+                                <div class="review-info">
+                                    <div class="review-name">Jake Morrison</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text">The secret games feature is genius. Found some absolute gems I never would have discovered otherwise. 10/10 site design too.</p>
+                            <div class="review-date">1 week ago</div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar alt3">A</div>
+                                <div class="review-info">
+                                    <div class="review-name">Alex Rivera</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text">Been using this for months now. Every game works perfectly, no sketchy links, no BS. Just quality gaming when I need it.</p>
+                            <div class="review-date">1 week ago</div>
+                        </div>
+                    </div>
+
+                    <!-- Center Padlet -->
                     <div class="padlet-wrapper">
                         <div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4"><p style="padding:0;margin:0"><iframe src="https://padlet.com/embed/de91e4lqaz8j68w9" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe></p><div style="display:flex;align-items:center;justify-content:end;margin:0;padding:8px 8px 8px 0"><a href="https://padlet.com?ref=embed" style="display:flex;align-items:center;gap:5px;flex-grow:0;margin:0;border:none;padding:0;text-decoration:none" target="_blank"><span aria-hidden style="color:#9E9E9E;font-size:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1">Made with</span><img src="https://padlet.net/emails/padlet_email_logo_2026_text-dark-200.png" height="12" style="padding:0;margin:0;background:0 0;border:none;box-shadow:none;display:block" alt="Made with Padlet"></a></div></div>
+                    </div>
+
+                    <!-- Right Reviews Column -->
+                    <div class="reviews-column">
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar alt4">E</div>
+                                <div class="review-info">
+                                    <div class="review-name">Emma Williams</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text featured">You can really tell the creator curates this collection carefully. Unlike other sites that throw up hundreds of broken games, every single one here actually works and is worth playing. Quality over quantity done right.</p>
+                            <div class="review-date">3 days ago</div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar alt5">D</div>
+                                <div class="review-info">
+                                    <div class="review-name">David Kim</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text">Hollow Knight runs perfectly! The hero banner rotation is such a cool touch. Makes me want to try games I normally wouldn't.</p>
+                            <div class="review-date">6 days ago</div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">L</div>
+                                <div class="review-info">
+                                    <div class="review-name">Luna Park</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text featured">The developer's attention to detail is insane. Every game is hand-picked, the site never lags, and the design is cleaner than most paid gaming platforms. This is what happens when someone actually cares about their work.</p>
+                            <div class="review-date">1 week ago</div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar alt1">T</div>
+                                <div class="review-info">
+                                    <div class="review-name">Tyler Brooks</div>
+                                    <div class="review-stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <p class="review-text">My go-to site for breaks between classes. Fast, reliable, and actually fun to browse. The masonry layout makes finding new games super easy.</p>
+                            <div class="review-date">2 weeks ago</div>
+                        </div>
                     </div>
                 </div>
             </div>
