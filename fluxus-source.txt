@@ -946,14 +946,84 @@
             background: rgba(255,255,255,0.3);
         }
 
-        /* IMPROVED GAME GRID - MASONRY STYLE */
+        /* IMPROVED GAME GRID - SIDEBAR + TIGHT GRID */
         .game-section {
             padding: 60px 60px 80px;
             background: #000;
+            display: flex;
+            gap: 40px;
+        }
+
+        /* Category Sidebar */
+        .category-sidebar {
+            flex: 0 0 240px;
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .category-item {
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-item:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.3);
+            color: #fff;
+            transform: translateX(4px);
+        }
+
+        .category-item.active {
+            background: rgba(255,255,255,0.12);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .category-count {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.05);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .category-item.active .category-count {
+            color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Games Content Area */
+        .games-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .section-header {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .section-title {
@@ -968,10 +1038,10 @@
             color: rgba(255,255,255,0.6);
         }
 
-        /* Pinterest-style masonry grid - SMALLER ICONS */
+        /* Tighter masonry grid */
         .bento-grid {
-            column-count: 6;
-            column-gap: 12px;
+            column-count: 5;
+            column-gap: 10px;
         }
 
         .bento-item {
@@ -983,7 +1053,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             break-inside: avoid;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: inline-block;
             width: 100%;
         }
@@ -1220,17 +1290,38 @@
         /* Responsive */
         @media (max-width: 1600px) {
             .bento-grid {
-                column-count: 5;
-            }
-        }
-
-        @media (max-width: 1400px) {
-            .bento-grid {
                 column-count: 4;
             }
         }
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1200px) {
+            .bento-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .game-section {
+                flex-direction: column;
+            }
+
+            .category-sidebar {
+                position: relative;
+                top: 0;
+                flex: 1;
+                width: 100%;
+            }
+
+            .category-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .category-item {
+                flex: 0 0 auto;
+            }
+
             .bento-grid {
                 column-count: 3;
             }
@@ -1372,13 +1463,47 @@
                 </div>
             </div>
 
-            <!-- All Games - Masonry Grid -->
+            <!-- All Games - Sidebar Layout -->
             <div class="game-section">
-                <div class="section-header">
-                    <h2 class="section-title">Browse Games</h2>
-                    <p class="section-subtitle">Discover your next favorite game from our extensive collection</p>
+                <!-- Category Sidebar -->
+                <div class="category-sidebar">
+                    <h3 class="sidebar-title">Categories</h3>
+                    <div class="category-list">
+                        <div class="category-item active" data-category="all">
+                            <span>All Games</span>
+                            <span class="category-count" id="count-all">0</span>
+                        </div>
+                        <div class="category-item" data-category="featured">
+                            <span>Featured</span>
+                            <span class="category-count" id="count-featured">0</span>
+                        </div>
+                        <div class="category-item" data-category="action">
+                            <span>Action</span>
+                            <span class="category-count" id="count-action">0</span>
+                        </div>
+                        <div class="category-item" data-category="horror">
+                            <span>Horror</span>
+                            <span class="category-count" id="count-horror">0</span>
+                        </div>
+                        <div class="category-item" data-category="sandbox">
+                            <span>Sandbox</span>
+                            <span class="category-count" id="count-sandbox">0</span>
+                        </div>
+                        <div class="category-item" data-category="classic">
+                            <span>Classic</span>
+                            <span class="category-count" id="count-classic">0</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bento-grid" id="allGamesGrid"></div>
+
+                <!-- Games Content -->
+                <div class="games-content">
+                    <div class="section-header">
+                        <h2 class="section-title">Browse Games</h2>
+                        <p class="section-subtitle">Discover your next favorite game from our curated collection</p>
+                    </div>
+                    <div class="bento-grid" id="allGamesGrid"></div>
+                </div>
             </div>
 
             <!-- Comments Section -->
@@ -1975,7 +2100,7 @@
             const container = document.getElementById('allGamesGrid');
             
             const regularGamesHTML = games.map(game => `
-                <div class="bento-item" onclick="${game.versions ? `showVersionPicker(${games.indexOf(game)}, false)` : `playGame('${game.url}')`}">
+                <div class="bento-item" data-category="${game.category}" onclick="${game.versions ? `showVersionPicker(${games.indexOf(game)}, false)` : `playGame('${game.url}')`}">
                     <img src="${game.image}" class="bento-image" alt="${game.title}">
                     <div class="bento-overlay">
                         <div class="bento-title">${game.title}</div>
@@ -1995,6 +2120,62 @@
             `).join('');
             
             container.innerHTML = regularGamesHTML + secretGamesHTML;
+            
+            // Update category counts
+            updateCategoryCounts();
+            
+            // Add category filter listeners
+            setupCategoryFilters();
+        }
+
+        // Update category counts
+        function updateCategoryCounts() {
+            const categories = ['all', 'featured', 'action', 'horror', 'sandbox', 'classic'];
+            
+            categories.forEach(cat => {
+                let count;
+                if (cat === 'all') {
+                    count = games.length;
+                } else {
+                    count = games.filter(g => g.category === cat).length;
+                }
+                const countEl = document.getElementById(`count-${cat}`);
+                if (countEl) countEl.textContent = count;
+            });
+        }
+
+        // Setup category filters
+        function setupCategoryFilters() {
+            const categoryItems = document.querySelectorAll('.category-item');
+            
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all
+                    categoryItems.forEach(i => i.classList.remove('active'));
+                    // Add active to clicked
+                    this.classList.add('active');
+                    
+                    const category = this.dataset.category;
+                    filterByCategory(category);
+                });
+            });
+        }
+
+        // Filter games by category
+        function filterByCategory(category) {
+            const allItems = document.querySelectorAll('.bento-item:not(.secret-game)');
+            
+            allItems.forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'inline-block';
+                } else {
+                    if (item.dataset.category === category) {
+                        item.style.display = 'inline-block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
         }
 
         // Version picker
@@ -2075,6 +2256,13 @@
         // Search with secret game support
         document.getElementById('searchBox').addEventListener('input', function(e) {
             const search = e.target.value.toLowerCase().trim();
+            
+            // Reset category filter to "All" when searching
+            if (search) {
+                const categoryItems = document.querySelectorAll('.category-item');
+                categoryItems.forEach(i => i.classList.remove('active'));
+                document.querySelector('.category-item[data-category="all"]').classList.add('active');
+            }
             
             const allItems = document.querySelectorAll('.bento-item');
             
