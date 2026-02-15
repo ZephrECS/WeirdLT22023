@@ -1960,6 +1960,13 @@
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt', 
                 category: 'classic',
                 description: 'Manage bizarre pharmaceutical side effects. A darkly comedic game about the absurdity of modern medicine.'
+            },
+            { 
+                title: 'Untitled Goose Game', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/e3549b645ea3dc77411280ba4a83f018235bbdb6f0b32039a5519cee985f0f4f.avif', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/Untitled%20Goose%20Game.txt', 
+                category: 'classic',
+                description: 'Theres a Goose, Theres a game.'
             }
         ];
 
