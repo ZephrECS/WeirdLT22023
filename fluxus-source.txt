@@ -605,15 +605,15 @@
             padding-top: 100px;
         }
 
-        /* Hero Section */
+        /* IMPROVED HERO SECTION - BRIGHTER & BETTER */
         .hero {
             position: relative;
-            height: 80vh;
+            height: 85vh;
             background: #000;
             display: flex;
             align-items: center;
             padding: 0 60px;
-            margin-bottom: 40px;
+            margin-bottom: 0;
             overflow: hidden;
         }
 
@@ -628,30 +628,28 @@
         }
 
         .hero-background.active {
-            opacity: 0.4;
+            opacity: 1;
         }
 
         .hero-background img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: blur(8px) brightness(0.6);
-            transform: scale(1.2) translateX(0);
-            animation: slideRightToLeft 25s ease-in-out infinite;
+            filter: brightness(1.1) contrast(1.1);
+            transform: scale(1.15);
+            animation: slowZoom 20s ease-in-out infinite alternate;
         }
 
-        @keyframes slideRightToLeft {
+        @keyframes slowZoom {
             0% {
-                transform: scale(1.2) translateX(10%);
-            }
-            50% {
-                transform: scale(1.3) translateX(-10%);
+                transform: scale(1.15) translateX(0);
             }
             100% {
-                transform: scale(1.2) translateX(10%);
+                transform: scale(1.25) translateX(-5%);
             }
         }
 
+        /* Seamless gradient fade to bottom */
         .hero::after {
             content: '';
             position: absolute;
@@ -659,24 +657,50 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%);
+            background: 
+                linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.7) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.95) 90%, rgba(0,0,0,1) 100%);
             pointer-events: none;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 650px;
             position: relative;
             z-index: 2;
         }
 
-        .hero-title {
-            font-size: 64px;
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            font-size: 13px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-badge.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 800;
             margin-bottom: 20px;
             line-height: 1.1;
+            letter-spacing: -2px;
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
 
         .hero-title.visible {
@@ -685,13 +709,14 @@
         }
 
         .hero-description {
-            font-size: 18px;
+            font-size: 20px;
             line-height: 1.6;
             color: #e5e5e5;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .hero-description.visible {
@@ -702,37 +727,53 @@
         .hero-buttons {
             display: flex;
             gap: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+        }
+
+        .hero-buttons.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .btn {
-            padding: 14px 32px;
+            padding: 16px 40px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-primary {
             background: #fff;
             color: #000;
+            box-shadow: 0 4px 20px rgba(255,255,255,0.3);
         }
 
         .btn-primary:hover {
-            background: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255,255,255,0.4);
         }
 
         .btn-secondary {
-            background: rgba(109,109,110,0.7);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
             color: #fff;
         }
 
         .btn-secondary:hover {
-            background: rgba(109,109,110,0.4);
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
         }
 
         /* Version Picker Modal - Sleek Popup */
@@ -905,17 +946,32 @@
             background: rgba(255,255,255,0.3);
         }
 
-        /* Game Grid Layout - Unique Design */
+        /* IMPROVED GAME GRID - MASONRY STYLE */
         .game-section {
-            padding: 0 60px;
-            margin-bottom: 80px;
+            padding: 60px 60px 80px;
+            background: #000;
         }
 
-        /* Bento Box Grid */
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Pinterest-style masonry grid */
         .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 16px;
+            column-count: 5;
+            column-gap: 16px;
         }
 
         .bento-item {
@@ -926,24 +982,28 @@
             position: relative;
             border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            aspect-ratio: 16/9;
+            break-inside: avoid;
+            margin-bottom: 16px;
+            display: inline-block;
+            width: 100%;
         }
 
         .bento-item:hover {
             transform: translateY(-8px);
             border-color: rgba(255,255,255,0.3);
-            box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.15);
+            z-index: 10;
         }
 
         .bento-image {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
             transition: transform 0.4s ease;
         }
 
         .bento-item:hover .bento-image {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .bento-overlay {
@@ -952,7 +1012,7 @@
             left: 0;
             right: 0;
             padding: 20px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 70%, transparent 100%);
             transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -964,13 +1024,14 @@
         .bento-title {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            color: #fff;
         }
 
         .bento-tag {
             display: inline-block;
             font-size: 10px;
-            padding: 4px 10px;
+            padding: 5px 12px;
             background: #fff;
             color: #000;
             border-radius: 4px;
@@ -985,7 +1046,7 @@
             color: rgba(255,255,255,0.5);
             text-align: center;
             border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 60px;
+            margin-top: 40px;
         }
 
         .footer-logo {
@@ -996,26 +1057,43 @@
             text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .bento-grid {
+                column-count: 4;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .bento-grid {
+                column-count: 3;
+            }
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 padding: 20px 20px;
             }
 
             .hero {
-                height: 60vh;
+                height: 70vh;
                 padding: 0 20px;
             }
 
             .hero-title {
-                font-size: 40px;
+                font-size: 48px;
+            }
+
+            .hero-description {
+                font-size: 16px;
             }
 
             .game-section {
-                padding: 0 20px;
+                padding: 40px 20px;
             }
 
             .bento-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                column-count: 2;
             }
 
             .profiles-container {
@@ -1026,6 +1104,21 @@
                 width: 120px;
                 height: 120px;
                 font-size: 48px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bento-grid {
+                column-count: 1;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -1075,12 +1168,13 @@
                     <img id="heroImage" src="" alt="Featured Game">
                 </div>
                 <div class="hero-content">
+                    <div class="hero-badge visible" id="heroBadge">Featured Game</div>
                     <h1 class="hero-title visible" id="heroTitle">Unblocked Gaming</h1>
                     <p class="hero-description visible" id="heroDescription">
                         Play the best collection of unblocked games. From classics to new releases, 
                         all accessible anywhere, anytime.
                     </p>
-                    <div class="hero-buttons">
+                    <div class="hero-buttons visible">
                         <button class="btn btn-primary" id="playFeatured">
                             ▶ Play Now
                         </button>
@@ -1091,8 +1185,12 @@
                 </div>
             </div>
 
-            <!-- All Games - Single Grid -->
+            <!-- All Games - Masonry Grid -->
             <div class="game-section">
+                <div class="section-header">
+                    <h2 class="section-title">Browse Games</h2>
+                    <p class="section-subtitle">Discover your next favorite game from our extensive collection</p>
+                </div>
                 <div class="bento-grid" id="allGamesGrid"></div>
             </div>
 
@@ -1112,8 +1210,16 @@
         // Add your changelog entries here - newest first!
         const changelogs = [
             {
+                date: 'Feb 14, 2026',
+                isNew: true,
+                items: [
+                    { text: 'Redesigned hero banner with brighter, more engaging visuals', type: 'added' },
+                    { text: 'Implemented masonry grid layout for better game browsing', type: 'added' },
+                    { text: 'Enhanced animations and seamless transitions', type: 'fixed' }
+                ]
+            },
+            {
                 date: 'Feb 13, 2026',
-                isNew: true, // Set to true to highlight as new
                 items: [
                     { text: 'Added sleek changelog feature', type: 'added' },
                     { text: 'Improved version picker animations', type: 'fixed' },
@@ -1141,8 +1247,6 @@
         // ============================================
         // SECRET GAMES - HIDDEN SEARCH TERMS
         // ============================================
-        // These games only appear when you search for the EXACT search term
-        // Add your secret games here with their search triggers
         const secretGames = [
             {
                 title: 'Five Nights At Epsteins',
@@ -1156,7 +1260,7 @@
                 title: 'Secret Test Game',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg',
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro',
-                searchTrigger: 'konami', // Type exactly 'konami' to reveal
+                searchTrigger: 'konami',
                 description: 'A secret game that only appears when you know the code.',
                 hidden: true
             },
@@ -1164,7 +1268,7 @@
                 title: 'Hidden Gem',
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg',
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt',
-                searchTrigger: 'secret', // Type exactly 'secret' to reveal
+                searchTrigger: 'secret',
                 description: 'Another hidden treasure waiting to be discovered.',
                 hidden: true
             }
@@ -1432,7 +1536,6 @@
         const profileIcon = document.getElementById('profileIcon');
 
         fluxusProfile.addEventListener('click', function() {
-            // Start animation
             profileScreen.classList.add('animating');
             
             const avatar = this.querySelector('.profile-avatar');
@@ -1440,20 +1543,16 @@
             const profileName = this.querySelector('.profile-name');
             const profileHeader = document.querySelector('.profile-header');
             
-            // Fade out text elements immediately
             profileName.classList.add('fade-name');
             profileHeader.classList.add('fade-header');
             
-            // Trigger animations
             avatar.classList.add('zoom-animation');
             letterF.classList.add('grow-animation');
             
-            // Fade out entire screen
             setTimeout(() => {
                 profileScreen.classList.add('fade-out');
             }, 1000);
             
-            // Show main app with fade in
             setTimeout(() => {
                 profileScreen.style.display = 'none';
                 mainApp.classList.add('active');
@@ -1505,7 +1604,6 @@
                 </div>
             `;
             
-            // Smooth close function
             function closeModal() {
                 modal.classList.add('closing');
                 setTimeout(() => {
@@ -1513,10 +1611,8 @@
                 }, 300);
             }
             
-            // Close button
             modal.querySelector('.changelog-close').addEventListener('click', closeModal);
             
-            // Close when clicking outside
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
@@ -1526,7 +1622,6 @@
             document.body.appendChild(modal);
         }
         
-        // Changelog button click
         document.getElementById('changelogBtn').addEventListener('click', showChangelog);
 
         // Hero rotation system
@@ -1538,48 +1633,44 @@
             heroInterval = setInterval(() => {
                 currentHeroIndex = (currentHeroIndex + 1) % games.length;
                 updateHero();
-            }, 8000); // Change every 8 seconds
+            }, 8000);
         }
 
         function updateHero() {
             const game = games[currentHeroIndex];
             const heroBackground = document.getElementById('heroBackground');
             const heroImage = document.getElementById('heroImage');
+            const heroBadge = document.getElementById('heroBadge');
             const heroTitle = document.getElementById('heroTitle');
             const heroDescription = document.getElementById('heroDescription');
+            const heroButtons = document.querySelector('.hero-buttons');
             
-            // Fade out text
+            heroBadge.classList.remove('visible');
             heroTitle.classList.remove('visible');
             heroDescription.classList.remove('visible');
+            heroButtons.classList.remove('visible');
             
-            // Fade out background
             heroBackground.classList.remove('active');
             
             setTimeout(() => {
-                // Update content
                 heroImage.src = game.image;
+                heroBadge.textContent = game.tag || 'Featured Game';
                 heroTitle.textContent = game.title;
                 heroDescription.textContent = game.description || 'Experience this amazing game now.';
                 
-                // Fade in background
                 heroBackground.classList.add('active');
                 
-                // Fade in text with stagger
-                setTimeout(() => {
-                    heroTitle.classList.add('visible');
-                }, 100);
-                
-                setTimeout(() => {
-                    heroDescription.classList.add('visible');
-                }, 200);
+                setTimeout(() => heroBadge.classList.add('visible'), 100);
+                setTimeout(() => heroTitle.classList.add('visible'), 200);
+                setTimeout(() => heroDescription.classList.add('visible'), 300);
+                setTimeout(() => heroButtons.classList.add('visible'), 400);
             }, 600);
         }
 
-        // Render Games
+        // Render Games with masonry layout
         function renderGames() {
             const container = document.getElementById('allGamesGrid');
             
-            // Regular games
             const regularGamesHTML = games.map(game => `
                 <div class="bento-item" onclick="${game.versions ? `showVersionPicker(${games.indexOf(game)}, false)` : `playGame('${game.url}')`}">
                     <img src="${game.image}" class="bento-image" alt="${game.title}">
@@ -1590,7 +1681,6 @@
                 </div>
             `).join('');
             
-            // Secret games (hidden by default)
             const secretGamesHTML = secretGames.map(game => `
                 <div class="bento-item secret-game" style="display: none;" onclick="${game.versions ? `showVersionPicker(${secretGames.indexOf(game)}, true)` : `playGame('${game.url}')`}">
                     <img src="${game.image}" class="bento-image" alt="${game.title}">
@@ -1602,13 +1692,9 @@
             `).join('');
             
             container.innerHTML = regularGamesHTML + secretGamesHTML;
-            
-            // Debug: Log secret games
-            console.log('Secret games rendered:', secretGames.length);
-            console.log('Secret game triggers:', secretGames.map(g => g.searchTrigger));
         }
 
-        // Version picker for games with multiple versions
+        // Version picker
         function showVersionPicker(gameIndex, isSecret = false) {
             const game = isSecret ? secretGames[gameIndex] : games[gameIndex];
             if (!game.versions) return;
@@ -1631,7 +1717,6 @@
                 </div>
             `;
             
-            // Smooth close function
             function closeModal() {
                 modal.classList.add('closing');
                 setTimeout(() => {
@@ -1639,7 +1724,6 @@
                 }, 300);
             }
             
-            // Add click handlers to version options
             modal.querySelectorAll('.version-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const url = this.dataset.url;
@@ -1650,10 +1734,8 @@
                 });
             });
             
-            // Close button
             modal.querySelector('.version-close').addEventListener('click', closeModal);
             
-            // Close modal when clicking outside
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
@@ -1679,7 +1761,6 @@
 
         // Play Featured Game
         document.getElementById('playFeatured').addEventListener('click', () => {
-            // Only play from regular games, not secrets
             const game = games[currentHeroIndex % games.length];
             if (game.versions) {
                 showVersionPicker(currentHeroIndex % games.length, false);
@@ -1692,7 +1773,6 @@
         document.getElementById('searchBox').addEventListener('input', function(e) {
             const search = e.target.value.toLowerCase().trim();
             
-            // Get all game items
             const allItems = document.querySelectorAll('.bento-item');
             
             allItems.forEach(item => {
@@ -1700,23 +1780,19 @@
                 const isSecret = item.classList.contains('secret-game');
                 
                 if (search === '') {
-                    // No search - hide secret games, show all regular games
-                    item.style.display = isSecret ? 'none' : 'block';
+                    item.style.display = isSecret ? 'none' : 'inline-block';
                 } else {
                     if (isSecret) {
-                        // Secret game - check if search matches trigger
                         const gameTitle = item.querySelector('.bento-title').textContent;
                         const secretGame = secretGames.find(g => g.title === gameTitle);
                         
                         if (secretGame && secretGame.searchTrigger.toLowerCase() === search) {
-                            item.style.display = 'block';
-                            console.log('Secret game revealed:', gameTitle);
+                            item.style.display = 'inline-block';
                         } else {
                             item.style.display = 'none';
                         }
                     } else {
-                        // Regular game - show if title matches
-                        item.style.display = title.includes(search) ? 'block' : 'none';
+                        item.style.display = title.includes(search) ? 'inline-block' : 'none';
                     }
                 }
             });
