@@ -1749,6 +1749,30 @@
                 description: 'A fast-paced ultraviolent retro FPS. Descend through the layers of Hell in this stylish tribute to classic shooters.'
             },
             { 
+                title: 'Kindergarten', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/1b0bbb08482332e69ac7f7c6d1e262dc590d3df2f351f139f80dcb622d99493e.avif', 
+                category: 'featured', 
+                tag: 'POPULAR',
+                description: 'A dark comedy adventure game set in a twisted kindergarten. Solve puzzles, complete missions, and uncover the school\'s dark secrets.',
+                versions: [
+                    {
+                        name: 'Kindergarten 1',
+                        description: 'The original twisted school adventure',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/Kindergarten.txt'
+                    },
+                    {
+                        name: 'Kindergarten 2',
+                        description: 'Continue the dark comedy with new missions',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/Kindergarten%202.html'
+                    },
+                    {
+                        name: 'Kindergarten 3',
+                        description: 'Continue the dark comedy with new missions',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/Kindergarten%203.html'
+                    }
+                ]
+            },
+            { 
                 title: 'Balatro', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro', 
@@ -1974,6 +1998,25 @@
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/Clover%20Pit.html', 
                 category: 'classic',
                 description: 'Gamble. Gamble. Gamble. Gamble. '
+            },
+            { 
+                title: 'Kindergarten', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/kindergarten/kindergarten-cover.jpg', 
+                category: 'classic', 
+                tag: 'MULTIPLE',
+                description: 'Survive your way through school. Complete missions, solve puzzles, and avoid getting killed in this dark comedy adventure.',
+                versions: [
+                    {
+                        name: 'Kindergarten 1',
+                        description: 'The original dark comedy school survival game',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/kindergarten/kindergarten1.html'
+                    },
+                    {
+                        name: 'Kindergarten 2',
+                        description: 'The sequel with new missions and mysteries',
+                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/kindergarten/kindergarten2.html'
+                    }
+                ]
             }
         ];
 
