@@ -1850,7 +1850,7 @@
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/images.jpeg', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/Granny.txt', 
                 category: 'horror',
-                description: 'Escape from Granny's house before it's too late. Stay quiet, hide, and solve puzzles to survive five terrifying nights.'
+                description: 'Escape from Grannys house before its too late. Stay quiet, hide, and solve puzzles to survive five terrifying nights.'
             },
             { 
                 title: 'Bendy: ATIM', 
