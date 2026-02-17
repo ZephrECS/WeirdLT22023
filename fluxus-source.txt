@@ -919,7 +919,7 @@
             overflow: hidden;
         }
 
-        .hero-background {
+.hero-background {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             opacity: 0;
@@ -1177,6 +1177,8 @@
             background: #000;
             display: flex;
             gap: 40px;
+            position: relative;
+            overflow: hidden;
         }
 
         .category-sidebar {
@@ -1184,6 +1186,7 @@
             position: sticky;
             top: 120px;
             height: fit-content;
+            z-index: 1;
         }
 
         .sidebar-title { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #fff; }
@@ -1231,7 +1234,7 @@
             background: rgba(255,255,255,0.1);
         }
 
-        .games-content { flex: 1; min-width: 0; }
+        .games-content { flex: 1; min-width: 0; position: relative; z-index: 1; }
 
         .section-header { margin-bottom: 30px; }
         .section-title { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #fff; }
@@ -1423,6 +1426,19 @@
             .comments-container { flex-direction: column; }
             .reviews-column { flex: 1; width: 100%; }
         }
+        /* Wire Grid Canvas - behind game section */
+        #wireGrid {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            /* Fade in from top so it flows seamlessly from the hero banner */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 8%, rgba(0,0,0,0.7) 18%, black 32%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 8%, rgba(0,0,0,0.7) 18%, black 32%);
+        }
+
     </style>
 </head>
 <body>
@@ -1495,6 +1511,7 @@
 
             <!-- All Games - Sidebar Layout -->
             <div class="game-section">
+                <canvas id="wireGrid"></canvas>
                 <div class="category-sidebar">
                     <h3 class="sidebar-title">Categories</h3>
                     <div class="category-list">
@@ -2052,6 +2069,7 @@
                 profileIcon.style.fontWeight = '900';
                 renderGames();
                 startHeroRotation();
+                setTimeout(initWireGrid, 200);
             }, 1200);
         });
 
@@ -2551,6 +2569,168 @@
         }
 
         document.getElementById('htmlViewerBtn').addEventListener('click', openHtmlViewer);
+
+        // ============================================
+        // INTERACTIVE WIRE GRID
+        // ============================================
+        function initWireGrid() {
+            const section = document.querySelector('.game-section');
+            const canvas = document.getElementById('wireGrid');
+            if (!canvas || !section) return;
+            const ctx = canvas.getContext('2d');
+
+            // Tuning
+            const SPACING   = 44;    // grid spacing px
+            const INFLUENCE = 200;   // mouse repel radius
+            const STRENGTH  = 22;    // repel force
+            const SPRING    = 0.06;  // return-to-origin stiffness
+            const DAMP      = 0.78;  // velocity damping (higher = smoother)
+            const BASE_A    = 0.07;  // base line opacity
+            const HOVER_A   = 0.45;  // max line opacity near cursor
+            const BASE_W    = 0.4;   // base line width
+            const HOVER_W   = 1.2;   // max line width near cursor
+
+            let mouse = { x: -9999, y: -9999 };
+            let smoothMouse = { x: -9999, y: -9999 }; // lerped mouse for smoother glow
+            let points = [];
+            let cols = 0, rows = 0;
+
+            function resize() {
+                canvas.width  = section.offsetWidth;
+                canvas.height = section.offsetHeight;
+                buildGrid();
+            }
+
+            function buildGrid() {
+                cols = Math.ceil(canvas.width  / SPACING) + 2;
+                rows = Math.ceil(canvas.height / SPACING) + 2;
+                // Offset grid so it starts slightly off-screen for seamless edge look
+                const offX = (canvas.width  % SPACING) / 2;
+                const offY = (canvas.height % SPACING) / 2;
+                points = [];
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const ox = offX + c * SPACING;
+                        const oy = offY + r * SPACING;
+                        points.push({ ox, oy, x: ox, y: oy, vx: 0, vy: 0 });
+                    }
+                }
+            }
+
+            function pt(r, c) {
+                if (r < 0 || r >= rows || c < 0 || c >= cols) return null;
+                return points[r * cols + c];
+            }
+
+            function update() {
+                // Smooth mouse with lerp for the glow effect
+                const lerpF = 0.12;
+                smoothMouse.x += (mouse.x - smoothMouse.x) * lerpF;
+                smoothMouse.y += (mouse.y - smoothMouse.y) * lerpF;
+
+                for (const p of points) {
+                    const dx   = mouse.x - p.x;
+                    const dy   = mouse.y - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < INFLUENCE && dist > 1) {
+                        const t     = 1 - dist / INFLUENCE;
+                        const force = t * t * STRENGTH; // quadratic falloff — softer edges
+                        p.vx -= (dx / dist) * force * 0.25;
+                        p.vy -= (dy / dist) * force * 0.25;
+                    }
+
+                    // Spring back to rest position
+                    p.vx += (p.ox - p.x) * SPRING;
+                    p.vy += (p.oy - p.y) * SPRING;
+
+                    // Damping
+                    p.vx *= DAMP;
+                    p.vy *= DAMP;
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw horizontal lines
+                for (let r = 0; r < rows; r++) {
+                    const p0 = pt(r, 0);
+                    if (!p0) continue;
+                    const dy   = smoothMouse.y - p0.y;
+                    const glow = Math.max(0, 1 - Math.abs(dy) / INFLUENCE);
+                    ctx.beginPath();
+                    for (let c = 0; c < cols; c++) {
+                        const p = pt(r, c);
+                        if (!p) continue;
+                        c === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.strokeStyle = `rgba(255,255,255,${(BASE_A + glow * HOVER_A).toFixed(3)})`;
+                    ctx.lineWidth   = BASE_W + glow * HOVER_W;
+                    ctx.stroke();
+                }
+
+                // Draw vertical lines
+                for (let c = 0; c < cols; c++) {
+                    const p0 = pt(0, c);
+                    if (!p0) continue;
+                    const dx   = smoothMouse.x - p0.x;
+                    const glow = Math.max(0, 1 - Math.abs(dx) / INFLUENCE);
+                    ctx.beginPath();
+                    for (let r = 0; r < rows; r++) {
+                        const p = pt(r, c);
+                        if (!p) continue;
+                        r === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.strokeStyle = `rgba(255,255,255,${(BASE_A + glow * HOVER_A).toFixed(3)})`;
+                    ctx.lineWidth   = BASE_W + glow * HOVER_W;
+                    ctx.stroke();
+                }
+
+                // Soft radial glow at cursor
+                if (smoothMouse.x > -100) {
+                    const r = INFLUENCE * 0.8;
+                    const g = ctx.createRadialGradient(smoothMouse.x, smoothMouse.y, 0, smoothMouse.x, smoothMouse.y, r);
+                    g.addColorStop(0,   'rgba(255,255,255,0.06)');
+                    g.addColorStop(0.4, 'rgba(255,255,255,0.02)');
+                    g.addColorStop(1,   'rgba(255,255,255,0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(smoothMouse.x, smoothMouse.y, r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function loop() {
+                update();
+                draw();
+                requestAnimationFrame(loop);
+            }
+
+            // Track mouse relative to the canvas element
+            section.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+
+            section.addEventListener('mouseleave', () => {
+                // Don't snap — let mouse drift out smoothly via smoothMouse lerp
+                mouse.x = -9999;
+                mouse.y = -9999;
+            });
+
+            window.addEventListener('resize', () => {
+                resize();
+            });
+
+            resize();
+            loop();
+        }
+
     </script>
 </body>
 </html>
