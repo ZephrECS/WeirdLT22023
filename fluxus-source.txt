@@ -1806,7 +1806,7 @@
             },
             { 
                 title: 'Hotline Miami', 
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyYWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyMWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html', 
                 category: 'action',
                 description: 'A brutal top-down action game set in 1989 Miami. Clear rooms of enemies in this neon-soaked ultraviolent rampage.'
@@ -2000,24 +2000,12 @@
                 description: 'Gamble. Gamble. Gamble. Gamble. '
             },
             { 
-                title: 'Kindergarten', 
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/kindergarten/kindergarten-cover.jpg', 
-                category: 'classic', 
-                tag: 'MULTIPLE',
-                description: 'Survive your way through school. Complete missions, solve puzzles, and avoid getting killed in this dark comedy adventure.',
-                versions: [
-                    {
-                        name: 'Kindergarten 1',
-                        description: 'The original dark comedy school survival game',
-                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/kindergarten/kindergarten1.html'
-                    },
-                    {
-                        name: 'Kindergarten 2',
-                        description: 'The sequel with new missions and mysteries',
-                        gameUrl: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/kindergarten/kindergarten2.html'
-                    }
-                ]
-            }
+                title: 'Andy\'s Apple Farm', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/AndysAppleFarm/ne3tan.webp', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/AndysAppleFarm/applefarm.html', 
+                category: 'classic',
+                description: 'Just farming some apples, wait a second.. '
+            },
         ];
 
         // Initialize
