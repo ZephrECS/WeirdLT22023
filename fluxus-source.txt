@@ -2035,6 +2035,13 @@
                 category: 'classic',
                 description: 'Just farming some apples, wait a second..'
             },
+            { 
+                title: 'Shift At Midnight', 
+                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Shift%20At%20Midnight/coa2v6.jpg', 
+                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Shift%20At%20Midnight/clshiftatmidnight.html', 
+                category: 'classic',
+                description: 'Parasites.. LURKING as Humans. '
+            },
         ];
 
         // Initialize
