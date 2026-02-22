@@ -140,6 +140,7 @@
             transform: scale(1.1);
         }
 
+        /* Animation classes */
         .profile-screen.animating {
             pointer-events: none;
         }
@@ -165,13 +166,21 @@
         }
 
         @keyframes fadeOut {
-            to { opacity: 0; }
+            to {
+                opacity: 0;
+            }
         }
 
         @keyframes fadeBackground {
-            0% { opacity: 0; }
-            40% { opacity: 1; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         .profile-avatar.zoom-animation {
@@ -184,17 +193,42 @@
         }
 
         @keyframes zoomProfile {
-            0% { transform: translateY(-10px) scale(1); border-radius: 12px; }
-            50% { transform: translateY(-10px) scale(1.2); border-radius: 12px; }
-            70% { transform: translateY(-10px) scale(5); border-radius: 50%; }
-            100% { transform: translateY(-10px) scale(50); border-radius: 50%; opacity: 0; }
+            0% {
+                transform: translateY(-10px) scale(1);
+                border-radius: 12px;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.2);
+                border-radius: 12px;
+            }
+            70% {
+                transform: translateY(-10px) scale(5);
+                border-radius: 50%;
+            }
+            100% {
+                transform: translateY(-10px) scale(50);
+                border-radius: 50%;
+                opacity: 0;
+            }
         }
 
         @keyframes growF {
-            0% { transform: scale(1.1); opacity: 1; }
-            30% { transform: scale(1.5); opacity: 1; }
-            60% { transform: scale(8); opacity: 0.9; }
-            100% { transform: scale(40); opacity: 0; }
+            0% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            30% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            60% {
+                transform: scale(8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(40);
+                opacity: 0;
+            }
         }
 
         .profile-screen.fade-out {
@@ -203,7 +237,9 @@
         }
 
         @keyframes fadeOutScreen {
-            to { opacity: 0; }
+            to {
+                opacity: 0;
+            }
         }
 
         .profile-name {
@@ -230,8 +266,14 @@
         }
 
         @keyframes fadeInApp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .navbar {
@@ -268,406 +310,6 @@
             gap: 20px;
         }
 
-        /* ============================================
-           HTML VIEWER BUTTON
-           ============================================ */
-        .html-viewer-btn {
-            padding: 10px 18px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            color: rgba(255,255,255,0.8);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-        }
-
-        .html-viewer-btn .hvb-icon {
-            display: flex;
-            align-items: center;
-            color: #00ff88;
-            transition: transform 0.3s ease;
-        }
-
-        .html-viewer-btn:hover {
-            background: rgba(0,255,136,0.08);
-            border-color: rgba(0,255,136,0.4);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(0,255,136,0.15);
-            transform: translateY(-1px);
-        }
-
-        .html-viewer-btn:hover .hvb-icon {
-            transform: rotate(10deg) scale(1.1);
-        }
-
-        /* ============================================
-           HTML VIEWER MODAL
-           ============================================ */
-        .html-viewer-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            animation: hvFadeIn 0.25s ease forwards;
-        }
-
-        @keyframes hvFadeIn { to { opacity: 1; } }
-
-        .html-viewer-modal.closing {
-            animation: hvFadeOut 0.25s ease forwards;
-        }
-
-        @keyframes hvFadeOut { to { opacity: 0; } }
-
-        .hv-container {
-            width: 95vw;
-            height: 90vh;
-            max-width: 1600px;
-            background: #0a0a0a;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
-            transform: scale(0.94) translateY(16px);
-            animation: hvSlideUp 0.35s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
-        }
-
-        .html-viewer-modal.closing .hv-container {
-            animation: hvSlideDown 0.25s ease forwards;
-        }
-
-        @keyframes hvSlideUp { to { transform: scale(1) translateY(0); } }
-        @keyframes hvSlideDown { to { transform: scale(0.94) translateY(16px); opacity: 0; } }
-
-        /* Titlebar */
-        .hv-titlebar {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            height: 52px;
-            background: #0d0d0d;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            gap: 16px;
-            flex-shrink: 0;
-        }
-
-        .hv-traffic-lights {
-            display: flex;
-            gap: 7px;
-        }
-
-        .hv-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: filter 0.2s;
-        }
-
-        .hv-dot.close { background: #ff5f57; }
-        .hv-dot.min { background: #febc2e; }
-        .hv-dot.max { background: #28c840; }
-        .hv-dot:hover { filter: brightness(1.2); }
-
-        .hv-title {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.5);
-            flex: 1;
-            text-align: center;
-        }
-
-        .hv-title span { color: #00ff88; }
-
-        .hv-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .hv-btn {
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.5px;
-            font-family: 'Courier New', monospace;
-            border: 1px solid transparent;
-        }
-
-        .hv-btn-run {
-            background: #00ff88;
-            color: #000;
-            border-color: #00ff88;
-        }
-
-        .hv-btn-run:hover {
-            background: #00e67a;
-            box-shadow: 0 0 16px rgba(0,255,136,0.4);
-            transform: translateY(-1px);
-        }
-
-        .hv-btn-clear {
-            background: transparent;
-            color: rgba(255,255,255,0.5);
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .hv-btn-clear:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: #fff;
-        }
-
-        .hv-btn-fullscreen {
-            background: transparent;
-            color: rgba(255,255,255,0.5);
-            border-color: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .hv-btn-fullscreen:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: #fff;
-        }
-
-        /* Body */
-        .hv-body {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        /* Editor pane */
-        .hv-editor-pane {
-            width: 45%;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255,255,255,0.08);
-            min-width: 0;
-        }
-
-        .hv-pane-header {
-            padding: 10px 18px;
-            background: #0d0d0d;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-
-        .hv-pane-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #00ff88;
-        }
-
-        .hv-editor-wrap {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hv-line-numbers {
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 44px;
-            background: #0d0d0d;
-            border-right: 1px solid rgba(255,255,255,0.05);
-            padding: 16px 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hv-line-num {
-            display: block;
-            text-align: right;
-            padding-right: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6em;
-            color: rgba(255,255,255,0.18);
-            height: 1.6em;
-        }
-
-        .hv-code-editor {
-            position: absolute;
-            inset: 0;
-            padding: 16px 16px 16px 60px;
-            background: transparent;
-            color: #e0e0e0;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6em;
-            resize: none;
-            outline: none;
-            border: none;
-            caret-color: #00ff88;
-            tab-size: 2;
-            white-space: pre;
-            overflow: auto;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.15) transparent;
-        }
-
-        .hv-code-editor::selection { background: rgba(0,255,136,0.2); }
-
-        .hv-code-editor::-webkit-scrollbar { width: 6px; height: 6px; }
-        .hv-code-editor::-webkit-scrollbar-track { background: transparent; }
-        .hv-code-editor::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.15);
-            border-radius: 3px;
-        }
-
-        /* Resize handle */
-        .hv-resize-handle {
-            width: 4px;
-            background: rgba(255,255,255,0.05);
-            cursor: col-resize;
-            flex-shrink: 0;
-            transition: background 0.2s;
-        }
-
-        .hv-resize-handle:hover,
-        .hv-resize-handle.dragging {
-            background: rgba(0,255,136,0.3);
-        }
-
-        /* Preview pane */
-        .hv-preview-pane {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-
-        .hv-preview-frame {
-            flex: 1;
-            border: none;
-            background: #fff;
-        }
-
-        .hv-empty-state {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            color: rgba(255,255,255,0.2);
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-        }
-
-        .hv-empty-icon {
-            font-size: 40px;
-            opacity: 0.3;
-        }
-
-        /* Status bar */
-        .hv-statusbar {
-            height: 28px;
-            background: #0d0d0d;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            padding: 0 18px;
-            gap: 20px;
-            flex-shrink: 0;
-        }
-
-        .hv-status-item {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: rgba(255,255,255,0.25);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .hv-status-item.green { color: #00ff88; }
-
-        /* Fullscreen overlay */
-        .hv-fullscreen-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hv-fs-bar {
-            height: 44px;
-            background: rgba(0,0,0,0.95);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 12px;
-        }
-
-        .hv-fs-title {
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.4);
-            flex: 1;
-        }
-
-        .hv-fs-exit {
-            padding: 6px 14px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 12px;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .hv-fs-exit:hover {
-            background: rgba(255,255,255,0.14);
-            border-color: rgba(255,255,255,0.3);
-        }
-
-        .hv-fs-frame {
-            flex: 1;
-            border: none;
-            background: #fff;
-        }
-
         /* Changelog Button */
         .changelog-btn {
             padding: 10px 20px;
@@ -696,8 +338,12 @@
         }
 
         @keyframes shine {
-            0% { left: -50%; }
-            50%, 100% { left: 150%; }
+            0% {
+                left: -50%;
+            }
+            50%, 100% {
+                left: 150%;
+            }
         }
 
         .changelog-btn:hover {
@@ -718,8 +364,14 @@
         }
 
         @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
         }
 
         /* Changelog Modal */
@@ -803,10 +455,22 @@
             padding-right: 10px;
         }
 
-        .changelog-list::-webkit-scrollbar { width: 6px; }
-        .changelog-list::-webkit-scrollbar-track { background: transparent; }
-        .changelog-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
-        .changelog-list::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+        .changelog-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .changelog-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .changelog-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .changelog-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
 
         .changelog-entry {
             margin-bottom: 24px;
@@ -837,7 +501,11 @@
             margin-bottom: 8px;
         }
 
-        .changelog-items { display: flex; flex-direction: column; gap: 6px; }
+        .changelog-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
         .changelog-item {
             font-size: 14px;
@@ -847,10 +515,27 @@
             position: relative;
         }
 
-        .changelog-item::before { content: '•'; position: absolute; left: 8px; color: rgba(255,255,255,0.4); }
-        .changelog-item.added::before { content: '+'; color: #00ff88; }
-        .changelog-item.fixed::before { content: '✓'; color: #00aaff; }
-        .changelog-item.removed::before { content: '-'; color: #ff4444; }
+        .changelog-item::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .changelog-item.added::before {
+            content: '+';
+            color: #00ff88;
+        }
+
+        .changelog-item.fixed::before {
+            content: '✓';
+            color: #00aaff;
+        }
+
+        .changelog-item.removed::before {
+            content: '-';
+            color: #ff4444;
+        }
 
         .search-box {
             background: rgba(255,255,255,0.1);
@@ -889,10 +574,14 @@
             transform: scale(1.05);
         }
 
+        /* Flash animation for profile icon */
         body.flashing::before {
             content: '';
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
             z-index: 10000;
             animation: flashEffect 0.6s ease-out forwards;
@@ -900,14 +589,23 @@
         }
 
         @keyframes flashEffect {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            100% { opacity: 0; }
+            0% {
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
         }
 
         /* Content */
-        .content { padding-top: 100px; }
+        .content {
+            padding-top: 100px;
+        }
 
+        /* IMPROVED HERO SECTION - BRIGHTER & BETTER */
         .hero {
             position: relative;
             height: 85vh;
@@ -919,14 +617,19 @@
             overflow: hidden;
         }
 
-.hero-background {
+        .hero-background {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             opacity: 0;
             transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .hero-background.active { opacity: 1; }
+        .hero-background.active {
+            opacity: 1;
+        }
 
         .hero-background img {
             width: 100%;
@@ -938,14 +641,22 @@
         }
 
         @keyframes slowZoom {
-            0% { transform: scale(1.15) translateX(0); }
-            100% { transform: scale(1.25) translateX(-5%); }
+            0% {
+                transform: scale(1.15) translateX(0);
+            }
+            100% {
+                transform: scale(1.25) translateX(-5%);
+            }
         }
 
+        /* Seamless gradient fade to bottom */
         .hero::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: 
                 linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.7) 100%),
                 linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.95) 90%, rgba(0,0,0,1) 100%);
@@ -975,7 +686,10 @@
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .hero-badge.visible { opacity: 1; transform: translateY(0); }
+        .hero-badge.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .hero-title {
             font-size: 72px;
@@ -989,7 +703,10 @@
             text-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
 
-        .hero-title.visible { opacity: 1; transform: translateY(0); }
+        .hero-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .hero-description {
             font-size: 20px;
@@ -1002,7 +719,10 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
-        .hero-description.visible { opacity: 1; transform: translateY(0); }
+        .hero-description.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .hero-buttons {
             display: flex;
@@ -1012,7 +732,10 @@
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
         }
 
-        .hero-buttons.visible { opacity: 1; transform: translateY(0); }
+        .hero-buttons.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .btn {
             padding: 16px 40px;
@@ -1053,11 +776,13 @@
             transform: translateY(-2px);
         }
 
-        /* Version Picker Modal */
+        /* Version Picker Modal - Sleek Popup */
         .version-modal {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.85);
             display: flex;
             align-items: center;
@@ -1067,10 +792,21 @@
             animation: fadeInModal 0.3s ease forwards;
         }
 
-        .version-modal.closing { animation: fadeOutModal 0.3s ease forwards; }
+        .version-modal.closing {
+            animation: fadeOutModal 0.3s ease forwards;
+        }
 
-        @keyframes fadeInModal { to { opacity: 1; } }
-        @keyframes fadeOutModal { to { opacity: 0; } }
+        @keyframes fadeInModal {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutModal {
+            to {
+                opacity: 0;
+            }
+        }
 
         .version-content {
             background: #000;
@@ -1088,8 +824,18 @@
             animation: slideDownScale 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        @keyframes slideUpScale { to { transform: scale(1) translateY(0); } }
-        @keyframes slideDownScale { to { transform: scale(0.9) translateY(20px); opacity: 0; } }
+        @keyframes slideUpScale {
+            to {
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideDownScale {
+            to {
+                transform: scale(0.9) translateY(20px);
+                opacity: 0;
+            }
+        }
 
         .version-header {
             font-size: 28px;
@@ -1101,7 +847,11 @@
             gap: 12px;
         }
 
-        .version-subtitle { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 30px; }
+        .version-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
 
         .version-grid {
             display: grid;
@@ -1125,13 +875,17 @@
         .version-option::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             transition: left 0.5s ease;
         }
 
-        .version-option:hover::before { left: 100%; }
+        .version-option:hover::before {
+            left: 100%;
+        }
 
         .version-option:hover {
             background: rgba(255,255,255,0.12);
@@ -1145,8 +899,17 @@
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .version-name { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 6px; }
-        .version-description { font-size: 13px; color: rgba(255,255,255,0.6); }
+        .version-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .version-description {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
 
         .version-close {
             width: 100%;
@@ -1166,32 +929,51 @@
             border-color: rgba(255,255,255,0.2);
         }
 
-        .version-grid::-webkit-scrollbar { width: 6px; }
-        .version-grid::-webkit-scrollbar-track { background: transparent; }
-        .version-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
-        .version-grid::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+        .version-grid::-webkit-scrollbar {
+            width: 6px;
+        }
 
-        /* Game Grid */
+        .version-grid::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .version-grid::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .version-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* IMPROVED GAME GRID - SIDEBAR + TIGHT GRID */
         .game-section {
             padding: 60px 60px 80px;
             background: #000;
             display: flex;
             gap: 40px;
-            position: relative;
-            overflow: hidden;
         }
 
+        /* Category Sidebar */
         .category-sidebar {
             flex: 0 0 240px;
             position: sticky;
             top: 120px;
             height: fit-content;
-            z-index: 1;
         }
 
-        .sidebar-title { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #fff; }
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
 
-        .category-list { display: flex; flex-direction: column; gap: 8px; }
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
         .category-item {
             padding: 14px 18px;
@@ -1234,12 +1016,29 @@
             background: rgba(255,255,255,0.1);
         }
 
-        .games-content { flex: 1; min-width: 0; position: relative; z-index: 1; }
+        /* Games Content Area */
+        .games-content {
+            flex: 1;
+            min-width: 0;
+        }
 
-        .section-header { margin-bottom: 30px; }
-        .section-title { font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #fff; }
-        .section-subtitle { font-size: 16px; color: rgba(255,255,255,0.6); }
+        .section-header {
+            margin-bottom: 30px;
+        }
 
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Tighter grid layout with explicit positioning */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -1267,31 +1066,50 @@
             z-index: 10;
         }
 
+        /* Fade out and shrink non-matching items */
         .bento-item.fade-out {
             opacity: 0;
             transform: scale(0.8);
             pointer-events: none;
         }
 
+        /* Keep items visible during transition */
         .bento-item.transitioning {
             transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .bento-image { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
-        .bento-item:hover .bento-image { transform: scale(1.05); }
+        .bento-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .bento-item:hover .bento-image {
+            transform: scale(1.05);
+        }
 
         .bento-overlay {
             position: absolute;
-            bottom: 0; left: 0; right: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding: 20px;
             background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 70%, transparent 100%);
             transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .bento-item:hover .bento-overlay { transform: translateY(0); }
+        .bento-item:hover .bento-overlay {
+            transform: translateY(0);
+        }
 
-        .bento-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: #fff; }
+        .bento-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
 
         .bento-tag {
             display: inline-block;
@@ -1305,16 +1123,31 @@
             letter-spacing: 0.5px;
         }
 
-        /* Comments Section */
+        /* COMMENTS SECTION - SEAMLESS INTEGRATION */
         .comments-section {
             padding: 80px 60px;
             background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        .comments-header { text-align: center; margin-bottom: 50px; }
-        .comments-title { font-size: 48px; font-weight: 700; margin-bottom: 15px; color: #fff; letter-spacing: -1px; }
-        .comments-subtitle { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+        .comments-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .comments-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .comments-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
 
         .comments-container {
             max-width: 1400px;
@@ -1324,7 +1157,12 @@
             align-items: start;
         }
 
-        .reviews-column { flex: 0 0 280px; display: flex; flex-direction: column; gap: 20px; }
+        .reviews-column {
+            flex: 0 0 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
         .review-card {
             background: rgba(255,255,255,0.03);
@@ -1340,28 +1178,79 @@
             transform: translateY(-2px);
         }
 
-        .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-
-        .review-avatar {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 16px; color: #fff;
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
-        .review-avatar.alt1 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .review-avatar.alt2 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .review-avatar.alt3 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .review-avatar.alt4 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .review-avatar.alt5 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+        }
 
-        .review-info { flex: 1; }
-        .review-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 2px; }
-        .review-stars { color: #ffd700; font-size: 12px; letter-spacing: 2px; }
-        .review-text { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.7); }
-        .review-text.featured { color: rgba(255,255,255,0.85); font-weight: 500; }
-        .review-date { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; }
+        .review-avatar.alt1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .review-avatar.alt2 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .review-avatar.alt3 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .review-avatar.alt4 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .review-avatar.alt5 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .review-info {
+            flex: 1;
+        }
+
+        .review-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .review-stars {
+            color: #ffd700;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .review-text.featured {
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+        }
+
+        .review-date {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 8px;
+        }
 
         .padlet-wrapper {
             flex: 1;
@@ -1378,9 +1267,21 @@
             box-shadow: 0 15px 50px rgba(0,0,0,0.4);
         }
 
-        .padlet-embed { border: none !important; border-radius: 12px !important; overflow: hidden !important; background: #1a1a1a !important; }
-        .padlet-embed iframe { border-radius: 12px !important; }
-        .padlet-embed > div:last-child { display: none !important; }
+        .padlet-embed {
+            border: none !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            background: #1a1a1a !important;
+        }
+
+        .padlet-embed iframe {
+            border-radius: 12px !important;
+        }
+
+        /* Hide Padlet branding for cleaner look */
+        .padlet-embed > div:last-child {
+            display: none !important;
+        }
 
         /* Footer */
         .footer {
@@ -1391,54 +1292,126 @@
             margin-top: 40px;
         }
 
-        .footer-logo { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
 
         /* Responsive */
-        @media (max-width: 1600px) { .bento-grid { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 1200px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 1600px) {
+            .bento-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
 
         @media (max-width: 992px) {
-            .game-section { flex-direction: column; }
-            .category-sidebar { position: relative; top: 0; flex: 1; width: 100%; }
-            .category-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
-            .category-item { flex: 0 0 auto; }
-            .bento-grid { grid-template-columns: repeat(3, 1fr); }
+            .game-section {
+                flex-direction: column;
+            }
+
+            .category-sidebar {
+                position: relative;
+                top: 0;
+                flex: 1;
+                width: 100%;
+            }
+
+            .category-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .category-item {
+                flex: 0 0 auto;
+            }
+
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 20px 20px; }
-            .hero { height: 70vh; padding: 0 20px; }
-            .hero-title { font-size: 48px; }
-            .hero-description { font-size: 16px; }
-            .game-section { padding: 40px 20px; }
-            .comments-section { padding: 60px 20px; }
-            .padlet-wrapper { padding: 20px; }
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-            .profiles-container { gap: 20px; }
-            .profile-avatar { width: 120px; height: 120px; font-size: 48px; }
+            .navbar {
+                padding: 20px 20px;
+            }
+
+            .hero {
+                height: 70vh;
+                padding: 0 20px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .game-section {
+                padding: 40px 20px;
+            }
+
+            .comments-section {
+                padding: 60px 20px;
+            }
+
+            .padlet-wrapper {
+                padding: 20px;
+            }
+
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .profiles-container {
+                gap: 20px;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 48px;
+            }
         }
 
         @media (max-width: 480px) {
-            .bento-grid { grid-template-columns: repeat(1, 1fr); }
-            .hero-buttons { flex-direction: column; }
-            .btn { width: 100%; justify-content: center; }
-            .comments-title { font-size: 32px; }
-            .comments-container { flex-direction: column; }
-            .reviews-column { flex: 1; width: 100%; }
-        }
-        /* Wire Grid Canvas - behind game section */
-        #wireGrid {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            /* Fade in from top so it flows seamlessly from the hero banner */
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 8%, rgba(0,0,0,0.7) 18%, black 32%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 8%, rgba(0,0,0,0.7) 18%, black 32%);
-        }
+            .bento-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
 
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .comments-title {
+                font-size: 32px;
+            }
+
+            .comments-container {
+                flex-direction: column;
+            }
+
+            .reviews-column {
+                flex: 1;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1470,16 +1443,6 @@
             <div class="nav-logo">FLUXUS</div>
             <div class="nav-right">
                 <input type="text" class="search-box" id="searchBox" placeholder="Search games...">
-                <!-- HTML VIEWER BUTTON -->
-                <button class="html-viewer-btn" id="htmlViewerBtn">
-                    <span class="hvb-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="16 18 22 12 16 6"></polyline>
-                            <polyline points="8 6 2 12 8 18"></polyline>
-                        </svg>
-                    </span>
-                    HTML VIEWER
-                </button>
                 <button class="changelog-btn" id="changelogBtn">
                     What's New
                     <span class="badge"></span>
@@ -1503,15 +1466,19 @@
                         all accessible anywhere, anytime.
                     </p>
                     <div class="hero-buttons visible">
-                        <button class="btn btn-primary" id="playFeatured">▶ Play Now</button>
-                        <button class="btn btn-secondary">ℹ More Info</button>
+                        <button class="btn btn-primary" id="playFeatured">
+                            ▶ Play Now
+                        </button>
+                        <button class="btn btn-secondary">
+                            ℹ More Info
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- All Games - Sidebar Layout -->
             <div class="game-section">
-                <canvas id="wireGrid"></canvas>
+                <!-- Category Sidebar -->
                 <div class="category-sidebar">
                     <h3 class="sidebar-title">Categories</h3>
                     <div class="category-list">
@@ -1542,6 +1509,7 @@
                     </div>
                 </div>
 
+                <!-- Games Content -->
                 <div class="games-content">
                     <div class="section-header">
                         <h2 class="section-title">Browse Games</h2>
@@ -1558,6 +1526,7 @@
                     <p class="comments-subtitle">Share your thoughts, suggest games, or just hang out with fellow gamers</p>
                 </div>
                 <div class="comments-container">
+                    <!-- Left Reviews Column -->
                     <div class="reviews-column">
                         <div class="review-card">
                             <div class="review-header">
@@ -1570,6 +1539,7 @@
                             <p class="review-text featured">Finally found a site that actually cares about quality. The owner/developer really makes sure he only adds higher quality games compared to the slop on other sites which add whatever they can. This guy takes pride in keeping the site clean and sleek.</p>
                             <div class="review-date">2 days ago</div>
                         </div>
+
                         <div class="review-card">
                             <div class="review-header">
                                 <div class="review-avatar alt1">S</div>
@@ -1581,6 +1551,7 @@
                             <p class="review-text">Best unblocked gaming site I've used. Clean interface, no ads everywhere, just pure gaming. The Minecraft version runs so smooth!</p>
                             <div class="review-date">5 days ago</div>
                         </div>
+
                         <div class="review-card">
                             <div class="review-header">
                                 <div class="review-avatar alt2">J</div>
@@ -1592,6 +1563,7 @@
                             <p class="review-text">The secret games feature is genius. Found some absolute gems I never would have discovered otherwise. 10/10 site design too.</p>
                             <div class="review-date">1 week ago</div>
                         </div>
+
                         <div class="review-card">
                             <div class="review-header">
                                 <div class="review-avatar alt3">A</div>
@@ -1605,10 +1577,12 @@
                         </div>
                     </div>
 
+                    <!-- Center Padlet -->
                     <div class="padlet-wrapper">
                         <div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4"><p style="padding:0;margin:0"><iframe src="https://padlet.com/embed/de91e4lqaz8j68w9" frameborder="0" allow="camera;microphone;geolocation;display-capture;clipboard-write" style="width:100%;height:608px;display:block;padding:0;margin:0"></iframe></p><div style="display:flex;align-items:center;justify-content:end;margin:0;padding:8px 8px 8px 0"><a href="https://padlet.com?ref=embed" style="display:flex;align-items:center;gap:5px;flex-grow:0;margin:0;border:none;padding:0;text-decoration:none" target="_blank"><span aria-hidden style="color:#9E9E9E;font-size:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1">Made with</span><img src="https://padlet.net/emails/padlet_email_logo_2026_text-dark-200.png" height="12" style="padding:0;margin:0;background:0 0;border:none;box-shadow:none;display:block" alt="Made with Padlet"></a></div></div>
                     </div>
 
+                    <!-- Right Reviews Column -->
                     <div class="reviews-column">
                         <div class="review-card">
                             <div class="review-header">
@@ -1621,6 +1595,7 @@
                             <p class="review-text featured">You can really tell the creator curates this collection carefully. Unlike other sites that throw up hundreds of broken games, every single one here actually works and is worth playing. Quality over quantity done right.</p>
                             <div class="review-date">3 days ago</div>
                         </div>
+
                         <div class="review-card">
                             <div class="review-header">
                                 <div class="review-avatar alt5">D</div>
@@ -1632,6 +1607,7 @@
                             <p class="review-text">Hollow Knight runs perfectly! The hero banner rotation is such a cool touch. Makes me want to try games I normally wouldn't.</p>
                             <div class="review-date">6 days ago</div>
                         </div>
+
                         <div class="review-card">
                             <div class="review-header">
                                 <div class="review-avatar">L</div>
@@ -1643,6 +1619,7 @@
                             <p class="review-text featured">The developer's attention to detail is insane. Every game is hand-picked, the site never lags, and the design is cleaner than most paid gaming platforms. This is what happens when someone actually cares about their work.</p>
                             <div class="review-date">1 week ago</div>
                         </div>
+
                         <div class="review-card">
                             <div class="review-header">
                                 <div class="review-avatar alt1">T</div>
@@ -1667,21 +1644,15 @@
     </div>
 
     <script>
+        // Game Library - Easy to add/modify games
         // ============================================
-        // CHANGELOG
+        // CHANGELOG SYSTEM - EASY TO ADD NEW ENTRIES!
         // ============================================
+        // Add your changelog entries here - newest first!
         const changelogs = [
             {
-                date: 'Feb 17, 2026',
-                isNew: true,
-                items: [
-                    { text: 'Added HTML VIEWER — a sleek in-browser code editor with live preview', type: 'added' },
-                    { text: 'HTML VIEWER supports fullscreen preview mode', type: 'added' },
-                    { text: 'Draggable split pane between editor and preview', type: 'added' }
-                ]
-            },
-            {
                 date: 'Feb 14, 2026',
+                isNew: true,
                 items: [
                     { text: 'Redesigned hero banner with brighter, more engaging visuals', type: 'added' },
                     { text: 'Implemented masonry grid layout for better game browsing', type: 'added' },
@@ -1715,7 +1686,7 @@
         ];
 
         // ============================================
-        // SECRET GAMES
+        // SECRET GAMES - HIDDEN SEARCH TERMS
         // ============================================
         const secretGames = [
             {
@@ -1747,9 +1718,9 @@
         // ============================================
         // GAME LIBRARY
         // ============================================
+        
         const games = [
-
-            // ---- FEATURED ----
+            // Featured
             { 
                 title: 'Minecraft', 
                 image: 'https://github.com/ZephrECS/EagerIGG1.12.html/blob/main/MC.jpg?raw=true', 
@@ -1818,7 +1789,7 @@
                 description: 'Explore a vast ruined kingdom of insects and heroes. Discover ancient secrets and battle tainted creatures in this challenging metroidvania.'
             },
 
-            // ---- ACTION ----
+            // Action
             { 
                 title: 'Buckshot Roulette', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/logo_Buckshot_Roulette.png', 
@@ -1876,7 +1847,7 @@
                 description: 'Endless runner through city subways. Dodge trains, grind rails, and outrun the inspector in this colorful chase.'
             },
 
-            // ---- HORROR ----
+            // Horror
             { 
                 title: 'Iron Lung', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/MV5BM2JhZDRmNDAtZWE4OC00NmRjLTlmZGUtZmQxNmNkOTk5ZWRhXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', 
@@ -1903,7 +1874,7 @@
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/images.jpeg', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/Granny.txt', 
                 category: 'horror',
-                description: 'Escape from Granny\'s house before it\'s too late. Stay quiet, hide, and solve puzzles to survive five terrifying nights.'
+                description: 'Escape from Grannys house before its too late. Stay quiet, hide, and solve puzzles to survive five terrifying nights.'
             },
             { 
                 title: 'Bendy: ATIM', 
@@ -1941,7 +1912,7 @@
                 description: 'Work the graveyard shift at a gas station. Something\'s not right in this unsettling atmospheric horror.'
             },
 
-            // ---- SANDBOX ----
+            // Sandbox
             { 
                 title: 'R.E.P.O.', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./repo-teases-big-update-game-rant.avif', 
@@ -1971,7 +1942,7 @@
                 description: 'Chill fishing with friends online. Cast your line, catch fish, and hang out in this relaxing multiplayer experience.'
             },
 
-            // ---- CLASSIC ----
+            // Classic
             { 
                 title: 'Getting Over It', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/9AZHswQrJ6UuZld22c5UGLuk5mqDWAocm0gUhDd6MyA.jpg', 
@@ -2019,28 +1990,21 @@
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/e3549b645ea3dc77411280ba4a83f018235bbdb6f0b32039a5519cee985f0f4f.avif', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/Untitled%20Goose%20Game.txt', 
                 category: 'classic',
-                description: 'There\'s a Goose, There\'s a game.'
+                description: 'Theres a Goose, Theres a game.'
             },
             { 
                 title: 'Clover Pit', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/CloverPit_cover.jpeg', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/Clover%20Pit.html', 
                 category: 'classic',
-                description: 'Gamble. Gamble. Gamble. Gamble.'
+                description: 'Gamble. Gamble. Gamble. Gamble. '
             },
             { 
                 title: 'Andy\'s Apple Farm', 
                 image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/AndysAppleFarm/ne3tan.webp', 
                 url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/AndysAppleFarm/applefarm.html', 
                 category: 'classic',
-                description: 'Just farming some apples, wait a second..'
-            },
-            { 
-                title: 'Shift At Midnight', 
-                image: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Shift%20At%20Midnight/coa2v6.jpg', 
-                url: 'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Shift%20At%20Midnight/clshiftatmidnight.html', 
-                category: 'classic',
-                description: 'Parasites.. LURKING as Humans. '
+                description: 'Just farming some apples, wait a second.. '
             },
         ];
 
@@ -2059,66 +2023,94 @@
 
         fluxusProfile.addEventListener('click', function() {
             profileScreen.classList.add('animating');
+            
             const avatar = this.querySelector('.profile-avatar');
             const letterF = this.querySelector('.letter-f');
             const profileName = this.querySelector('.profile-name');
             const profileHeader = document.querySelector('.profile-header');
+            
             profileName.classList.add('fade-name');
             profileHeader.classList.add('fade-header');
+            
             avatar.classList.add('zoom-animation');
             letterF.classList.add('grow-animation');
-            setTimeout(() => { profileScreen.classList.add('fade-out'); }, 1000);
+            
+            setTimeout(() => {
+                profileScreen.classList.add('fade-out');
+            }, 1000);
+            
             setTimeout(() => {
                 profileScreen.style.display = 'none';
                 mainApp.classList.add('active');
                 profileIcon.textContent = 'F';
                 profileIcon.style.fontSize = '20px';
                 profileIcon.style.fontWeight = '900';
+                
                 renderGames();
                 startHeroRotation();
-                setTimeout(initWireGrid, 200);
             }, 1200);
         });
 
+        // Flash effect when clicking profile icon
         profileIcon.addEventListener('click', () => {
             document.body.classList.add('flashing');
-            setTimeout(() => { document.body.classList.remove('flashing'); }, 600);
+            setTimeout(() => {
+                document.body.classList.remove('flashing');
+            }, 600);
         });
 
         // ============================================
         // CHANGELOG MODAL
         // ============================================
+        
         function showChangelog() {
             const modal = document.createElement('div');
             modal.className = 'changelog-modal';
+            
             const changelogHTML = changelogs.map(entry => `
                 <div class="changelog-entry ${entry.isNew ? 'new' : ''}">
                     <div class="changelog-date">${entry.date}${entry.isNew ? ' • NEW' : ''}</div>
                     <div class="changelog-items">
-                        ${entry.items.map(item => `<div class="changelog-item ${item.type}">${item.text}</div>`).join('')}
+                        ${entry.items.map(item => `
+                            <div class="changelog-item ${item.type}">${item.text}</div>
+                        `).join('')}
                     </div>
                 </div>
             `).join('');
+            
             modal.innerHTML = `
                 <div class="changelog-content">
                     <div class="changelog-header">
                         <h2 class="changelog-title">🎮 What's New</h2>
                         <button class="changelog-close">✕</button>
                     </div>
-                    <div class="changelog-list">${changelogHTML}</div>
+                    <div class="changelog-list">
+                        ${changelogHTML}
+                    </div>
                 </div>
             `;
+            
             function closeModal() {
                 modal.classList.add('closing');
-                setTimeout(() => modal.remove(), 300);
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
             }
+            
             modal.querySelector('.changelog-close').addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
             document.body.appendChild(modal);
         }
+        
         document.getElementById('changelogBtn').addEventListener('click', showChangelog);
 
-        // Hero rotation
+        // Hero rotation system
         let currentHeroIndex = 0;
         let heroInterval;
 
@@ -2138,17 +2130,22 @@
             const heroTitle = document.getElementById('heroTitle');
             const heroDescription = document.getElementById('heroDescription');
             const heroButtons = document.querySelector('.hero-buttons');
+            
             heroBadge.classList.remove('visible');
             heroTitle.classList.remove('visible');
             heroDescription.classList.remove('visible');
             heroButtons.classList.remove('visible');
+            
             heroBackground.classList.remove('active');
+            
             setTimeout(() => {
                 heroImage.src = game.image;
                 heroBadge.textContent = game.tag || 'Featured Game';
                 heroTitle.textContent = game.title;
                 heroDescription.textContent = game.description || 'Experience this amazing game now.';
+                
                 heroBackground.classList.add('active');
+                
                 setTimeout(() => heroBadge.classList.add('visible'), 100);
                 setTimeout(() => heroTitle.classList.add('visible'), 200);
                 setTimeout(() => heroDescription.classList.add('visible'), 300);
@@ -2156,9 +2153,10 @@
             }, 600);
         }
 
-        // Render Games
+        // Render Games with masonry layout
         function renderGames() {
             const container = document.getElementById('allGamesGrid');
+            
             const regularGamesHTML = games.map(game => `
                 <div class="bento-item" data-category="${game.category}" onclick="${game.versions ? `showVersionPicker(${games.indexOf(game)}, false)` : `playGame('${game.url}')`}">
                     <img src="${game.image}" class="bento-image" alt="${game.title}" onload="setGridRowSpan(this)">
@@ -2168,6 +2166,7 @@
                     </div>
                 </div>
             `).join('');
+            
             const secretGamesHTML = secretGames.map(game => `
                 <div class="bento-item secret-game" style="display: none;" onclick="${game.versions ? `showVersionPicker(${secretGames.indexOf(game)}, true)` : `playGame('${game.url}')`}">
                     <img src="${game.image}" class="bento-image" alt="${game.title}" onload="setGridRowSpan(this)">
@@ -2177,52 +2176,82 @@
                     </div>
                 </div>
             `).join('');
+            
             container.innerHTML = regularGamesHTML + secretGamesHTML;
+            
+            // Update category counts
             updateCategoryCounts();
+            
+            // Add category filter listeners
             setupCategoryFilters();
         }
 
+        // Calculate grid row span based on image height for masonry effect
         function setGridRowSpan(img) {
             const item = img.closest('.bento-item');
-            const rowHeight = 10;
-            const rowGap = 10;
+            const rowHeight = 10; // matches grid-auto-rows
+            const rowGap = 10; // matches gap
             const height = img.getBoundingClientRect().height;
             const rowSpan = Math.ceil((height + rowGap) / (rowHeight + rowGap));
             item.style.gridRowEnd = `span ${rowSpan}`;
         }
 
+        // Update category counts
         function updateCategoryCounts() {
             const categories = ['all', 'featured', 'action', 'horror', 'sandbox', 'classic'];
+            
             categories.forEach(cat => {
-                const count = cat === 'all' ? games.length : games.filter(g => g.category === cat).length;
+                let count;
+                if (cat === 'all') {
+                    count = games.length;
+                } else {
+                    count = games.filter(g => g.category === cat).length;
+                }
                 const countEl = document.getElementById(`count-${cat}`);
                 if (countEl) countEl.textContent = count;
             });
         }
 
+        // Setup category filters
         function setupCategoryFilters() {
             const categoryItems = document.querySelectorAll('.category-item');
+            
             categoryItems.forEach(item => {
                 item.addEventListener('click', function() {
+                    // Remove active class from all
                     categoryItems.forEach(i => i.classList.remove('active'));
+                    // Add active to clicked
                     this.classList.add('active');
-                    filterByCategory(this.dataset.category);
+                    
+                    const category = this.dataset.category;
+                    filterByCategory(category);
                 });
             });
         }
 
+        // Filter games by category - fade out non-matching, let grid reflow smoothly
         function filterByCategory(category) {
             const allItems = document.querySelectorAll('.bento-item:not(.secret-game)');
-            allItems.forEach(item => item.classList.add('transitioning'));
-            allItems.forEach((item) => {
+            
+            // Add transitioning class for smooth animation
+            allItems.forEach(item => {
+                item.classList.add('transitioning');
+            });
+            
+            allItems.forEach((item, index) => {
                 const shouldShow = category === 'all' || item.dataset.category === category;
+                
                 if (shouldShow) {
+                    // Remove fade-out and ensure visibility
                     item.classList.remove('fade-out');
+                    // Use grid properties instead of display
                     item.style.gridColumn = 'span 1';
                     item.style.visibility = 'visible';
                     item.style.position = 'relative';
                 } else {
+                    // Fade out the item
                     item.classList.add('fade-out');
+                    // After fade completes, collapse it from grid
                     setTimeout(() => {
                         if (item.classList.contains('fade-out')) {
                             item.style.gridColumn = 'span 0';
@@ -2232,12 +2261,20 @@
                     }, 400);
                 }
             });
-            setTimeout(() => { allItems.forEach(item => item.classList.remove('transitioning')); }, 700);
+            
+            // Remove transitioning class after animations complete
+            setTimeout(() => {
+                allItems.forEach(item => {
+                    item.classList.remove('transitioning');
+                });
+            }, 700);
         }
 
+        // Version picker
         function showVersionPicker(gameIndex, isSecret = false) {
             const game = isSecret ? secretGames[gameIndex] : games[gameIndex];
             if (!game.versions) return;
+            
             const modal = document.createElement('div');
             modal.className = 'version-modal';
             modal.innerHTML = `
@@ -2245,27 +2282,46 @@
                     <h2 class="version-header">🎮 Select Version</h2>
                     <p class="version-subtitle">Choose which version of ${game.title} you'd like to play</p>
                     <div class="version-grid">
-                        ${game.versions.map(v => `<div class="version-option" data-url="${v.gameUrl}"><div class="version-name">${v.name}</div><div class="version-description">${v.description}</div></div>`).join('')}
+                        ${game.versions.map(v => `
+                            <div class="version-option" data-url="${v.gameUrl}">
+                                <div class="version-name">${v.name}</div>
+                                <div class="version-description">${v.description}</div>
+                            </div>
+                        `).join('')}
                     </div>
                     <button class="version-close">Cancel</button>
                 </div>
             `;
+            
             function closeModal() {
                 modal.classList.add('closing');
-                setTimeout(() => modal.remove(), 300);
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
             }
+            
             modal.querySelectorAll('.version-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const url = this.dataset.url;
                     closeModal();
-                    setTimeout(() => playGame(url), 150);
+                    setTimeout(() => {
+                        playGame(url);
+                    }, 150);
                 });
             });
+            
             modal.querySelector('.version-close').addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
             document.body.appendChild(modal);
         }
 
+        // Play Game
         async function playGame(url) {
             try {
                 const response = await fetch(url);
@@ -2279,6 +2335,7 @@
             }
         }
 
+        // Play Featured Game
         document.getElementById('playFeatured').addEventListener('click', () => {
             const game = games[currentHeroIndex % games.length];
             if (game.versions) {
@@ -2288,24 +2345,35 @@
             }
         });
 
+        // Search with secret game support
         document.getElementById('searchBox').addEventListener('input', function(e) {
             const search = e.target.value.toLowerCase().trim();
+            
+            // Reset category filter to "All" when searching
             if (search) {
                 const categoryItems = document.querySelectorAll('.category-item');
                 categoryItems.forEach(i => i.classList.remove('active'));
                 document.querySelector('.category-item[data-category="all"]').classList.add('active');
             }
+            
             const allItems = document.querySelectorAll('.bento-item');
+            
             allItems.forEach(item => {
                 const title = item.querySelector('.bento-title')?.textContent.toLowerCase() || '';
                 const isSecret = item.classList.contains('secret-game');
+                
                 if (search === '') {
                     item.style.display = isSecret ? 'none' : 'inline-block';
                 } else {
                     if (isSecret) {
                         const gameTitle = item.querySelector('.bento-title').textContent;
                         const secretGame = secretGames.find(g => g.title === gameTitle);
-                        item.style.display = (secretGame && secretGame.searchTrigger.toLowerCase() === search) ? 'inline-block' : 'none';
+                        
+                        if (secretGame && secretGame.searchTrigger.toLowerCase() === search) {
+                            item.style.display = 'inline-block';
+                        } else {
+                            item.style.display = 'none';
+                        }
                     } else {
                         item.style.display = title.includes(search) ? 'inline-block' : 'none';
                     }
@@ -2313,431 +2381,15 @@
             });
         });
 
+        // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) { navbar.classList.add('scrolled'); }
-            else { navbar.classList.remove('scrolled'); }
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
-
-        // ============================================
-        // HTML VIEWER
-        // ============================================
-
-        const DEFAULT_HTML = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, sans-serif;
-      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
-      color: #e0e0e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-    }
-    h1 { font-size: 3em; margin: 0; letter-spacing: -2px; }
-    p { color: #888; margin-top: 12px; }
-    .dot { color: #00ff88; }
-  </style>
-</head>
-<body>
-  <div>
-    <h1>Hello<span class="dot">.</span></h1>
-    <p>Edit the code on the left and press Run</p>
-  </div>
-</body>
-</html>`;
-
-        let hvEditorContent = DEFAULT_HTML;
-        let hvLineCount = 0;
-        let hvModal = null;
-
-        function openHtmlViewer() {
-            hvModal = document.createElement('div');
-            hvModal.className = 'html-viewer-modal';
-            hvModal.innerHTML = `
-                <div class="hv-container" id="hvContainer">
-                    <div class="hv-titlebar">
-                        <div class="hv-traffic-lights">
-                            <div class="hv-dot close" id="hvClose"></div>
-                            <div class="hv-dot min"></div>
-                            <div class="hv-dot max" id="hvFullscreenDot"></div>
-                        </div>
-                        <div class="hv-title"><span>&lt;</span> HTML VIEWER <span>/&gt;</span></div>
-                        <div class="hv-actions">
-                            <button class="hv-btn hv-btn-clear" id="hvClearBtn">CLEAR</button>
-                            <button class="hv-btn hv-btn-fullscreen" id="hvFsBtn">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-                                FULLSCREEN
-                            </button>
-                            <button class="hv-btn hv-btn-run" id="hvRunBtn">▶ RUN</button>
-                        </div>
-                    </div>
-                    <div class="hv-body" id="hvBody">
-                        <div class="hv-editor-pane" id="hvEditorPane">
-                            <div class="hv-pane-header">
-                                <div class="hv-pane-dot"></div>
-                                EDITOR — index.html
-                            </div>
-                            <div class="hv-editor-wrap">
-                                <div class="hv-line-numbers" id="hvLineNums"></div>
-                                <textarea class="hv-code-editor" id="hvEditor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
-                            </div>
-                        </div>
-                        <div class="hv-resize-handle" id="hvResizeHandle"></div>
-                        <div class="hv-preview-pane" id="hvPreviewPane">
-                            <div class="hv-pane-header">
-                                <div class="hv-pane-dot" style="background: #febc2e;"></div>
-                                PREVIEW
-                            </div>
-                            <div class="hv-empty-state" id="hvEmptyState">
-                                <div class="hv-empty-icon">⟨/⟩</div>
-                                <div>Press RUN to render your HTML</div>
-                            </div>
-                            <iframe class="hv-preview-frame" id="hvPreview" style="display:none;"></iframe>
-                        </div>
-                    </div>
-                    <div class="hv-statusbar">
-                        <div class="hv-status-item green" id="hvStatusReady">● READY</div>
-                        <div class="hv-status-item" id="hvStatusLines">0 LINES</div>
-                        <div class="hv-status-item" id="hvStatusChars">0 CHARS</div>
-                        <div class="hv-status-item" style="margin-left: auto;">HTML VIEWER v1.0</div>
-                    </div>
-                </div>
-            `;
-
-            hvModal.addEventListener('click', (e) => { if (e.target === hvModal) closeHtmlViewer(); });
-            document.body.appendChild(hvModal);
-
-            const editor = document.getElementById('hvEditor');
-            editor.value = hvEditorContent;
-            updateLineNumbers();
-            updateStatusBar();
-
-            editor.addEventListener('input', () => {
-                hvEditorContent = editor.value;
-                updateLineNumbers();
-                updateStatusBar();
-            });
-
-            editor.addEventListener('scroll', () => {
-                const lineNums = document.getElementById('hvLineNums');
-                lineNums.scrollTop = editor.scrollTop;
-            });
-
-            editor.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    e.preventDefault();
-                    const start = editor.selectionStart;
-                    const end = editor.selectionEnd;
-                    editor.value = editor.value.substring(0, start) + '  ' + editor.value.substring(end);
-                    editor.selectionStart = editor.selectionEnd = start + 2;
-                    hvEditorContent = editor.value;
-                    updateLineNumbers();
-                }
-                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                    e.preventDefault();
-                    runHtml();
-                }
-            });
-
-            document.getElementById('hvRunBtn').addEventListener('click', runHtml);
-            document.getElementById('hvClearBtn').addEventListener('click', () => {
-                editor.value = '';
-                hvEditorContent = '';
-                updateLineNumbers();
-                updateStatusBar();
-                document.getElementById('hvPreview').style.display = 'none';
-                document.getElementById('hvEmptyState').style.display = 'flex';
-            });
-            document.getElementById('hvClose').addEventListener('click', closeHtmlViewer);
-            document.getElementById('hvFsBtn').addEventListener('click', openFullscreen);
-            document.getElementById('hvFullscreenDot').addEventListener('click', openFullscreen);
-
-            setupResizer();
-            runHtml();
-        }
-
-        function updateLineNumbers() {
-            const editor = document.getElementById('hvEditor');
-            if (!editor) return;
-            const lineNums = document.getElementById('hvLineNums');
-            if (!lineNums) return;
-            const lines = editor.value.split('\n').length;
-            if (lines === hvLineCount) return;
-            hvLineCount = lines;
-            lineNums.innerHTML = Array.from({length: lines}, (_, i) =>
-                `<span class="hv-line-num">${i + 1}</span>`
-            ).join('');
-        }
-
-        function updateStatusBar() {
-            const editor = document.getElementById('hvEditor');
-            if (!editor) return;
-            const lines = editor.value.split('\n').length;
-            const chars = editor.value.length;
-            const linesEl = document.getElementById('hvStatusLines');
-            const charsEl = document.getElementById('hvStatusChars');
-            if (linesEl) linesEl.textContent = `${lines} LINES`;
-            if (charsEl) charsEl.textContent = `${chars} CHARS`;
-        }
-
-        function runHtml() {
-            const editor = document.getElementById('hvEditor');
-            const preview = document.getElementById('hvPreview');
-            const emptyState = document.getElementById('hvEmptyState');
-            const statusReady = document.getElementById('hvStatusReady');
-            if (!editor || !preview) return;
-            const html = editor.value;
-            if (!html.trim()) return;
-            emptyState.style.display = 'none';
-            preview.style.display = 'block';
-            const blob = new Blob([html], { type: 'text/html' });
-            preview.src = URL.createObjectURL(blob);
-            const runBtn = document.getElementById('hvRunBtn');
-            if (runBtn) {
-                runBtn.textContent = '✓ DONE';
-                runBtn.style.background = '#00cc66';
-                setTimeout(() => { runBtn.textContent = '▶ RUN'; runBtn.style.background = ''; }, 1200);
-            }
-            if (statusReady) {
-                statusReady.textContent = '● RUNNING';
-                statusReady.style.color = '#febc2e';
-                setTimeout(() => { statusReady.textContent = '● READY'; statusReady.style.color = '#00ff88'; }, 1000);
-            }
-        }
-
-        function closeHtmlViewer() {
-            if (!hvModal) return;
-            hvModal.classList.add('closing');
-            setTimeout(() => { hvModal.remove(); hvModal = null; }, 250);
-        }
-
-        function openFullscreen() {
-            const editor = document.getElementById('hvEditor');
-            if (!editor) return;
-            const html = editor.value;
-            if (!html.trim()) return;
-            const overlay = document.createElement('div');
-            overlay.className = 'hv-fullscreen-overlay';
-            overlay.innerHTML = `
-                <div class="hv-fs-bar">
-                    <div class="hv-fs-title">⟨/⟩ HTML VIEWER — FULLSCREEN PREVIEW</div>
-                    <button class="hv-fs-exit" id="hvFsExit">✕ EXIT FULLSCREEN</button>
-                </div>
-                <iframe class="hv-fs-frame" id="hvFsFrame"></iframe>
-            `;
-            document.body.appendChild(overlay);
-            const frame = document.getElementById('hvFsFrame');
-            const blob = new Blob([html], { type: 'text/html' });
-            frame.src = URL.createObjectURL(blob);
-            document.getElementById('hvFsExit').addEventListener('click', () => {
-                overlay.style.opacity = '0';
-                overlay.style.transition = 'opacity 0.2s';
-                setTimeout(() => overlay.remove(), 200);
-            });
-        }
-
-        function setupResizer() {
-            const handle = document.getElementById('hvResizeHandle');
-            const editorPane = document.getElementById('hvEditorPane');
-            const body = document.getElementById('hvBody');
-            if (!handle || !editorPane || !body) return;
-            let isResizing = false;
-            let startX = 0;
-            let startWidth = 0;
-            handle.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                startX = e.clientX;
-                startWidth = editorPane.offsetWidth;
-                handle.classList.add('dragging');
-                document.body.style.cursor = 'col-resize';
-                document.body.style.userSelect = 'none';
-            });
-            document.addEventListener('mousemove', (e) => {
-                if (!isResizing) return;
-                const delta = e.clientX - startX;
-                const totalWidth = body.offsetWidth;
-                const newWidth = Math.max(240, Math.min(totalWidth - 240, startWidth + delta));
-                editorPane.style.width = newWidth + 'px';
-                editorPane.style.flex = 'none';
-            });
-            document.addEventListener('mouseup', () => {
-                if (!isResizing) return;
-                isResizing = false;
-                handle.classList.remove('dragging');
-                document.body.style.cursor = '';
-                document.body.style.userSelect = '';
-            });
-        }
-
-        document.getElementById('htmlViewerBtn').addEventListener('click', openHtmlViewer);
-
-        // ============================================
-        // INTERACTIVE WIRE GRID
-        // ============================================
-        function initWireGrid() {
-            const section = document.querySelector('.game-section');
-            const canvas = document.getElementById('wireGrid');
-            if (!canvas || !section) return;
-            const ctx = canvas.getContext('2d');
-
-            // Tuning
-            const SPACING   = 44;    // grid spacing px
-            const INFLUENCE = 200;   // mouse repel radius
-            const STRENGTH  = 22;    // repel force
-            const SPRING    = 0.06;  // return-to-origin stiffness
-            const DAMP      = 0.78;  // velocity damping (higher = smoother)
-            const BASE_A    = 0.07;  // base line opacity
-            const HOVER_A   = 0.45;  // max line opacity near cursor
-            const BASE_W    = 0.4;   // base line width
-            const HOVER_W   = 1.2;   // max line width near cursor
-
-            let mouse = { x: -9999, y: -9999 };
-            let smoothMouse = { x: -9999, y: -9999 }; // lerped mouse for smoother glow
-            let points = [];
-            let cols = 0, rows = 0;
-
-            function resize() {
-                canvas.width  = section.offsetWidth;
-                canvas.height = section.offsetHeight;
-                buildGrid();
-            }
-
-            function buildGrid() {
-                cols = Math.ceil(canvas.width  / SPACING) + 2;
-                rows = Math.ceil(canvas.height / SPACING) + 2;
-                // Offset grid so it starts slightly off-screen for seamless edge look
-                const offX = (canvas.width  % SPACING) / 2;
-                const offY = (canvas.height % SPACING) / 2;
-                points = [];
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        const ox = offX + c * SPACING;
-                        const oy = offY + r * SPACING;
-                        points.push({ ox, oy, x: ox, y: oy, vx: 0, vy: 0 });
-                    }
-                }
-            }
-
-            function pt(r, c) {
-                if (r < 0 || r >= rows || c < 0 || c >= cols) return null;
-                return points[r * cols + c];
-            }
-
-            function update() {
-                // Smooth mouse with lerp for the glow effect
-                const lerpF = 0.12;
-                smoothMouse.x += (mouse.x - smoothMouse.x) * lerpF;
-                smoothMouse.y += (mouse.y - smoothMouse.y) * lerpF;
-
-                for (const p of points) {
-                    const dx   = mouse.x - p.x;
-                    const dy   = mouse.y - p.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < INFLUENCE && dist > 1) {
-                        const t     = 1 - dist / INFLUENCE;
-                        const force = t * t * STRENGTH; // quadratic falloff — softer edges
-                        p.vx -= (dx / dist) * force * 0.25;
-                        p.vy -= (dy / dist) * force * 0.25;
-                    }
-
-                    // Spring back to rest position
-                    p.vx += (p.ox - p.x) * SPRING;
-                    p.vy += (p.oy - p.y) * SPRING;
-
-                    // Damping
-                    p.vx *= DAMP;
-                    p.vy *= DAMP;
-
-                    p.x += p.vx;
-                    p.y += p.vy;
-                }
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Draw horizontal lines
-                for (let r = 0; r < rows; r++) {
-                    const p0 = pt(r, 0);
-                    if (!p0) continue;
-                    const dy   = smoothMouse.y - p0.y;
-                    const glow = Math.max(0, 1 - Math.abs(dy) / INFLUENCE);
-                    ctx.beginPath();
-                    for (let c = 0; c < cols; c++) {
-                        const p = pt(r, c);
-                        if (!p) continue;
-                        c === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-                    }
-                    ctx.strokeStyle = `rgba(255,255,255,${(BASE_A + glow * HOVER_A).toFixed(3)})`;
-                    ctx.lineWidth   = BASE_W + glow * HOVER_W;
-                    ctx.stroke();
-                }
-
-                // Draw vertical lines
-                for (let c = 0; c < cols; c++) {
-                    const p0 = pt(0, c);
-                    if (!p0) continue;
-                    const dx   = smoothMouse.x - p0.x;
-                    const glow = Math.max(0, 1 - Math.abs(dx) / INFLUENCE);
-                    ctx.beginPath();
-                    for (let r = 0; r < rows; r++) {
-                        const p = pt(r, c);
-                        if (!p) continue;
-                        r === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-                    }
-                    ctx.strokeStyle = `rgba(255,255,255,${(BASE_A + glow * HOVER_A).toFixed(3)})`;
-                    ctx.lineWidth   = BASE_W + glow * HOVER_W;
-                    ctx.stroke();
-                }
-
-                // Soft radial glow at cursor
-                if (smoothMouse.x > -100) {
-                    const r = INFLUENCE * 0.8;
-                    const g = ctx.createRadialGradient(smoothMouse.x, smoothMouse.y, 0, smoothMouse.x, smoothMouse.y, r);
-                    g.addColorStop(0,   'rgba(255,255,255,0.06)');
-                    g.addColorStop(0.4, 'rgba(255,255,255,0.02)');
-                    g.addColorStop(1,   'rgba(255,255,255,0)');
-                    ctx.fillStyle = g;
-                    ctx.beginPath();
-                    ctx.arc(smoothMouse.x, smoothMouse.y, r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            function loop() {
-                update();
-                draw();
-                requestAnimationFrame(loop);
-            }
-
-            // Track mouse relative to the canvas element
-            section.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                mouse.x = e.clientX - rect.left;
-                mouse.y = e.clientY - rect.top;
-            });
-
-            section.addEventListener('mouseleave', () => {
-                // Don't snap — let mouse drift out smoothly via smoothMouse lerp
-                mouse.x = -9999;
-                mouse.y = -9999;
-            });
-
-            window.addEventListener('resize', () => {
-                resize();
-            });
-
-            resize();
-            loop();
-        }
-
     </script>
 </body>
 </html>
