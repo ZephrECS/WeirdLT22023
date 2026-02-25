@@ -4,525 +4,1045 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Synapse</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0a;
-  --bg2: #111111;
-  --bg3: #1a1a1a;
-  --line: rgba(255,255,255,0.06);
-  --line2: rgba(255,255,255,0.12);
-  --text: #ffffff;
-  --muted: rgba(255,255,255,0.4);
-  --muted2: rgba(255,255,255,0.22);
+  --bg:#09090b; --bg2:#111115; --bg3:#1a1a20;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+  --text:#f1f0f5; --muted:#5e5d6e; --muted2:#8b8a9a;
+  --accent:#7c6bff; --accent2:#a78bfa;
 }
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { height:100%; scroll-behavior:smooth; }
-body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; overflow-x:hidden; min-height:100%; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Geist',sans-serif;overflow:hidden;}
 
-/* ═══ LOADER ═══ */
-#loader {
-  position:fixed; inset:0; background:#0a0a0a;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  z-index:9999; gap:36px;
+#snow{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* ─── ONBOARDING ────────────────────────────────────── */
+#onboarding{
+  position:fixed;inset:0;z-index:999;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .55s,visibility .55s;
 }
-#loader.done { animation:loaderOut 0.55s cubic-bezier(0.4,0,1,1) 0.25s forwards; pointer-events:none; }
-@keyframes loaderOut { to{opacity:0;visibility:hidden;} }
+#onboarding.hide{opacity:0;visibility:hidden;pointer-events:none;}
 
-.logo-wrap { display:flex; flex-direction:column; align-items:center; opacity:0; animation:logoIn 0.6s cubic-bezier(0.22,1.3,0.36,1) 0.1s forwards; }
-@keyframes logoIn { from{opacity:0;transform:scale(0.88) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
-
-.loader-bar-wrap { width:200px; display:flex; flex-direction:column; gap:9px; opacity:0; animation:barIn 0.4s ease 0.5s forwards; }
-@keyframes barIn { from{opacity:0} to{opacity:1} }
-.loader-bar-outer { width:100%; height:1px; background:rgba(255,255,255,0.1); overflow:hidden; }
-.loader-bar-inner { height:100%; width:0%; background:#fff; transition:width 0.06s linear; }
-.loader-status { font-size:10px; font-weight:400; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.35); text-align:center; }
-
-/* ═══ APP ═══ */
-#app { min-height:100vh; opacity:0; pointer-events:none; }
-#app.visible { opacity:1; pointer-events:all; animation:appIn 0.4s ease forwards; }
-@keyframes appIn { to{opacity:1} }
-
-/* ═══ NAV ═══ */
-nav {
-  position:fixed; top:0; left:0; right:0; height:62px;
-  display:flex; align-items:center; padding:0 48px; gap:36px;
-  z-index:500;
-  background:linear-gradient(to bottom,rgba(10,10,10,0.98) 0%,rgba(10,10,10,0) 100%);
-  transition:background 0.3s;
+.ob-step{
+  display:none;flex-direction:column;align-items:center;
+  width:min(480px,90vw);
+  animation:stepIn .4s cubic-bezier(.22,.68,0,1.2) both;
 }
-nav.solid { background:rgba(10,10,10,0.97); border-bottom:1px solid var(--line); }
-.nav-logo { display:flex; align-items:center; text-decoration:none; flex-shrink:0; cursor:pointer; }
-.nav-logo-rest { font-size:23px; font-weight:900; letter-spacing:-0.01em; line-height:1; color:#fff; }
-.nav-cats { display:flex; align-items:center; gap:2px; flex:1; }
-.nav-cat { font-size:13px; font-weight:400; color:var(--muted); padding:6px 12px; border-radius:4px; cursor:pointer; transition:color 0.15s,background 0.15s; white-space:nowrap; user-select:none; }
-.nav-cat:hover { color:var(--text); background:rgba(255,255,255,0.06); }
-.nav-cat.active { color:var(--text); background:rgba(255,255,255,0.1); }
-.nav-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
-.search-wrap { display:flex; align-items:center; gap:8px; border:1px solid var(--line2); border-radius:6px; padding:6px 12px; background:rgba(255,255,255,0.04); transition:border-color 0.15s,background 0.15s; }
-.search-wrap:focus-within { border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.06); }
-.search-wrap svg { opacity:0.3; flex-shrink:0; }
-.search-wrap input { background:none; border:none; outline:none; font-family:'Inter',sans-serif; font-size:13px; font-weight:400; color:#fff; width:160px; }
-.search-wrap input::placeholder { color:var(--muted); }
+.ob-step.active{display:flex;}
+@keyframes stepIn{from{opacity:0;transform:translateY(18px) scale(.97);}to{opacity:1;transform:none;}}
 
-/* ═══ HERO ═══ */
-.hero { position:relative; height:520px; overflow:hidden; background:var(--bg); margin-bottom:4px; }
-.hero-bg-img { position:absolute; inset:0; background-size:cover; background-position:center top; filter:brightness(0.38) saturate(0.7); transition:opacity 0.5s; }
-.hero-fade-l { position:absolute; left:0; top:0; bottom:0; width:60%; background:linear-gradient(to right,var(--bg) 0%,transparent 100%); z-index:1; }
-.hero-fade-b { position:absolute; left:0; right:0; bottom:0; height:65%; background:linear-gradient(to top,var(--bg) 0%,transparent 100%); z-index:1; }
-.hero-content { position:absolute; bottom:80px; left:64px; z-index:2; max-width:460px; }
-.hero-badge { display:inline-flex; align-items:center; gap:8px; font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
-.hero-badge::before { content:''; width:22px; height:1px; background:var(--muted); }
-.hero-title { font-size:56px; font-weight:900; letter-spacing:-0.03em; line-height:0.93; color:#fff; margin-bottom:16px; text-shadow:0 2px 40px rgba(0,0,0,0.8); }
-.hero-desc { font-size:13px; font-weight:400; line-height:1.65; color:rgba(255,255,255,0.5); margin-bottom:26px; max-width:380px; }
-.hero-btns { display:flex; gap:10px; }
-.hero-btn { display:flex; align-items:center; gap:8px; padding:12px 24px; border-radius:5px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.15s; border:none; }
-.hero-btn-play { background:#fff; color:#000; }
-.hero-btn-play:hover { background:rgba(255,255,255,0.88); transform:translateY(-1px); }
-.hero-btn-play svg { fill:#000; }
-.hero-dots { position:absolute; bottom:30px; right:64px; display:flex; gap:6px; z-index:2; }
-.hero-dot { width:24px; height:2px; border-radius:2px; background:rgba(255,255,255,0.22); cursor:pointer; transition:background 0.2s,width 0.2s; }
-.hero-dot.active { background:#fff; width:34px; }
+/* step 1 – progress */
+.ob-logo{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:64px;letter-spacing:-2px;
+  background:linear-gradient(140deg,#fff 30%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:6px;
+}
+.ob-sub{font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:26px;}
+.ob-bar-wrap{width:170px;height:1.5px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:26px;}
+.ob-bar{height:100%;width:0%;background:var(--accent);border-radius:99px;transition:width .3s ease;}
+.ob-load-btn{
+  padding:9px 24px;border-radius:10px;border:1px solid var(--border2);
+  background:transparent;color:var(--muted2);font-size:12px;
+  font-family:'Geist',sans-serif;cursor:pointer;transition:all .2s;
+}
+.ob-load-btn:hover{border-color:var(--accent);color:var(--accent2);}
 
-/* ═══ ROWS ═══ */
-.content { padding:0 0 80px; }
-.row { margin-bottom:4px; padding:18px 0; }
-.row-header { display:flex; align-items:center; justify-content:space-between; padding:0 64px; margin-bottom:14px; }
-.row-label { font-size:17px; font-weight:700; letter-spacing:-0.01em; color:#fff; }
-.row-see-all { font-size:12px; font-weight:500; color:var(--muted); cursor:pointer; transition:color 0.15s; }
-.row-see-all:hover { color:rgba(255,255,255,0.75); }
-.shelf { display:flex; gap:10px; padding:4px 64px 8px; overflow-x:auto; scroll-behavior:smooth; -ms-overflow-style:none; scrollbar-width:none; }
-.shelf::-webkit-scrollbar { display:none; }
+/* card shell */
+.ob-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:28px;padding:40px 36px;
+  display:flex;flex-direction:column;align-items:center;gap:18px;width:100%;
+}
+.ob-icon{
+  width:58px;height:58px;border-radius:18px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:26px;font-style:italic;color:white;
+  box-shadow:0 12px 36px rgba(124,107,255,.28);
+}
+.ob-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;text-align:center;}
+.ob-desc{font-size:13px;color:var(--muted2);text-align:center;line-height:1.65;max-width:290px;}
 
-/* ═══ CARDS ═══ */
-.card { flex-shrink:0; width:190px; border-radius:7px; overflow:hidden; cursor:pointer; position:relative; background:var(--bg2); border:1px solid transparent; transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),border-color 0.2s,box-shadow 0.2s; animation:cardIn 0.3s ease both; }
-.card:hover { transform:scale(1.06) translateY(-4px); border-color:rgba(255,255,255,0.15); box-shadow:0 20px 50px rgba(0,0,0,0.7); z-index:10; }
-@keyframes cardIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.card-img-wrap { position:relative; overflow:hidden; }
-.card-img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; filter:brightness(0.85); transition:filter 0.22s,transform 0.25s; }
-.card:hover .card-img { filter:brightness(1); transform:scale(1.04); }
-.card-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 55%); opacity:0; transition:opacity 0.22s; display:flex; flex-direction:column; justify-content:flex-end; padding:12px; }
-.card:hover .card-overlay { opacity:1; }
-.card-play-btn { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.95); display:flex; align-items:center; justify-content:center; margin-bottom:8px; transform:scale(0.7); opacity:0; transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),opacity 0.15s; }
-.card:hover .card-play-btn { transform:scale(1); opacity:1; }
-.card-play-btn svg { fill:#000; width:11px; margin-left:2px; }
-/* tags removed */
-.card-bottom { padding:10px 10px 11px; }
-.card-name { font-size:12px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.card-cat { font-size:10px; font-weight:400; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+/* theme grid */
+.ob-theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%;}
+.ob-topt{
+  padding:12px 15px;border-radius:13px;border:2px solid var(--border);
+  background:var(--bg3);cursor:pointer;font-size:13px;font-weight:500;
+  display:flex;align-items:center;gap:10px;transition:all .2s;color:var(--muted2);
+}
+.ob-topt:hover{border-color:var(--border2);color:var(--text);}
+.ob-topt.sel{border-color:var(--accent);color:var(--text);background:rgba(124,107,255,.1);}
+.ob-swatch{width:18px;height:18px;border-radius:5px;flex-shrink:0;}
 
-/* ═══ CAT VIEW ═══ */
-.cat-view { display:none; padding:90px 64px 60px; }
-.cat-view.visible { display:block; }
-.cat-heading { font-size:30px; font-weight:900; letter-spacing:-0.02em; color:#fff; margin-bottom:28px; }
-.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); gap:12px; }
-.cat-grid .card { width:auto; }
+/* experience cards */
+.ob-exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;}
+.ob-exp-card{
+  border-radius:18px;border:2px solid var(--border);
+  background:var(--bg3);cursor:pointer;overflow:hidden;transition:all .22s;
+}
+.ob-exp-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.ob-exp-card.sel{border-color:var(--accent);}
+.ob-exp-pre{
+  height:108px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--bg3),var(--bg));
+  position:relative;overflow:hidden;
+}
+.ob-exp-pre-snow{position:absolute;inset:0;overflow:hidden;}
+.ob-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:10px;}
+.ob-mini-card{aspect-ratio:1;border-radius:5px;background:var(--bg2);border:1px solid var(--border);}
+.ob-mini-browser{
+  width:78%;height:68%;border-radius:8px;
+  background:var(--bg2);border:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.ob-mini-bar{height:10px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 5px;gap:3px;}
+.ob-mini-dot{width:4px;height:4px;border-radius:50%;}
+.ob-mini-body{flex:1;display:flex;align-items:center;justify-content:center;}
+.ob-mini-txt{font-size:7px;color:var(--muted);font-family:'Geist',sans-serif;}
+.ob-exp-foot{padding:11px 13px;}
+.ob-exp-lbl{font-size:13px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.ob-exp-lbl svg{width:13px;height:13px;opacity:.55;}
+.ob-exp-sdesc{font-size:11px;color:var(--muted2);}
 
-/* ═══ SEARCH VIEW ═══ */
-.search-view { display:none; padding:100px 64px 60px; }
-.search-view.visible { display:block; }
-.search-heading { font-size:14px; font-weight:500; color:var(--muted); margin-bottom:24px; letter-spacing:0.02em; }
-.search-heading span { color:#fff; font-weight:700; }
-.search-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); gap:12px; }
-.search-grid .card { width:auto; }
-.no-results { font-size:14px; color:var(--muted); padding:40px 0; }
+/* continue */
+.ob-btn{
+  width:100%;padding:14px;border-radius:14px;
+  background:var(--accent);border:none;color:white;
+  font-size:14px;font-weight:600;font-family:'Geist',sans-serif;
+  cursor:pointer;transition:opacity .2s,transform .1s;
+}
+.ob-btn:hover{opacity:.87;}
+.ob-btn:active{transform:scale(.99);}
+.ob-btn:disabled{opacity:.3;cursor:default;}
 
-/* ═══ VERSION MODAL ═══ */
-.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:5000; animation:mfIn 0.2s ease forwards; }
-.modal-bg.out { animation:mfOut 0.18s ease forwards; }
-@keyframes mfIn { from{opacity:0} to{opacity:1} }
-@keyframes mfOut { to{opacity:0} }
-.modal { background:#161616; border:1px solid rgba(255,255,255,0.1); border-radius:10px; width:90%; max-width:400px; padding:28px; animation:mslIn 0.28s cubic-bezier(0.34,1.56,0.64,1) forwards; transform:translateY(14px) scale(0.97); }
-.modal-bg.out .modal { animation:mslOut 0.18s ease forwards; }
-@keyframes mslIn { to{transform:translateY(0) scale(1)} }
-@keyframes mslOut { to{transform:translateY(10px) scale(0.97);opacity:0} }
-.modal-title { font-size:18px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px; }
-.modal-sub { font-size:11px; font-weight:400; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:20px; }
-.modal-opts { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
-.modal-opt { padding:14px 16px; border:1px solid rgba(255,255,255,0.08); border-radius:7px; cursor:pointer; transition:border-color 0.15s,background 0.15s; display:flex; align-items:center; justify-content:space-between; }
-.modal-opt:hover { border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.04); }
-.modal-opt-name { font-size:13px; font-weight:600; margin-bottom:3px; }
-.modal-opt-desc { font-size:11px; color:var(--muted); }
-.modal-opt-arrow { color:var(--muted2); font-size:18px; }
-.modal-cancel { width:100%; padding:11px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:6px; color:var(--muted); font-family:'Inter',sans-serif; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.15s; }
-.modal-cancel:hover { background:rgba(255,255,255,0.09); color:#fff; }
+/* username field */
+.ob-unfield{
+  width:100%;padding:13px 15px;background:var(--bg3);
+  border:1.5px solid var(--border);border-radius:13px;
+  color:var(--text);font-size:14px;font-family:'Geist',sans-serif;
+  outline:none;transition:border .2s;
+}
+.ob-unfield:focus{border-color:var(--accent);}
+.ob-unfield::placeholder{color:var(--muted);}
+.ob-skip{
+  background:none;border:none;color:var(--muted);font-size:12px;
+  cursor:pointer;font-family:'Geist',sans-serif;margin-top:-8px;
+  transition:color .2s;
+}
+.ob-skip:hover{color:var(--muted2);}
 
-/* ═══ VIEWER ═══ */
-.viewer { position:fixed; inset:0; z-index:8000; display:flex; flex-direction:column; background:#000; animation:vIn 0.18s ease forwards; }
-@keyframes vIn { from{opacity:0} to{opacity:1} }
-.viewer.out { animation:vOut 0.15s ease forwards; }
-@keyframes vOut { to{opacity:0} }
-.vbar { flex-shrink:0; height:48px; background:rgba(10,10,10,0.97); border-bottom:1px solid var(--line); display:flex; align-items:center; padding:0 16px; gap:12px; }
-.vbar-logo { display:flex; align-items:center; flex-shrink:0; }
-.vbar-s { font-size:15px; font-weight:900; background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.vbar-rest { font-size:15px; font-weight:900; color:#fff; }
-.vbar-sep2 { width:1px; height:18px; background:var(--line2); flex-shrink:0; }
-.vbar-title { font-size:13px; font-weight:500; color:rgba(255,255,255,0.6); flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.vbar-btns { display:flex; align-items:center; gap:4px; flex-shrink:0; }
-.vb { height:30px; min-width:30px; padding:0 10px; border-radius:4px; display:flex; align-items:center; justify-content:center; gap:5px; cursor:pointer; border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.45); background:transparent; font-family:'Inter',sans-serif; font-size:11px; font-weight:500; transition:all 0.15s; position:relative; }
-.vb:hover { border-color:rgba(255,255,255,0.18); color:#fff; background:rgba(255,255,255,0.06); }
-.vb:active { transform:scale(0.92); }
-.vb::after { content:attr(data-tip); position:absolute; bottom:-30px; left:50%; transform:translateX(-50%); background:#1a1a1a; border:1px solid var(--line2); color:#fff; font-size:10px; white-space:nowrap; padding:3px 8px; border-radius:4px; opacity:0; pointer-events:none; transition:opacity 0.15s; z-index:1; }
-.vb:hover::after { opacity:1; }
-.vb-exit { color:rgba(220,70,70,0.7); border-color:rgba(220,70,70,0.18); }
-.vb-exit:hover { color:#e05050; border-color:rgba(220,70,70,0.4); background:rgba(220,70,70,0.06); }
-.vbar-div { width:1px; height:18px; background:var(--line); flex-shrink:0; margin:0 2px; }
-.vframe { flex:1; position:relative; overflow:hidden; }
-.vframe iframe { width:100%; height:100%; border:none; opacity:0; transition:opacity 0.3s; }
-.vframe-loader { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:14px; }
-.vfl-ring { width:22px; height:22px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.1); border-top-color:#fff; animation:spin 0.75s linear infinite; }
-@keyframes spin { to{transform:rotate(360deg)} }
-.vfl-text { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); }
+/* flake */
+.flake{position:absolute;border-radius:50%;background:white;animation:floatFlake linear infinite;}
+@keyframes floatFlake{
+  0%{transform:translateY(0) translateX(0);opacity:var(--op);}
+  50%{transform:translateY(50%) translateX(7px);}
+  100%{transform:translateY(100%) translateX(-4px);opacity:0;}
+}
 
-/* ═══ TOAST ═══ */
-.toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(6px); background:#1e1e1e; border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:9px 16px; font-size:12px; font-weight:500; letter-spacing:0.04em; color:#fff; z-index:9999; white-space:nowrap; animation:tIn 0.28s cubic-bezier(0.34,1.56,0.64,1) forwards; opacity:0; }
-@keyframes tIn { to{opacity:1;transform:translateX(-50%) translateY(0)} }
-.toast.out { animation:tOut 0.18s ease forwards; }
-@keyframes tOut { to{opacity:0;transform:translateX(-50%) translateY(6px)} }
-.toast.err { color:#f07070; }
+/* ─── SIDEBAR ───────────────────────────────────────── */
+#sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:62px;
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;
+  padding:16px 0;z-index:100;gap:2px;
+}
+.s-logo{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:22px;color:var(--accent2);margin-bottom:14px;
+}
+.nav-btn{
+  width:40px;height:40px;border-radius:12px;border:none;
+  background:transparent;color:var(--muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .18s;
+}
+.nav-btn:hover{background:var(--bg3);color:var(--text);}
+.nav-btn.active{background:rgba(124,107,255,.16);color:var(--accent2);}
+.nav-btn svg{width:18px;height:18px;}
+.s-spacer{flex:1;}
+.s-bottom{display:flex;flex-direction:column;align-items:center;gap:2px;}
+
+/* ─── MAIN ──────────────────────────────────────────── */
+#main{position:fixed;left:62px;top:0;right:0;bottom:0;overflow:hidden;z-index:10;}
+.panel{
+  position:absolute;inset:0;overflow-y:auto;
+  padding:40px 44px;
+  opacity:0;pointer-events:none;
+  transform:translateY(8px);
+  transition:opacity .28s,transform .28s;
+}
+.panel.active{opacity:1;pointer-events:all;transform:none;}
+
+/* ─── HOME ──────────────────────────────────────────── */
+#panel-home{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;height:100%;padding:0;
+}
+.home-title{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:90px;letter-spacing:-3px;line-height:.92;
+  background:linear-gradient(140deg,#ffffff 35%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.home-tag{
+  font-size:12px;color:var(--muted);letter-spacing:.13em;
+  text-transform:uppercase;margin-top:10px;margin-bottom:34px;
+}
+.search-wrap{position:relative;width:min(540px,82vw);}
+.search-wrap input{
+  width:100%;padding:14px 20px 14px 48px;
+  background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:16px;color:var(--text);font-size:15px;
+  font-family:'Geist',sans-serif;outline:none;transition:border .2s,background .2s;
+}
+.search-wrap input:focus{border-color:var(--accent);background:var(--bg3);}
+.search-wrap input::placeholder{color:var(--muted);}
+.s-ico{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);display:flex;}
+.s-ico svg{width:16px;height:16px;}
+.quick-links{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;justify-content:center;}
+.quick-link{
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  padding:12px 14px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:14px;
+  cursor:pointer;transition:all .18s;min-width:72px;
+  text-decoration:none;color:var(--text);
+}
+.quick-link:hover{border-color:var(--accent);transform:translateY(-2px);}
+.ql-ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.ql-lbl{font-size:11px;color:var(--muted2);}
+.home-online{margin-top:26px;font-size:11px;color:var(--muted);letter-spacing:.08em;}
+
+/* ─── GAMES ─────────────────────────────────────────── */
+.panel-title{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:36px;letter-spacing:-1px;margin-bottom:4px;
+}
+.panel-sub{font-size:13px;color:var(--muted2);margin-bottom:22px;}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.chip{
+  padding:6px 14px;border-radius:99px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-size:12px;
+  font-family:'Geist',sans-serif;cursor:pointer;transition:all .18s;
+}
+.chip:hover,.chip.active{border-color:var(--accent);color:var(--accent2);background:rgba(124,107,255,.1);}
+.games-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;
+}
+.game-card{
+  position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1;
+  cursor:pointer;border:1.5px solid var(--border);
+  transition:transform .2s,border-color .2s;background:var(--bg3);
+}
+.game-card:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(124,107,255,.5);}
+.gc-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.gc-snow{position:absolute;inset:0;overflow:hidden;}
+.gc-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 12px 11px;
+  background:linear-gradient(to top,rgba(0,0,0,.88),transparent);
+  font-size:12px;font-weight:500;
+}
+.gc-tag{font-size:10px;color:var(--accent2);margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em;}
+
+/* ─── PARTNERS ──────────────────────────────────────── */
+.partners-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.p-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:18px;padding:20px;cursor:pointer;
+  transition:all .2s;display:flex;gap:14px;
+}
+.p-card:hover{border-color:rgba(124,107,255,.4);transform:translateY(-2px);}
+.p-icon{
+  width:44px;height:44px;border-radius:12px;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--accent2);
+}
+.p-name{font-size:14px;font-weight:600;margin-bottom:5px;}
+.p-desc{font-size:12px;color:var(--muted2);line-height:1.55;}
+
+/* ─── ACCOUNT ───────────────────────────────────────── */
+.acct-wrap{max-width:400px;margin:0 auto;padding-top:40px;}
+.acct-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:24px;padding:36px;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+.acct-avatar{
+  width:68px;height:68px;border-radius:18px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif',serif;font-size:30px;font-style:italic;color:white;
+  box-shadow:0 10px 30px rgba(124,107,255,.28);
+}
+.acct-title{font-family:'Instrument Serif',serif;font-style:italic;font-size:26px;}
+.acct-sub{font-size:13px;color:var(--muted2);text-align:center;line-height:1.5;}
+.acct-field{width:100%;}
+.acct-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.acct-field input{
+  width:100%;padding:12px 15px;background:var(--bg3);
+  border:1.5px solid var(--border);border-radius:12px;
+  color:var(--text);font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border .2s;
+}
+.acct-field input:focus{border-color:var(--accent);}
+.btn-prim{
+  width:100%;padding:13px;border-radius:13px;
+  background:var(--accent);border:none;color:white;
+  font-size:14px;font-family:'Geist',sans-serif;font-weight:600;cursor:pointer;transition:opacity .2s;
+}
+.btn-prim:hover{opacity:.85;}
+.btn-mute{
+  width:100%;padding:11px;border-radius:12px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted2);font-size:13px;font-family:'Geist',sans-serif;cursor:pointer;transition:all .2s;
+}
+.btn-mute:hover{border-color:var(--accent);color:var(--accent2);}
+.acct-logged{display:none;flex-direction:column;align-items:center;gap:12px;width:100%;text-align:center;}
+.acct-logged.show{display:flex;}
+.acct-form.gone{display:none;}
+
+/* ─── SETTINGS ──────────────────────────────────────── */
+.settings-layout{display:flex;gap:26px;}
+.settings-nav{width:185px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;}
+.sn-item{
+  padding:10px 13px;border-radius:12px;cursor:pointer;
+  font-size:13px;color:var(--muted2);transition:all .18s;border:1px solid transparent;
+}
+.sn-item:hover{color:var(--text);background:var(--bg3);}
+.sn-item.active{color:var(--accent2);background:rgba(124,107,255,.1);border-color:rgba(124,107,255,.18);}
+.s-section{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:26px;}
+.s-sec-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;}
+.s-sec-sub{font-size:12px;color:var(--muted2);margin-bottom:16px;}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:9px;}
+.theme-opt{
+  padding:10px;border-radius:11px;border:2px solid var(--border);
+  cursor:pointer;text-align:center;font-size:12px;transition:all .18s;
+  background:var(--bg3);color:var(--muted2);
+}
+.theme-opt:hover{border-color:var(--border2);}
+.theme-opt.active{border-color:var(--accent);background:rgba(124,107,255,.1);color:var(--accent2);}
+.theme-swatch{width:26px;height:26px;border-radius:7px;margin:0 auto 6px;}
+.cloak-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:9px;}
+.cloak-opt{
+  padding:10px 12px;border-radius:11px;border:1px solid var(--border);
+  cursor:pointer;font-size:12px;text-align:center;transition:all .18s;
+  background:var(--bg3);color:var(--muted2);
+}
+.cloak-opt:hover{border-color:var(--border2);color:var(--text);}
+.cloak-opt.active{border-color:var(--accent);color:var(--accent2);background:rgba(124,107,255,.1);}
+.panic-row{display:flex;align-items:center;gap:13px;flex-wrap:wrap;}
+.panic-disp{
+  padding:9px 18px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;font-family:'Syne',sans-serif;font-size:19px;
+  color:var(--accent2);min-width:48px;text-align:center;
+}
+.btn-sm{
+  padding:9px 15px;border-radius:10px;border:1px solid var(--border);
+  background:var(--bg3);color:var(--muted2);font-size:12px;
+  font-family:'Geist',sans-serif;cursor:pointer;transition:all .18s;
+}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent2);}
+.s-input{
+  padding:10px 13px;background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:13px;
+  font-family:'Geist',sans-serif;outline:none;transition:border .2s;
+}
+.s-input:focus{border-color:var(--accent);}
+
+/* ─── MODAL ─────────────────────────────────────────── */
+.modal-ov{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-ov.show{opacity:1;pointer-events:all;}
+.modal-box{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:24px;padding:28px;width:min(450px,90vw);
+  transform:scale(.95);transition:transform .3s;
+  display:flex;flex-direction:column;gap:13px;
+}
+.modal-ov.show .modal-box{transform:scale(1);}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;}
+.modal-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;}
+.modal-ver{font-size:10px;background:rgba(124,107,255,.15);color:var(--accent2);padding:3px 8px;border-radius:99px;}
+.modal-x{
+  width:28px;height:28px;border-radius:8px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);cursor:pointer;font-size:13px;transition:all .2s;
+}
+.modal-x:hover{color:var(--text);}
+.modal-item{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:13px 15px;}
+.mi-title{font-size:13px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
+.mi-badge{font-size:9px;padding:2px 7px;border-radius:99px;background:rgba(167,139,250,.18);color:var(--accent2);}
+.mi-desc{font-size:12px;color:var(--muted2);line-height:1.55;}
+
+/* ─── TOAST ─────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:20px;right:20px;z-index:900;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:11px;padding:10px 17px;font-size:12px;color:var(--text);
+  transform:translateY(12px);opacity:0;transition:all .25s;pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:99px;}
 </style>
 </head>
 <body>
+<canvas id="snow"></canvas>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="logo-wrap">
-    <img src="https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/eZAVR9NVbs4z-3QWVqKX-X-xWyiVRQSn6_Gu_X3WIAV5ugdWjAWugSCyqh7oXeIZXTlOcDzEJw67dUaR_WxCsQ.webp" alt="SYNAPSE" style="height:160px;width:auto;filter:drop-shadow(0 0 20px rgba(255,255,255,0.25));">
-    </div>
+<!-- ════════════ ONBOARDING ════════════ -->
+<div id="onboarding">
 
-  <div class="loader-bar-wrap">
-    <div class="loader-bar-outer"><div class="loader-bar-inner" id="lbar"></div></div>
-    <div class="loader-status" id="lstatus">initializing</div>
+  <!-- STEP 1: loading -->
+  <div class="ob-step active" id="ob-step-1">
+    <div class="ob-logo">Synapse</div>
+    <div class="ob-sub">Initializing</div>
+    <div class="ob-bar-wrap"><div class="ob-bar" id="ob-bar"></div></div>
+    <button class="ob-load-btn" onclick="loadData()">⬆ Load Saved Data</button>
   </div>
-</div>
 
-<!-- APP -->
-<div id="app">
-
-  <nav id="nav">
-    <div class="nav-logo" onclick="showHome()" style="cursor:pointer"><img src="https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/eZAVR9NVbs4z-3QWVqKX-X-xWyiVRQSn6_Gu_X3WIAV5ugdWjAWugSCyqh7oXeIZXTlOcDzEJw67dUaR_WxCsQ.webp" alt="SYNAPSE" style="height:32px;width:auto;"></div>
-    <div class="nav-cats" id="navCats">
-      <div class="nav-cat active" data-cat="all">Home</div>
-      <div class="nav-cat" data-cat="featured">Featured</div>
-      <div class="nav-cat" data-cat="action">Action</div>
-      <div class="nav-cat" data-cat="horror">Horror</div>
-      <div class="nav-cat" data-cat="sandbox">Sandbox</div>
-      <div class="nav-cat" data-cat="classic">Classic</div>
+  <!-- STEP 2: welcome -->
+  <div class="ob-step" id="ob-step-2">
+    <div class="ob-card">
+      <div class="ob-icon">S</div>
+      <div class="ob-title">Welcome to Synapse</div>
+      <div class="ob-desc">The settings you choose can always be changed later.</div>
+      <button class="ob-btn" onclick="goStep(3)">Get Started</button>
     </div>
-    <div class="nav-right">
-      <div class="search-wrap">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="searchInput" type="text" placeholder="Search games…">
-      </div>
-    </div>
-  </nav>
+  </div>
 
-  <!-- HOME -->
-  <div id="homeView">
-    <div class="hero">
-      <div class="hero-bg-img" id="heroBg"></div>
-      <div class="hero-fade-l"></div>
-      <div class="hero-fade-b"></div>
-      <div class="hero-content">
-        <div class="hero-badge" id="heroBadge">Featured</div>
-        <div class="hero-title" id="heroTitle"></div>
-        <div class="hero-desc">Play instantly in your browser — no download needed.</div>
-        <div class="hero-btns">
-          <button class="hero-btn hero-btn-play" id="heroPlay">
-            <svg width="12" height="12" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            Play Now
-          </button>
+  <!-- STEP 3: theme -->
+  <div class="ob-step" id="ob-step-3">
+    <div class="ob-card">
+      <div class="ob-title">Choose a Theme</div>
+      <div class="ob-theme-grid" id="ob-theme-grid"></div>
+      <button class="ob-btn" onclick="goStep(4)">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: experience (Fern-style) -->
+  <div class="ob-step" id="ob-step-4">
+    <div style="text-align:center;margin-bottom:12px;">
+      <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:34px;letter-spacing:-1px;background:linear-gradient(140deg,#fff 30%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Synapse</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.12em;text-transform:uppercase;">Choose your experience</div>
+    </div>
+    <div class="ob-exp-grid">
+      <div class="ob-exp-card" id="exp-full" onclick="selectExp('full')">
+        <div class="ob-exp-pre">
+          <div class="ob-exp-pre-snow" id="exp-snow-full"></div>
+          <div class="ob-mini-browser">
+            <div class="ob-mini-bar">
+              <div class="ob-mini-dot" style="background:#ff5f57;"></div>
+              <div class="ob-mini-dot" style="background:#febb2d;"></div>
+              <div class="ob-mini-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="ob-mini-body"><div class="ob-mini-txt">synapse://browse</div></div>
+          </div>
+        </div>
+        <div class="ob-exp-foot">
+          <div class="ob-exp-lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20"/></svg>
+            Games &amp; Proxy
+          </div>
+          <div class="ob-exp-sdesc">Browse the web freely and play games</div>
         </div>
       </div>
-      <div class="hero-dots" id="heroDots"></div>
+      <div class="ob-exp-card" id="exp-games" onclick="selectExp('games')">
+        <div class="ob-exp-pre">
+          <div class="ob-exp-pre-snow" id="exp-snow-games"></div>
+          <div class="ob-mini-grid">
+            <div class="ob-mini-card"></div><div class="ob-mini-card"></div>
+            <div class="ob-mini-card"></div><div class="ob-mini-card"></div>
+            <div class="ob-mini-card"></div><div class="ob-mini-card"></div>
+            <div class="ob-mini-card"></div><div class="ob-mini-card"></div>
+          </div>
+        </div>
+        <div class="ob-exp-foot">
+          <div class="ob-exp-lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M6 13h4m-2-2v4"/><circle cx="16" cy="12" r=".8" fill="currentColor"/><circle cx="18" cy="14" r=".8" fill="currentColor"/></svg>
+            Games Only
+          </div>
+          <div class="ob-exp-sdesc">Jump straight into the game library</div>
+        </div>
+      </div>
     </div>
-    <div class="content" id="rowsContainer"></div>
+    <button class="ob-btn" id="ob-exp-btn" disabled onclick="goStep(5)" style="width:100%;margin-top:12px;">Continue</button>
   </div>
 
-  <!-- CAT VIEW -->
-  <div id="catView" class="cat-view">
-    <div class="cat-heading" id="catHeading"></div>
-    <div class="cat-grid" id="catGrid"></div>
+  <!-- STEP 5: username -->
+  <div class="ob-step" id="ob-step-5">
+    <div class="ob-card">
+      <div class="ob-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="ob-title">Select a Username</div>
+      <div class="ob-desc">This identifies you on Synapse. You can change it any time in your account settings.</div>
+      <input class="ob-unfield" id="ob-username" placeholder="Pick something cool...">
+      <button class="ob-btn" onclick="finishOnboarding()">Save Data &amp; Continue</button>
+      <button class="ob-skip" onclick="finishOnboarding(true)">Skip for now</button>
+    </div>
   </div>
 
-  <!-- SEARCH VIEW -->
-  <div id="searchView" class="search-view">
-    <div class="search-heading">Results for <span id="searchLabel"></span></div>
-    <div class="search-grid" id="searchGrid"></div>
+</div>
+<!-- end onboarding -->
+
+<!-- ════════════ APP ════════════ -->
+<div id="sidebar">
+  <div class="s-logo">S</div>
+  <button class="nav-btn active" data-tab="home" title="Home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+  </button>
+  <button class="nav-btn" data-tab="games" title="Games">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M6 13h4m-2-2v4"/><circle cx="16" cy="12" r=".8" fill="currentColor"/><circle cx="18" cy="14" r=".8" fill="currentColor"/></svg>
+  </button>
+  <button class="nav-btn" id="navProxy" data-tab="proxy" title="Proxy" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+  </button>
+  <button class="nav-btn" data-tab="partners" title="Partners">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+  </button>
+  <div class="s-spacer"></div>
+  <div class="s-bottom">
+    <button class="nav-btn" data-tab="account" title="Account">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+    <button class="nav-btn" data-tab="settings" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+    <button class="nav-btn" id="panicBtn" title="Panic">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19M1 1l22 22"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="main">
+
+  <!-- HOME -->
+  <div class="panel active" id="panel-home">
+    <div class="home-title">Synapse</div>
+    <div class="home-tag">Your portal to everything</div>
+    <div class="search-wrap">
+      <span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+      <input type="text" id="homeSearch" placeholder="Search for anything..." onkeydown="homeSearchKey(event)">
+    </div>
+    <div class="quick-links" id="quickLinks"></div>
+    <div class="home-online" id="homeOnline">— Online</div>
+  </div>
+
+  <!-- GAMES -->
+  <div class="panel" id="panel-games">
+    <div class="panel-title">Game Library</div>
+    <div class="panel-sub">Browse and play unblocked games</div>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+
+  <!-- PROXY -->
+  <div class="panel" id="panel-proxy">
+    <div style="height:100%;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;gap:10px;">
+        <div style="position:relative;flex:1;">
+          <span class="s-ico" style="top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+          <input style="width:100%;padding:12px 16px 12px 44px;background:var(--bg2);border:1.5px solid var(--border);border-radius:13px;color:var(--text);font-size:14px;font-family:'Geist',sans-serif;outline:none;transition:border .2s;" id="proxyInput" placeholder="Enter URL or search..." onkeydown="proxyKey(event)">
+        </div>
+        <button style="padding:12px 20px;background:var(--accent);border:none;border-radius:13px;color:white;font-size:13px;font-family:'Geist',sans-serif;font-weight:600;cursor:pointer;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'" onclick="goProxy()">Go</button>
+      </div>
+      <div style="flex:1;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);position:relative;min-height:0;" id="proxyWrap">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);" id="proxyPlaceholder">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".25"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20"/></svg>
+          <p style="font-size:13px;">Enter a URL to start browsing</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTNERS -->
+  <div class="panel" id="panel-partners">
+    <div class="panel-title">Partners</div>
+    <div class="panel-sub">Platforms we trust and work with</div>
+    <div class="partners-grid" id="partnersGrid"></div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="panel" id="panel-account">
+    <div class="acct-wrap">
+      <div class="acct-card">
+        <div class="acct-avatar" id="acctAvatar">?</div>
+        <div class="acct-title">Your Account</div>
+        <div class="acct-sub">Set a username to save your settings and progress as a portable file.</div>
+        <div class="acct-form" id="acctForm" style="width:100%;display:flex;flex-direction:column;gap:13px;">
+          <div class="acct-field">
+            <div class="acct-lbl">Username</div>
+            <input type="text" id="acctUsername" placeholder="Choose a username...">
+          </div>
+          <button class="btn-prim" onclick="acctSave()">Save Data</button>
+        </div>
+        <div class="acct-logged" id="acctLogged">
+          <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:24px;" id="acctName"></div>
+          <div style="font-size:12px;color:var(--muted2);">Synapse Member</div>
+          <div style="display:flex;gap:9px;width:100%;">
+            <button class="btn-mute" style="flex:1;" onclick="exportData()">⬇ Export Data</button>
+            <button class="btn-mute" style="flex:1;" onclick="acctLogout()">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="panel" id="panel-settings">
+    <div class="panel-title" style="margin-bottom:24px;">Settings</div>
+    <div class="settings-layout">
+      <div class="settings-nav">
+        <div class="sn-item active" data-sec="appearance">Appearance</div>
+        <div class="sn-item" data-sec="cloaking">Cloaking</div>
+        <div class="sn-item" data-sec="panic">Panic Key</div>
+        <div class="sn-item" data-sec="info">Information</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+        <div class="s-section" id="sec-appearance">
+          <div class="s-sec-title">Theme</div>
+          <div class="s-sec-sub">Choose your color palette</div>
+          <div class="theme-grid" id="themeGrid"></div>
+        </div>
+        <div class="s-section" id="sec-cloaking" style="display:none;">
+          <div class="s-sec-title">Tab Cloak</div>
+          <div class="s-sec-sub">Change how this tab appears to others</div>
+          <div class="cloak-grid" id="cloakGrid"></div>
+        </div>
+        <div class="s-section" id="sec-panic" style="display:none;">
+          <div class="s-sec-title">Panic Key</div>
+          <div class="s-sec-sub">Instantly navigate away when pressed</div>
+          <div class="panic-row">
+            <div class="panic-disp" id="panicDisp">~</div>
+            <button class="btn-sm" onclick="listenPanic()">Change Key</button>
+            <span style="font-size:11px;color:var(--muted);" id="panicStatus"></span>
+          </div>
+          <div style="margin-top:18px;">
+            <div class="s-sec-sub">Redirect URL</div>
+            <div style="display:flex;gap:9px;margin-top:7px;">
+              <input class="s-input" id="panicUrlInput" style="flex:1;" value="https://www.google.com">
+              <button class="btn-sm" onclick="savePanicUrl()">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="s-section" id="sec-info" style="display:none;">
+          <div class="s-sec-title">About Synapse</div>
+          <div class="s-sec-sub" style="margin-bottom:14px;">Version &amp; credits</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted2);">
+            <div style="display:flex;justify-content:space-between;"><span>Version</span><span style="color:var(--text);">v1.0.0</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Experience</span><span style="color:var(--text);" id="infoExp">—</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Theme</span><span style="color:var(--accent2);" id="infoTheme">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
 
-<script>
-const GAMES = [
-  { title:'Minecraft', img:'https://github.com/ZephrECS/EagerIGG1.12.html/blob/main/MC.jpg?raw=true', cat:'featured', tag:'popular',
-    versions:[{name:'Minecraft 1.5.2',desc:'Runs better than other versions.',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/EaglercraftMODDED/cleaglercraft152.html'},{name:'Minecraft 1.8.8',desc:'Classic PvP version.',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/EaglercraftMODDED/1.9eag.txt'}],mode:'onsite'},
-  { title:'ULTRAKILL', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg', cat:'featured', tag:'new', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt', mode:'onsite'},
-  { title:'Kindergarten', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/1b0bbb08482332e69ac7f7c6d1e262dc590d3df2f351f139f80dcb622d99493e.avif', cat:'featured', tag:'popular',
-    versions:[{name:'Kindergarten 1',desc:'The original.',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/Kindergarten.txt'},{name:'Kindergarten 2',desc:'Continues the chaos.',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/Kindergarten%202.html'},{name:'Kindergarten 3',desc:'Even darker.',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Kindergarten/Kindergarten%203.html'}],mode:'onsite'},
-  { title:'Balatro', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg', cat:'featured', tag:'trending', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro', mode:'onsite'},
-  { title:'Hollow Knight', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/MV5BMGIyYmJmZDgtOWQ1Ny00NDFiLTk2OTgtM2Q2ZWQ4OWIxZjg3XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', cat:'featured', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HollowKnight/HollowGME.txt', mode:'onsite'},
-  { title:'Buckshot Roulette', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/logo_Buckshot_Roulette.png', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Buckshot%20Roulette/Buckshot%20Roulette.txt', mode:'onsite'},
-  { title:'People Playground', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/4bb51ff19e082e45d9187564ea12f3c01d520c683db7da74b10a89efd254ee7c.jpg', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/PPG/People%20Playground.txt', mode:'newtab'},
-  { title:'Hotline Miami', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/MV5BOWRlM2RkMjktYWQzMi00YmIxLTkyMWUtOTI0ZWRmODE1N2U5XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Hotline%20Miami/Hotline%20Miami.html', mode:'onsite'},
-  { title:'Half-Life', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/halflife_coverart.jpg', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/HalfLife/Half%20Life.txt', mode:'onsite'},
-  { title:'Vice City', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/Vice-city-cover.jpg', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Vice-City/ViceCity.html', mode:'onsite'},
-  { title:'COD: Zombies', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/TIARP5371__87728.jpg', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/NZ%3AP%20HTML/NZP.txt', mode:'onsite'},
-  { title:'Bow Masters', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/BowMasters/81H-w-fHMWL.png', cat:'action', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/BowMasters/28.html', mode:'onsite'},
-  { title:'Subway Surfers', img:'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/video-game-Subway-Surfers-Poster-diamond-by-numbers.jpg', cat:'action', url:'https://raw.githubusercontent.com/s0lace-games/s0lace/refs/heads/main/public/games/subway-surfers/index.html', mode:'onsite'},
-  { title:'Iron Lung', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/MV5BM2JhZDRmNDAtZWE4OC00NmRjLTlmZGUtZmQxNmNkOTk5ZWRhXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Iron%20Lung/Iron%20Lung.html', mode:'onsite'},
-  { title:'TattleTail', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/tattletail-646521.7.webp', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Tattletail/Tattletail.txt', mode:'onsite'},
-  { title:'FTF: Home Alone', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/MV5BNGZjOTBlYTctODcxNy00YTM1LTg2YTYtZTI3NzBmMDA4ZmJmXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', cat:'horror', url:'https://raw.githubusercontent.com/genizy/web-port/refs/heads/main/fears-to-fathom/home-alone/index.html', mode:'onsite'},
-  { title:'Granny', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/images.jpeg', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Granny/Granny.txt', mode:'onsite'},
-  { title:'Bendy: ATIM', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Bendy/images%20(1).jpeg', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Bendy/Bendy%20and%20the%20Ink%20Machine%20(1).html', mode:'onsite'},
-  { title:"That's Not My Neighbor", img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Your%20Not%20My%20Neighbor/images%20(2).jpeg', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/tnmn.html', mode:'onsite'},
-  { title:'Deadseat', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Deadseat/images_upscaled.jpg', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Deadseat/The%20Deadseat.html', mode:'onsite'},
-  { title:'A Bite At Freddys', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/New%20Project%20(1).png', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/A%20Bite%20At%20Freddies/ABAF.html', mode:'onsite'},
-  { title:'Midnight Shift', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/RLDGy%2B.png', cat:'horror', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Midnight%20Shift/midnight_shift.html', mode:'onsite'},
-  { title:'R.E.P.O.', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./repo-teases-big-update-game-rant.avif', cat:'sandbox', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/R.E.P.O./R.E.P.O.txt', mode:'onsite'},
-  { title:'Slime Rancher', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/w5OuzDEu6HNzT2K4e5HRI7vJ.avif', cat:'sandbox', url:'http://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Slime%20Rancher/Slime%20Rancher.txt', mode:'onsite'},
-  { title:'Sandboxels', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/Site-logo.webp', cat:'sandbox', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Sandboxels/clsandboxels.html', mode:'onsite'},
-  { title:'Webfishing', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Webfishing/images%20(3).jpeg', cat:'sandbox', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Webfishing/WebFishing%20(1).html', mode:'onsite'},
-  { title:'Getting Over It', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/9AZHswQrJ6UuZld22c5UGLuk5mqDWAocm0gUhDd6MyA.jpg', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Getting%20Over%20It%20With%20Bennet%20Foddy/GOIWBF.txt', mode:'onsite'},
-  { title:'Undertale', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Undertale/MV5BMWI3ZTkxZjktYWU3NC00OGQ1LWFlNzgtYzIwMWI4NDg2YTU0XkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/undertale.html', mode:'onsite'},
-  { title:'Deltarune', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/deltrarune/deltarune.webp', cat:'classic', url:'https://raw.githubusercontent.com/aukak/fyinx/refs/heads/main/g/deltarune/index.html', mode:'onsite'},
-  { title:'Get Yoked', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/GetYoked/New%20Project%20(3).jpg', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/GetYoked/Get%20Yoked.html', mode:'onsite'},
-  { title:'Gladdi-Hoppers', img:'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/Gladdihoppers/images.jpeg', cat:'classic', url:'https://raw.githubusercontent.com/SchoolHacksRUs/madboxlearningv3/refs/heads/main/Gladdihoppers/gladdihoppers.html', mode:'onsite'},
-  { title:'Side Effects', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/side-effects-button-1759512691005.webp', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/SideEffects/MonkeyMayhen.txt', mode:'onsite'},
-  { title:'Untitled Goose Game', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/e3549b645ea3dc77411280ba4a83f018235bbdb6f0b32039a5519cee985f0f4f.avif', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/Untitled%20Goose%20Game.txt', mode:'onsite'},
-  { title:"Andy's Apple Farm", img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/AndysAppleFarm/ne3tan.webp', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/AndysAppleFarm/applefarm.html', mode:'onsite'},
-  { title:'Clover Pit', img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/CloverPit_cover.jpeg', cat:'classic', url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/CloverPit/Clover%20Pit.html', mode:'newtab'},
-];
-const SECRET=[
-  {title:'Five Nights At Epsteins',img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/images.jpg',trigger:'roblox',cat:'secret',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/fnae/gncrack.html',mode:'onsite'},
-  {title:'Secret Test Game',img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/logo_Balatro.jpg',trigger:'konami',cat:'secret',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/Balatro',mode:'onsite'},
-  {title:'Hidden Gem',img:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/MV5BNGIyZDE4OTYtNjBhOS00NzFkLTkyYWMtYzAzNWUxZThmMDBlXkEyXkFqcGc%40._V1_.jpg',trigger:'secret',cat:'secret',url:'https://raw.githubusercontent.com/ZephrECS/WeirdLT22023/refs/heads/main/madbox-learning/ULTRAKILL/ULTRAKILL.txt',mode:'onsite'},
-];
-
-/* LOADER */
-(function(){
-  const bar=document.getElementById('lbar'),status=document.getElementById('lstatus');
-  const msgs=['loading games','preloading assets','finalizing','ready'];
-  let p=0,mi=0,ti=0;
-  const targets=[25,60,88,100];
-  function tick(){
-    if(ti>=targets.length){launch();return;}
-    if(p<targets[ti]){
-      p++; bar.style.width=p+'%';
-      if(p===25||p===60||p===90||p===100){if(mi<msgs.length)status.textContent=msgs[mi++];}
-      setTimeout(tick,12+Math.random()*24);
-    } else {ti++;setTimeout(tick,200);}
-  }
-  function launch(){
-    setTimeout(()=>{
-      document.getElementById('loader').classList.add('done');
-      document.getElementById('app').classList.add('visible');
-      init();
-    },350);
-  }
-  setTimeout(tick,300);
-})();
-
-/* STATE */
-let activeViewer=null, heroGames=[], heroIdx=0, heroTimer=null;
-
-function init(){
-  heroGames=GAMES.filter(g=>g.cat==='featured');
-  buildHero(0);
-  buildHeroDots();
-  buildRows();
-  bindNavCats();
-  document.getElementById('searchInput').addEventListener('input',function(){
-    const v=this.value.trim();
-    if(!v)showHome(); else showSearch(v);
-  });
-  window.addEventListener('scroll',()=>{
-    document.getElementById('nav').classList.toggle('solid',window.scrollY>20);
-  });
-}
-
-function buildHero(idx){
-  heroIdx=idx;
-  const g=heroGames[idx]; if(!g)return;
-  document.getElementById('heroBg').style.backgroundImage=`url('${g.img}')`;
-  document.getElementById('heroTitle').textContent=g.title;
-  document.getElementById('heroBadge').textContent=g.cat.charAt(0).toUpperCase()+g.cat.slice(1);
-  document.getElementById('heroPlay').onclick=()=>{ if(g.versions)versionPicker(g); else launchGame(g.url,g.title,g.mode||'onsite'); };
-  document.querySelectorAll('.hero-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-  clearTimeout(heroTimer);
-  heroTimer=setTimeout(()=>buildHero((idx+1)%heroGames.length),6000);
-}
-function buildHeroDots(){
-  const w=document.getElementById('heroDots'); w.innerHTML='';
-  heroGames.forEach((_,i)=>{
-    const d=document.createElement('div'); d.className='hero-dot'+(i===0?' active':'');
-    d.onclick=()=>buildHero(i); w.appendChild(d);
-  });
-}
-function buildRows(){
-  const c=document.getElementById('rowsContainer'); c.innerHTML='';
-  [{label:'Featured',cat:'featured'},{label:'Action',cat:'action'},{label:'Horror',cat:'horror'},{label:'Sandbox',cat:'sandbox'},{label:'Classic',cat:'classic'}].forEach(({label,cat})=>{
-    const games=GAMES.filter(g=>g.cat===cat); if(!games.length)return;
-    const row=document.createElement('div'); row.className='row';
-    row.innerHTML=`<div class="row-header"><div class="row-label">${label}</div><div class="row-see-all" data-cat="${cat}" data-label="${label}">See all →</div></div><div class="shelf" id="shelf-${cat}"></div>`;
-    c.appendChild(row);
-    row.querySelector('.row-see-all').onclick=e=>showCat(e.target.dataset.cat,e.target.dataset.label);
-    const shelf=row.querySelector('.shelf');
-    games.forEach((g,i)=>{const card=buildCard(g,false); card.style.animationDelay=(i*0.03)+'s'; shelf.appendChild(card);});
-  });
-}
-
-function buildCard(g,isSecret){
-  const d=document.createElement('div'); d.className='card';
-  d.innerHTML=`
-    <div class="card-img-wrap">
-      <img class="card-img" src="${g.img}" alt="${g.title}" loading="lazy">
-      <div class="card-overlay"><div class="card-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    </div>
-    <div class="card-bottom"><div class="card-name">${g.title}</div><div class="card-cat">${g.cat||'secret'}</div></div>`;
-  d.onclick=()=>{ if(g.versions)versionPicker(g); else launchGame(g.url,g.title,g.mode||'onsite'); };
-  return d;
-}
-
-function setView(v){
-  document.getElementById('homeView').style.display=v==='home'?'block':'none';
-  document.getElementById('catView').classList.toggle('visible',v==='cat');
-  document.getElementById('searchView').classList.toggle('visible',v==='search');
-}
-function showHome(){
-  setView('home');
-  document.querySelectorAll('.nav-cat').forEach(el=>el.classList.toggle('active',el.dataset.cat==='all'));
-  document.getElementById('searchInput').value='';
-  window.scrollTo(0,0);
-}
-function showCat(cat,label){
-  const games=GAMES.filter(g=>g.cat===cat);
-  const grid=document.getElementById('catGrid'); grid.innerHTML='';
-  games.forEach((g,i)=>{const c=buildCard(g,false); c.style.animationDelay=(i*0.025)+'s'; grid.appendChild(c);});
-  document.getElementById('catHeading').textContent=label+' — '+games.length+' games';
-  setView('cat');
-  document.querySelectorAll('.nav-cat').forEach(el=>el.classList.toggle('active',el.dataset.cat===cat));
-  window.scrollTo(0,0);
-}
-function showSearch(q){
-  if(!q){showHome();return;}
-  let list=GAMES.filter(g=>g.title.toLowerCase().includes(q.toLowerCase()));
-  const sg=SECRET.find(s=>s.trigger===q.toLowerCase().trim());
-  if(sg)list=[sg,...list];
-  const grid=document.getElementById('searchGrid'); grid.innerHTML='';
-  if(!list.length){grid.innerHTML='<div class="no-results">No games found.</div>';}
-  else{list.forEach((g,i)=>{const c=buildCard(g,!!g.trigger); c.style.animationDelay=(i*0.025)+'s'; grid.appendChild(c);});}
-  document.getElementById('searchLabel').textContent=`"${q}" — ${list.length} result${list.length===1?'':'s'}`;
-  setView('search');
-  document.querySelectorAll('.nav-cat').forEach(el=>el.classList.remove('active'));
-  window.scrollTo(0,0);
-}
-function bindNavCats(){
-  document.querySelectorAll('.nav-cat').forEach(el=>{
-    el.addEventListener('click',()=>{
-      const cat=el.dataset.cat;
-      if(cat==='all'){showHome();return;}
-      const labels={featured:'Featured',action:'Action',horror:'Horror',sandbox:'Sandbox',classic:'Classic'};
-      showCat(cat,labels[cat]||cat);
-    });
-  });
-}
-
-function versionPicker(game){
-  const bg=document.createElement('div'); bg.className='modal-bg';
-  bg.innerHTML=`<div class="modal"><div class="modal-title">${game.title}</div><div class="modal-sub">choose version</div><div class="modal-opts">${game.versions.map(v=>`<div class="modal-opt" data-url="${v.url}" data-mode="${game.mode||'onsite'}"><div><div class="modal-opt-name">${v.name}</div><div class="modal-opt-desc">${v.desc}</div></div><span class="modal-opt-arrow">›</span></div>`).join('')}</div><button class="modal-cancel">Cancel</button></div>`;
-  const close=()=>{bg.classList.add('out');setTimeout(()=>bg.remove(),200);};
-  bg.querySelectorAll('.modal-opt').forEach(o=>o.addEventListener('click',()=>{close();setTimeout(()=>launchGame(o.dataset.url,game.title,o.dataset.mode),180);}));
-  bg.querySelector('.modal-cancel').addEventListener('click',close);
-  bg.addEventListener('click',e=>{if(e.target===bg)close();});
-  document.body.appendChild(bg);
-}
-
-async function launchGame(url,title,mode){
-  if(mode==='newtab'){
-    try{const r=await fetch(url);const h=await r.text();const t=window.open('','_blank');t.document.open();t.document.write(h);t.document.close();}
-    catch{alert('Could not load game.');}
-    return;
-  }
-  openViewer(url,title);
-}
-
-async function openViewer(url,title){
-  if(activeViewer)killViewer(activeViewer,false);
-  const v=document.createElement('div'); v.className='viewer';
-  v.innerHTML=`
-    <div class="vbar">
-      <div class="vbar-logo"><span class="vbar-s">S</span><span class="vbar-rest">YNAPSE</span></div>
-      <div class="vbar-sep2"></div>
-      <div class="vbar-title">${title}</div>
-      <div class="vbar-btns">
-        <button class="vb" id="vbSave" data-tip="Export save"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save</button>
-        <button class="vb" id="vbLoad" data-tip="Import save"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Load</button>
-        <div class="vbar-div"></div>
-        <button class="vb" id="vbRefresh" data-tip="Restart"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
-        <button class="vb" id="vbFS" data-tip="Fullscreen"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
-        <div class="vbar-div"></div>
-        <button class="vb vb-exit" id="vbExit"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Exit</button>
+<!-- WHATS NEW -->
+<div class="modal-ov" id="wn-modal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div style="display:flex;align-items:center;gap:9px;">
+        <div class="modal-title">What's New</div>
+        <div class="modal-ver">v1.0.0</div>
       </div>
+      <button class="modal-x" onclick="document.getElementById('wn-modal').classList.remove('show')">✕</button>
     </div>
-    <div class="vframe">
-      <div class="vframe-loader"><div class="vfl-ring"></div><div class="vfl-text">loading</div></div>
-      <iframe id="vif" allowfullscreen allow="autoplay;fullscreen;gamepad;pointer-lock"></iframe>
-    </div>`;
-  document.body.appendChild(v); activeViewer=v;
-  const iframe=v.querySelector('#vif'), loader=v.querySelector('.vframe-loader');
-  try{
-    const res=await fetch(url), html=await res.text();
-    const blob=new Blob([html],{type:'text/html'}), bu=URL.createObjectURL(blob);
-    iframe.addEventListener('load',()=>{loader.style.display='none';iframe.style.opacity='1';setTimeout(()=>URL.revokeObjectURL(bu),3000);},{once:true});
-    iframe.src=bu;
-  } catch {loader.querySelector('.vfl-text').textContent='failed to load';loader.querySelector('.vfl-ring').style.display='none';}
+    <div class="modal-item">
+      <div class="mi-title">🎉 Synapse Launches!</div>
+      <div class="mi-desc">Welcome to Synapse — a modern, sleek platform for unblocked games and web browsing.</div>
+    </div>
+    <div class="modal-item">
+      <div class="mi-title">Save &amp; Load Data <span class="mi-badge">NEW</span></div>
+      <div class="mi-desc">Export your settings as a .json file and load it back from the loading screen any time.</div>
+    </div>
+    <div class="modal-item">
+      <div class="mi-title">Themes &amp; Cloaking <span class="mi-badge">NEW</span></div>
+      <div class="mi-desc">Personalise your color theme and disguise your browser tab in Settings.</div>
+    </div>
+  </div>
+</div>
 
-  v.querySelector('#vbSave').onclick=()=>{
-    try{
-      const iw=iframe.contentWindow,ls={},ss={};
-      for(let i=0;i<iw.localStorage.length;i++){const k=iw.localStorage.key(i);ls[k]=iw.localStorage.getItem(k);}
-      for(let i=0;i<iw.sessionStorage.length;i++){const k=iw.sessionStorage.key(i);ss[k]=iw.sessionStorage.getItem(k);}
-      const b=new Blob([JSON.stringify({game:title,savedAt:new Date().toISOString(),localStorage:ls,sessionStorage:ss},null,2)],{type:'application/json'});
-      const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`${title.replace(/\s+/g,'-').toLowerCase()}-save.json`;a.click();
-      setTimeout(()=>URL.revokeObjectURL(a.href),1000); toast('Save exported');
-    } catch{toast('Cannot access game data',true);}
-  };
-  v.querySelector('#vbLoad').onclick=()=>{
-    const fi=document.createElement('input');fi.type='file';fi.accept='.json';
-    fi.onchange=()=>{
-      const f=fi.files[0];if(!f)return;
-      const r=new FileReader();
-      r.onload=e=>{
-        try{
-          const p=JSON.parse(e.target.result),iw=iframe.contentWindow;
-          if(p.localStorage)Object.entries(p.localStorage).forEach(([k,val])=>iw.localStorage.setItem(k,val));
-          if(p.sessionStorage)Object.entries(p.sessionStorage).forEach(([k,val])=>iw.sessionStorage.setItem(k,val));
-          toast('Save loaded — restarting');
-          setTimeout(()=>{const src=iframe.src;iframe.style.opacity='0';loader.style.display='flex';iframe.src='';setTimeout(()=>{iframe.src=src;iframe.addEventListener('load',()=>{loader.style.display='none';iframe.style.opacity='1';},{once:true});},80);},700);
-        } catch{toast('Invalid save file',true);}
-      };r.readAsText(f);
-    };fi.click();
-  };
-  v.querySelector('#vbRefresh').onclick=()=>{const src=iframe.src;iframe.style.opacity='0';loader.style.display='flex';iframe.src='';setTimeout(()=>{iframe.src=src;iframe.addEventListener('load',()=>{loader.style.display='none';iframe.style.opacity='1';},{once:true});},80);};
-  v.querySelector('#vbFS').onclick=()=>{const w=v.querySelector('.vframe');if(document.fullscreenElement)document.exitFullscreen();else(w.requestFullscreen||w.webkitRequestFullscreen||function(){}).call(w);};
-  v.querySelector('#vbExit').onclick=()=>killViewer(v);
-  const esc=e=>{if(e.key==='Escape'&&!document.fullscreenElement){killViewer(v);document.removeEventListener('keydown',esc);}};
-  document.addEventListener('keydown',esc); v._esc=esc;
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── SNOW ─────────────────────────────────────────────── */
+const canvas=document.getElementById('snow'),ctx=canvas.getContext('2d');
+let flakes=[];
+function initSnow(){
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  flakes=Array.from({length:130},()=>{
+    const r=Math.random();
+    return{x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+      rad:.4+Math.pow(r,2)*2.4,op:.03+r*.16,sp:.12+r*.36,
+      dr:(Math.random()-.5)*.28,wb:Math.random()*Math.PI*2};
+  });
+}
+function drawSnow(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  flakes.forEach(f=>{
+    f.y+=f.sp;f.wb+=.008;f.x+=Math.sin(f.wb)*f.dr;
+    if(f.y>canvas.height){f.y=-4;f.x=Math.random()*canvas.width;}
+    ctx.beginPath();ctx.arc(f.x,f.y,f.rad,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${f.op})`;ctx.fill();
+  });
+  requestAnimationFrame(drawSnow);
+}
+window.addEventListener('resize',initSnow);
+initSnow();drawSnow();
+
+function seedMiniSnow(el){
+  for(let i=0;i<14;i++){
+    const d=document.createElement('div');
+    const s=.8+Math.random()*2;const op=.04+Math.random()*.16;
+    d.className='flake';
+    d.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--op:${op};animation-duration:${5+Math.random()*7}s;animation-delay:${-Math.random()*7}s;`;
+    el.appendChild(d);
+  }
+}
+function addCardSnow(el){
+  const w=el.querySelector('.gc-snow');if(!w)return;
+  for(let i=0;i<16;i++){
+    const d=document.createElement('div');
+    const s=.6+Math.random()*2;const op=.04+Math.random()*.15;
+    d.className='flake';
+    d.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--op:${op};animation-duration:${4+Math.random()*6}s;animation-delay:${-Math.random()*6}s;`;
+    w.appendChild(d);
+  }
 }
 
-function killViewer(v,anim=true){
-  if(!v||!v.isConnected)return;
-  if(v._esc)document.removeEventListener('keydown',v._esc);
-  if(anim){v.classList.add('out');setTimeout(()=>{v.remove();if(activeViewer===v)activeViewer=null;},160);}
-  else{v.remove();if(activeViewer===v)activeViewer=null;}
+/* ── STATE ────────────────────────────────────────────── */
+let state={username:null,theme:'default',cloak:'none',panicKey:'`',panicUrl:'https://www.google.com',experience:'games',onboarded:false};
+function persist(){localStorage.setItem('syn2',JSON.stringify(state));}
+function restore(){try{const s=localStorage.getItem('syn2');if(s)Object.assign(state,JSON.parse(s));}catch(e){}}
+
+/* ── THEMES ───────────────────────────────────────────── */
+const THEMES={
+  default:  {name:'Default', color:'#7c6bff','--accent':'#7c6bff','--accent2':'#a78bfa'},
+  midnight: {name:'Midnight',color:'#4f8ef7','--accent':'#4f8ef7','--accent2':'#93c5fd'},
+  forest:   {name:'Forest',  color:'#22c55e','--accent':'#22c55e','--accent2':'#86efac'},
+  crimson:  {name:'Crimson', color:'#ef4444','--accent':'#ef4444','--accent2':'#fca5a5'},
+  sunset:   {name:'Sunset',  color:'#f97316','--accent':'#f97316','--accent2':'#fdba74'},
+  ocean:    {name:'Ocean',   color:'#06b6d4','--accent':'#06b6d4','--accent2':'#67e8f9'},
+  lavender: {name:'Lavender',color:'#c084fc','--accent':'#c084fc','--accent2':'#e9d5ff'},
+  mono:     {name:'Mono',    color:'#9ca3af','--accent':'#9ca3af','--accent2':'#e5e7eb'},
+};
+function applyTheme(k){
+  const t=THEMES[k]||THEMES.default;
+  Object.entries(t).forEach(([p,v])=>{if(p.startsWith('--'))document.documentElement.style.setProperty(p,v);});
+  state.theme=k;persist();renderThemeGrid();renderObThemeGrid();
 }
-function toast(msg,isErr=false){
-  const ex=document.querySelector('.toast');if(ex)ex.remove();
-  const t=document.createElement('div');t.className='toast'+(isErr?' err':'');t.textContent=msg;
-  document.body.appendChild(t);
-  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),200);},2600);
+
+/* ── CLOAKS ───────────────────────────────────────────── */
+const CLOAKS=[
+  {id:'none',label:'None',title:'Synapse'},
+  {id:'google',label:'Google',title:'Google'},
+  {id:'classroom',label:'Classroom',title:'Google Classroom'},
+  {id:'docs',label:'Docs',title:'Google Docs'},
+  {id:'drive',label:'Drive',title:'Google Drive'},
+  {id:'kahoot',label:'Kahoot!',title:'Kahoot!'},
+  {id:'edpuzzle',label:'Edpuzzle',title:'Edpuzzle'},
+  {id:'blooket',label:'Blooket',title:'Blooket'},
+];
+function applyCloak(id){
+  const c=CLOAKS.find(x=>x.id===id)||CLOAKS[0];
+  document.title=c.title;state.cloak=id;persist();renderCloakGrid();
 }
+
+/* ── ONBOARDING ───────────────────────────────────────── */
+let currentStep=1,selectedTheme='default',selectedExp=null;
+
+function goStep(n){
+  document.getElementById('ob-step-'+currentStep).classList.remove('active');
+  currentStep=n;
+  const next=document.getElementById('ob-step-'+n);
+  next.classList.remove('active');
+  void next.offsetWidth;
+  next.classList.add('active');
+  if(n===3)renderObThemeGrid();
+  if(n===4){seedMiniSnow(document.getElementById('exp-snow-full'));seedMiniSnow(document.getElementById('exp-snow-games'));}
+}
+
+function renderObThemeGrid(){
+  const g=document.getElementById('ob-theme-grid');if(!g)return;
+  g.innerHTML=Object.entries(THEMES).map(([k,t])=>`
+    <div class="ob-topt ${selectedTheme===k?'sel':''}" onclick="pickObTheme('${k}')">
+      <div class="ob-swatch" style="background:${t.color};"></div>${t.name}
+    </div>`).join('');
+}
+function pickObTheme(k){selectedTheme=k;applyTheme(k);renderObThemeGrid();}
+
+function selectExp(mode){
+  selectedExp=mode;
+  document.getElementById('exp-full').classList.toggle('sel',mode==='full');
+  document.getElementById('exp-games').classList.toggle('sel',mode==='games');
+  document.getElementById('ob-exp-btn').disabled=false;
+}
+
+function finishOnboarding(skip=false){
+  const uname=document.getElementById('ob-username').value.trim();
+  if(!skip&&uname)state.username=uname;
+  state.experience=selectedExp||'games';
+  state.onboarded=true;
+  applyTheme(selectedTheme);
+  applyCloak(state.cloak);
+  persist();
+  if(state.experience==='full')document.getElementById('navProxy').style.display='';
+  document.getElementById('onboarding').classList.add('hide');
+  setTimeout(()=>document.getElementById('wn-modal').classList.add('show'),500);
+  renderAll();
+}
+
+/* ── BOOT ─────────────────────────────────────────────── */
+function boot(){
+  restore();
+  applyTheme(state.theme);
+  applyCloak(state.cloak);
+  document.getElementById('panicDisp').textContent=state.panicKey;
+  document.getElementById('panicUrlInput').value=state.panicUrl;
+
+  const bar=document.getElementById('ob-bar');
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=7+Math.random()*14;if(p>100)p=100;
+    bar.style.width=p+'%';
+    if(p>=100){
+      clearInterval(iv);
+      if(state.onboarded){
+        if(state.experience==='full')document.getElementById('navProxy').style.display='';
+        document.getElementById('onboarding').classList.add('hide');
+        renderAll();
+      } else {
+        setTimeout(()=>goStep(2),300);
+      }
+    }
+  },100);
+}
+
+function renderAll(){
+  renderQuickLinks();renderGames();renderPartners();
+  renderThemeGrid();renderCloakGrid();renderAccount();tickOnline();
+  document.getElementById('infoExp').textContent=state.experience==='full'?'Games & Proxy':'Games Only';
+  document.getElementById('infoTheme').textContent=THEMES[state.theme]?.name||state.theme;
+}
+
+/* ── QUICK LINKS ──────────────────────────────────────── */
+const LINKS=[
+  {label:'YouTube',color:'#ff0000',url:'https://youtube.com',svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white" stroke="none"/></svg>'},
+  {label:'GitHub',color:'#24292e',url:'https://github.com',svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>'},
+  {label:'Google',color:'#4285f4',url:'https://google.com',svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'},
+  {label:'nowgg.fun',color:'#7c6bff',url:'https://nowgg.fun',svg:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M6 13h4m-2-2v4"/></svg>'},
+];
+function renderQuickLinks(){
+  document.getElementById('quickLinks').innerHTML=LINKS.map(l=>`
+    <a class="quick-link" href="${l.url}" target="_blank">
+      <div class="ql-ico" style="background:${l.color};">${l.svg}</div>
+      <span class="ql-lbl">${l.label}</span>
+    </a>`).join('');
+}
+
+/* ── GAMES ────────────────────────────────────────────── */
+const GAMES=[
+  {name:'Slope',cat:'Action',col:'#1a1a2e'},{name:'1v1.lol',cat:'Shooter',col:'#16213e'},
+  {name:'Smash Karts',cat:'Racing',col:'#0f3460'},{name:'Retro Bowl',cat:'Sports',col:'#1b1b2f'},
+  {name:'Basket Random',cat:'Sports',col:'#162447'},{name:'Monkey Mart',cat:'Idle',col:'#1f4068'},
+  {name:'2048',cat:'Puzzle',col:'#1a1a2e'},{name:'Chess',cat:'Strategy',col:'#0d0d0d'},
+  {name:'Tetris',cat:'Puzzle',col:'#0f3460'},{name:'Run 3',cat:'Runner',col:'#1b1b2f'},
+  {name:'Cookie Clicker',cat:'Idle',col:'#162447'},{name:'Agar.io',cat:'IO',col:'#1a1a2e'},
+  {name:'Paper.io',cat:'IO',col:'#16213e'},{name:'Drift Boss',cat:'Racing',col:'#0f3460'},
+  {name:'Fireboy Watergirl',cat:'Puzzle',col:'#1b1b2f'},{name:'FNF',cat:'Music',col:'#1f4068'},
+  {name:'Geometry Dash',cat:'Action',col:'#1a1a2e'},{name:'Bloxd.io',cat:'IO',col:'#16213e'},
+  {name:'Tank Trouble',cat:'Action',col:'#2b2d42'},{name:'Wordle',cat:'Puzzle',col:'#2b2d42'},
+  {name:'Crazy Bikes',cat:'Racing',col:'#0f3460'},{name:'Mine Sweeper',cat:'Puzzle',col:'#1a1a2e'},
+  {name:'Subway Surfers',cat:'Runner',col:'#1b1b2f'},{name:'Bob The Robber',cat:'Adventure',col:'#162447'},
+];
+const CATS=['All',...new Set(GAMES.map(g=>g.cat))];
+let activeCat='All';
+function renderGames(){
+  document.getElementById('filterRow').innerHTML=CATS.map(c=>`
+    <button class="chip ${activeCat===c?'active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');
+  const list=activeCat==='All'?GAMES:GAMES.filter(g=>g.cat===activeCat);
+  document.getElementById('gamesGrid').innerHTML=list.map(g=>`
+    <div class="game-card" onclick="playGame('${g.name}')">
+      <div class="gc-bg" style="background:${g.col};">
+        <div class="gc-snow"></div>
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.5"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M6 13h4m-2-2v4"/></svg>
+      </div>
+      <div class="gc-label"><div class="gc-tag">${g.cat}</div><div>${g.name}</div></div>
+    </div>`).join('');
+  document.querySelectorAll('.game-card').forEach(addCardSnow);
+}
+function filterCat(c){activeCat=c;renderGames();}
+function playGame(name){showToast(`Opening ${name}…`);}
+
+/* ── PARTNERS ─────────────────────────────────────────── */
+const PARTNERS=[
+  {n:'Lunar',d:'Feature-packed tabbed proxy to bypass censorship.',i:'L'},
+  {n:'Axis',d:'Unblocked games, Cloudmoon bypasses, and Linux VMs.',i:'Ax'},
+  {n:'Squall',d:'Lightweight ultrafast proxy with 900+ quality games.',i:'Sq'},
+  {n:'VAPOR',d:'All-in-one platform for free music, games, and tools.',i:'V'},
+  {n:'Hydra Network',d:'Free websites allowing students to browse unrestricted.',i:'H'},
+  {n:'PeteZah Games',d:'Curated hub of unblocked games and proxy tools.',i:'P'},
+  {n:"Noah's Hub",d:'One of the biggest unblocked gaming sites, 300+ games.',i:'N'},
+  {n:'SPLASH',d:'Secure Proxy for Live Audiovisual SHell.',i:'Sp'},
+  {n:'Infamous Network',d:'Collection of UBG sites, proxies, chatroom, music.',i:'In'},
+  {n:'Waves!!',d:'Fast proxy, lots of features, nice looking UI.',i:'W'},
+  {n:'Otonic',d:'1100+ games, movies, and proxy. Community-driven.',i:'O'},
+  {n:'PenguinO Web',d:'Games, tools, and proxy solutions.',i:'Pe'},
+];
+function renderPartners(){
+  document.getElementById('partnersGrid').innerHTML=PARTNERS.map(p=>`
+    <div class="p-card">
+      <div class="p-icon">${p.i}</div>
+      <div><div class="p-name">${p.n}</div><div class="p-desc">${p.d}</div></div>
+    </div>`).join('');
+}
+
+/* ── ACCOUNT ──────────────────────────────────────────── */
+function renderAccount(){
+  const form=document.getElementById('acctForm');
+  const logged=document.getElementById('acctLogged');
+  const avatar=document.getElementById('acctAvatar');
+  const name=document.getElementById('acctName');
+  if(state.username){
+    form.classList.add('gone');logged.classList.add('show');
+    name.textContent=state.username;avatar.textContent=state.username[0].toUpperCase();
+  } else {
+    form.classList.remove('gone');logged.classList.remove('show');avatar.textContent='?';
+  }
+}
+function acctSave(){
+  const v=document.getElementById('acctUsername').value.trim();
+  if(!v)return showToast('Enter a username first');
+  state.username=v;persist();renderAccount();showToast(`Saved as ${v}!`);
+}
+function acctLogout(){state.username=null;persist();renderAccount();}
+function exportData(){
+  const b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='synapse_data.json';a.click();
+  showToast('Data exported!');
+}
+function loadData(){
+  const input=document.createElement('input');input.type='file';input.accept='.json';
+  input.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      try{
+        Object.assign(state,JSON.parse(ev.target.result));
+        persist();applyTheme(state.theme);applyCloak(state.cloak);
+        document.getElementById('panicDisp').textContent=state.panicKey;
+        document.getElementById('panicUrlInput').value=state.panicUrl;
+        if(state.experience==='full')document.getElementById('navProxy').style.display='';
+        state.onboarded=true;persist();
+        document.getElementById('onboarding').classList.add('hide');
+        renderAll();showToast('Data loaded!');
+      }catch(e){showToast('Invalid file');}
+    };
+    r.readAsText(f);
+  };
+  input.click();
+}
+
+/* ── SETTINGS ─────────────────────────────────────────── */
+function renderThemeGrid(){
+  const g=document.getElementById('themeGrid');if(!g)return;
+  g.innerHTML=Object.entries(THEMES).map(([k,t])=>`
+    <div class="theme-opt ${state.theme===k?'active':''}" onclick="applyTheme('${k}')">
+      <div class="theme-swatch" style="background:${t.color};"></div>${t.name}
+    </div>`).join('');
+}
+function renderCloakGrid(){
+  const g=document.getElementById('cloakGrid');if(!g)return;
+  g.innerHTML=CLOAKS.map(c=>`
+    <div class="cloak-opt ${state.cloak===c.id?'active':''}" onclick="applyCloak('${c.id}')">${c.label}</div>`).join('');
+}
+document.querySelectorAll('.sn-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.sn-item').forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+    const sec=item.dataset.sec;
+    ['appearance','cloaking','panic','info'].forEach(s=>{
+      const el=document.getElementById('sec-'+s);
+      if(el)el.style.display=s===sec?'block':'none';
+    });
+    if(sec==='appearance')renderThemeGrid();
+    if(sec==='cloaking')renderCloakGrid();
+  });
+});
+
+/* ── NAV ──────────────────────────────────────────────── */
+function switchTab(tab){
+  document.querySelectorAll('.nav-btn[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
+  if(tab==='games')renderGames();
+  if(tab==='settings'){renderThemeGrid();renderCloakGrid();}
+  if(tab==='account')renderAccount();
+  if(tab==='partners')renderPartners();
+}
+document.querySelectorAll('.nav-btn[data-tab]').forEach(b=>{
+  b.addEventListener('click',()=>switchTab(b.dataset.tab));
+});
+
+/* ── PROXY ────────────────────────────────────────────── */
+function proxyKey(e){if(e.key==='Enter')goProxy();}
+function goProxy(){
+  let url=document.getElementById('proxyInput').value.trim();if(!url)return;
+  if(!url.startsWith('http'))url='https://'+url;
+  document.getElementById('proxyWrap').innerHTML=`<iframe src="${url}" style="width:100%;height:100%;border:none;" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>`;
+}
+function homeSearchKey(e){
+  if(e.key!=='Enter')return;
+  const v=document.getElementById('homeSearch').value.trim();if(!v)return;
+  const url=v.includes('.')&&!v.includes(' ')?(v.startsWith('http')?v:'https://'+v):`https://www.google.com/search?q=${encodeURIComponent(v)}`;
+  if(state.experience==='full'){switchTab('proxy');document.getElementById('proxyInput').value=url;goProxy();}
+  else window.open(url,'_blank');
+}
+
+/* ── PANIC ────────────────────────────────────────────── */
+let listeningPanic=false;
+function listenPanic(){listeningPanic=true;document.getElementById('panicStatus').textContent='Press any key…';}
+document.addEventListener('keydown',e=>{
+  if(listeningPanic){
+    state.panicKey=e.key;persist();
+    document.getElementById('panicDisp').textContent=e.key;
+    document.getElementById('panicStatus').textContent='Saved!';
+    listeningPanic=false;return;
+  }
+  if(e.key===state.panicKey)window.location.href=state.panicUrl;
+});
+function savePanicUrl(){
+  state.panicUrl=document.getElementById('panicUrlInput').value.trim()||'https://www.google.com';
+  persist();showToast('Panic URL saved');
+}
+document.getElementById('panicBtn').addEventListener('click',()=>window.location.href=state.panicUrl);
+
+/* ── ONLINE ───────────────────────────────────────────── */
+let online=4+Math.floor(Math.random()*14);
+function tickOnline(){
+  online=Math.max(1,online+Math.floor(Math.random()*3)-1);
+  const el=document.getElementById('homeOnline');if(el)el.textContent=`${online} Online`;
+}
+setInterval(tickOnline,6000);
+
+/* ── TOAST ────────────────────────────────────────────── */
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+boot();
 </script>
 </body>
 </html>
